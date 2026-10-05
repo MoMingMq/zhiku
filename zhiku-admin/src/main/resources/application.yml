@@ -171,8 +171,8 @@ springdoc:
     version: '版本号: ${project.version}'
     # 作者信息
     contact:
-      name: Lion Li
-      email: crazylionli@163.com
+      name: ZhiKu
+      email: admin@zhiku.com
       url: https://github.com/MoMingMq/zhiku
   #这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
