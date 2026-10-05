@@ -74,7 +74,7 @@ import { dictOptions } from '@/utils/dict';
 import { confirmAction } from '@/utils/modal';
 </#if>
 import { hasPermi } from '@/utils/permission';
-import { <#if needDateField>formatDateTimeFields, toDayjsFields, </#if> toPageQuery, toTableData } from '@/utils/ruoyi';
+import { <#if needDateField>formatDateTimeFields, toDayjsFields, </#if> toPageQuery, toTableData } from '@/utils/zhiku';
 
 const default${BusinessName}Form: ${BusinessName}Form = {
 <#list columns as column>

@@ -72,7 +72,7 @@ import { dictOptions } from '@/utils/dict';
 import { confirmAction } from '@/utils/modal';
 </#if>
 import { hasPermi } from '@/utils/permission';
-import { filterTree<#if needDateField>, formatDateTimeFields</#if>, handleTree<#if needDateField>, toDayjsFields</#if> } from '@/utils/ruoyi';
+import { filterTree<#if needDateField>, formatDateTimeFields</#if>, handleTree<#if needDateField>, toDayjsFields</#if> } from '@/utils/zhiku';
 
 const default${BusinessName}Form: ${BusinessName}Form = {
   ${treeParentCode}: ${treeRootValueTsLiteral},

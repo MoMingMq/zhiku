@@ -1,8 +1,8 @@
 package ${packageName}.domain.bo;
 
 import ${packageName}.domain.${ClassName};
-import org.dromara.common.core.validate.AddGroup;
-import org.dromara.common.core.validate.EditGroup;
+import org.zhiku.common.core.validate.AddGroup;
+import org.zhiku.common.core.validate.EditGroup;
 import io.github.linpeilie.annotations.AutoMapper;
 import java.io.Serial;
 import java.io.Serializable;

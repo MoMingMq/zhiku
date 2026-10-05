@@ -3,8 +3,8 @@ package ${packageName}.service;
 import ${packageName}.domain.vo.${ClassName}Vo;
 import ${packageName}.domain.bo.${ClassName}Bo;
 <#if table.crud>
-import org.dromara.common.core.domain.PageResult;
-import org.dromara.common.mybatis.core.page.PageQuery;
+import org.zhiku.common.core.domain.PageResult;
+import org.zhiku.common.mybatis.core.page.PageQuery;
 </#if>
 
 import java.util.Collection;

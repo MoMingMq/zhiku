@@ -382,7 +382,7 @@ import { useTableSelection } from '@/hooks/table/useTableSelection';
 import { useDict } from '@/utils/dict';
 </#if>
 <#if needParseTime>
-import { parseTime } from '@/utils/ruoyi';
+import { parseTime } from '@/utils/zhiku';
 </#if>
 import modal from '@/plugins/modal';
 <#if enableExport>

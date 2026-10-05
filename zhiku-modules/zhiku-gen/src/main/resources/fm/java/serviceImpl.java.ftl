@@ -1,18 +1,18 @@
 package ${packageName}.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
-import org.dromara.common.core.utils.MapstructUtils;
-import org.dromara.common.core.utils.StringUtils;
+import org.zhiku.common.core.utils.MapstructUtils;
+import org.zhiku.common.core.utils.StringUtils;
 <#if table.crud>
-import org.dromara.common.core.domain.PageResult;
-import org.dromara.common.mybatis.core.page.PageQuery;
+import org.zhiku.common.core.domain.PageResult;
+import org.zhiku.common.mybatis.core.page.PageQuery;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 </#if>
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 <#if enableUnique>
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 </#if>
-import org.dromara.common.mybatis.core.query.QueryBuilder;
+import org.zhiku.common.mybatis.core.query.QueryBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ import ${packageName}.domain.${ClassName};
 import ${packageName}.mapper.${ClassName}Mapper;
 import ${packageName}.service.I${ClassName}Service;
 <#if table.tree>
-import org.dromara.common.core.exception.ServiceException;
+import org.zhiku.common.core.exception.ServiceException;
 </#if>
 
 import java.util.ArrayList;

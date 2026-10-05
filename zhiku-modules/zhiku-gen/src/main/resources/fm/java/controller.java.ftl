@@ -10,22 +10,22 @@ import jakarta.validation.constraints.*;
 import cn.dev33.satoken.annotation.SaCheckPermission;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.annotation.Validated;
-import org.dromara.common.redis.annotation.RepeatSubmit;
-import org.dromara.common.log.annotation.Log;
-import org.dromara.common.web.core.BaseController;
-import org.dromara.common.mybatis.core.page.PageQuery;
-import org.dromara.common.core.domain.R;
-import org.dromara.common.core.validate.AddGroup;
-import org.dromara.common.core.validate.EditGroup;
-import org.dromara.common.log.enums.BusinessType;
+import org.zhiku.common.redis.annotation.RepeatSubmit;
+import org.zhiku.common.log.annotation.Log;
+import org.zhiku.common.web.core.BaseController;
+import org.zhiku.common.mybatis.core.page.PageQuery;
+import org.zhiku.common.core.domain.R;
+import org.zhiku.common.core.validate.AddGroup;
+import org.zhiku.common.core.validate.EditGroup;
+import org.zhiku.common.log.enums.BusinessType;
 <#if enableExport>
-import org.dromara.common.excel.utils.ExcelBuilder;
+import org.zhiku.common.excel.utils.ExcelBuilder;
 </#if>
 import ${packageName}.domain.vo.${ClassName}Vo;
 import ${packageName}.domain.bo.${ClassName}Bo;
 import ${packageName}.service.I${ClassName}Service;
 <#if table.crud>
-import org.dromara.common.core.domain.PageResult;
+import org.zhiku.common.core.domain.PageResult;
 <#elseif table.tree>
 </#if>
 

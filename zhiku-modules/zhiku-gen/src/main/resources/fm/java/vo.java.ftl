@@ -6,10 +6,10 @@ import ${import};
 import ${packageName}.domain.${ClassName};
 import org.apache.fesod.sheet.annotation.ExcelIgnoreUnannotated;
 import org.apache.fesod.sheet.annotation.ExcelProperty;
-import org.dromara.common.excel.annotation.ExcelDictFormat;
-import org.dromara.common.excel.convert.ExcelDictConvert;
-import org.dromara.common.translation.annotation.Translation;
-import org.dromara.common.translation.constant.TransConstant;
+import org.zhiku.common.excel.annotation.ExcelDictFormat;
+import org.zhiku.common.excel.convert.ExcelDictConvert;
+import org.zhiku.common.translation.annotation.Translation;
+import org.zhiku.common.translation.constant.TransConstant;
 import io.github.linpeilie.annotations.AutoMapper;
 import lombok.Data;
 
