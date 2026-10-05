@@ -10,13 +10,14 @@ Copyright (c) 2026 知库贡献者
 - Hutool — Mulan Permissive Software License v2 (MulanPSL2)
 - Redisson — Apache License 2.0
 - MapStruct-Plus — Apache License 2.0
-- Apache Fesod — Apache License 2.0（Apache 孵化项目）
+- Apache Fesod — Apache License 2.0（Apache 孵化项目，EasyExcel 后继）
+- SnailJob — Apache License 2.0 — Copyright (c) aizuda
+- Snail AI (snail-ai-agent) — Apache License 2.0 — Copyright (c) opensnail
+- warm-flow — Apache License 2.0 — Copyright (c) dromara/warm-flow
 - dynamic-datasource — Apache License 2.0
 - springdoc-openapi — Apache License 2.0
-- SnailJob — 协议待核实（见 wiki/platform/open-source-license.md 待核实清单）
-- Snail AI (snail-ai-agent) — 协议待核实
-- warm-flow — 协议待核实
 - Lombok — MIT License
 
+以上协议已于 2026-10-05 逐项核实（来源：各项目官方仓库 LICENSE）。
 新增依赖时必须同步更新本清单（规范见 wiki/platform/open-source-license.md）。
 本仓库 LICENSE 文件为上游 MIT 许可证，按协议要求原样保留，不得删除或篡改。
