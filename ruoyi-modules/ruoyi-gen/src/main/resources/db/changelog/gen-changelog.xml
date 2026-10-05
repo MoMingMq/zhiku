@@ -3,6 +3,6 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <include file="db/changelog/schema/01-gen-table.xml" relativeToChangelogFile="true"/>
-    <include file="db/changelog/data/01-gen-menu.xml" relativeToChangelogFile="true"/>
+    <include file="schema/01-gen-table.xml" relativeToChangelogFile="true"/>
+    <include file="data/01-gen-menu.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

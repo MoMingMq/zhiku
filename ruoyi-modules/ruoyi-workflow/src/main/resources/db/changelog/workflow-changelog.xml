@@ -3,9 +3,9 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <include file="db/changelog/schema/01-flow-core.xml" relativeToChangelogFile="true"/>
-    <include file="db/changelog/schema/02-flow-ext.xml" relativeToChangelogFile="true"/>
-    <include file="db/changelog/data/01-flow-data.xml" relativeToChangelogFile="true"/>
-    <include file="db/changelog/data/02-flow-dict.xml" relativeToChangelogFile="true"/>
-    <include file="db/changelog/data/03-flow-menu.xml" relativeToChangelogFile="true"/>
+    <include file="schema/01-flow-core.xml" relativeToChangelogFile="true"/>
+    <include file="schema/02-flow-ext.xml" relativeToChangelogFile="true"/>
+    <include file="data/01-flow-data.xml" relativeToChangelogFile="true"/>
+    <include file="data/02-flow-dict.xml" relativeToChangelogFile="true"/>
+    <include file="data/03-flow-menu.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
