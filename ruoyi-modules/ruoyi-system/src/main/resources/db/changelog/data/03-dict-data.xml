@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-58-sys-dict-type-data" author="zhiku">
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000001"/>
+            <column name="dict_name" value="用户性别"/>
+            <column name="dict_type" value="sys_user_gender"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="用户性别列表"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000002"/>
+            <column name="dict_name" value="菜单状态"/>
+            <column name="dict_type" value="sys_show_hide"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="菜单状态列表"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000003"/>
+            <column name="dict_name" value="系统开关"/>
+            <column name="dict_type" value="sys_normal_disable"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="系统开关列表"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000006"/>
+            <column name="dict_name" value="系统是否"/>
+            <column name="dict_type" value="sys_yes_no"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="系统是否列表"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000007"/>
+            <column name="dict_name" value="通知类型"/>
+            <column name="dict_type" value="sys_notice_type"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="通知类型列表"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000008"/>
+            <column name="dict_name" value="通知状态"/>
+            <column name="dict_type" value="sys_notice_status"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="通知状态列表"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000009"/>
+            <column name="dict_name" value="操作类型"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="操作类型列表"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000010"/>
+            <column name="dict_name" value="系统状态"/>
+            <column name="dict_type" value="sys_common_status"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="登录状态列表"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000011"/>
+            <column name="dict_name" value="授权类型"/>
+            <column name="dict_type" value="sys_grant_type"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="认证授权类型"/>
+        </insert>
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000012"/>
+            <column name="dict_name" value="设备类型"/>
+            <column name="dict_type" value="sys_device_type"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="客户端设备类型"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20261005-59-sys-dict-data" author="zhiku">
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000001"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="男"/>
+            <column name="dict_value" value="0"/>
+            <column name="dict_type" value="sys_user_gender"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value=""/>
+            <column name="is_default" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="性别男"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000002"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="女"/>
+            <column name="dict_value" value="1"/>
+            <column name="dict_type" value="sys_user_gender"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value=""/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="性别女"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000003"/>
+            <column name="dict_sort" valueNumeric="3"/>
+            <column name="dict_label" value="未知"/>
+            <column name="dict_value" value="2"/>
+            <column name="dict_type" value="sys_user_gender"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value=""/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="性别未知"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000004"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="显示"/>
+            <column name="dict_value" value="0"/>
+            <column name="dict_type" value="sys_show_hide"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="primary"/>
+            <column name="is_default" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="显示菜单"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000005"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="隐藏"/>
+            <column name="dict_value" value="1"/>
+            <column name="dict_type" value="sys_show_hide"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="danger"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="隐藏菜单"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000006"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="正常"/>
+            <column name="dict_value" value="0"/>
+            <column name="dict_type" value="sys_normal_disable"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="primary"/>
+            <column name="is_default" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="正常状态"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000007"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="停用"/>
+            <column name="dict_value" value="1"/>
+            <column name="dict_type" value="sys_normal_disable"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="danger"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="停用状态"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000012"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="是"/>
+            <column name="dict_value" value="Y"/>
+            <column name="dict_type" value="sys_yes_no"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="primary"/>
+            <column name="is_default" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="系统默认是"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000013"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="否"/>
+            <column name="dict_value" value="N"/>
+            <column name="dict_type" value="sys_yes_no"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="danger"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="系统默认否"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000014"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="通知"/>
+            <column name="dict_value" value="1"/>
+            <column name="dict_type" value="sys_notice_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="warning"/>
+            <column name="is_default" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="通知"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000015"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="公告"/>
+            <column name="dict_value" value="2"/>
+            <column name="dict_type" value="sys_notice_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="success"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="公告"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000016"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="正常"/>
+            <column name="dict_value" value="0"/>
+            <column name="dict_type" value="sys_notice_status"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="primary"/>
+            <column name="is_default" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="正常状态"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000017"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="关闭"/>
+            <column name="dict_value" value="1"/>
+            <column name="dict_type" value="sys_notice_status"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="danger"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="关闭状态"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000029"/>
+            <column name="dict_sort" valueNumeric="99"/>
+            <column name="dict_label" value="其他"/>
+            <column name="dict_value" value="0"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="info"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="其他操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000018"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="新增"/>
+            <column name="dict_value" value="1"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="info"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="新增操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000019"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="修改"/>
+            <column name="dict_value" value="2"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="info"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="修改操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000020"/>
+            <column name="dict_sort" valueNumeric="3"/>
+            <column name="dict_label" value="删除"/>
+            <column name="dict_value" value="3"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="danger"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="删除操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000021"/>
+            <column name="dict_sort" valueNumeric="4"/>
+            <column name="dict_label" value="授权"/>
+            <column name="dict_value" value="4"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="primary"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="授权操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000022"/>
+            <column name="dict_sort" valueNumeric="5"/>
+            <column name="dict_label" value="导出"/>
+            <column name="dict_value" value="5"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="warning"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="导出操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000023"/>
+            <column name="dict_sort" valueNumeric="6"/>
+            <column name="dict_label" value="导入"/>
+            <column name="dict_value" value="6"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="warning"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="导入操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000024"/>
+            <column name="dict_sort" valueNumeric="7"/>
+            <column name="dict_label" value="强退"/>
+            <column name="dict_value" value="7"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="danger"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="强退操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000025"/>
+            <column name="dict_sort" valueNumeric="8"/>
+            <column name="dict_label" value="生成代码"/>
+            <column name="dict_value" value="8"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="warning"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="生成操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000026"/>
+            <column name="dict_sort" valueNumeric="9"/>
+            <column name="dict_label" value="清空数据"/>
+            <column name="dict_value" value="9"/>
+            <column name="dict_type" value="sys_oper_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="danger"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="清空操作"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000027"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="成功"/>
+            <column name="dict_value" value="0"/>
+            <column name="dict_type" value="sys_common_status"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="primary"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="正常状态"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000028"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="失败"/>
+            <column name="dict_value" value="1"/>
+            <column name="dict_type" value="sys_common_status"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="danger"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="停用状态"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000030"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="密码认证"/>
+            <column name="dict_value" value="password"/>
+            <column name="dict_type" value="sys_grant_type"/>
+            <column name="css_class" value="el-check-tag"/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="密码认证"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000031"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="短信认证"/>
+            <column name="dict_value" value="sms"/>
+            <column name="dict_type" value="sys_grant_type"/>
+            <column name="css_class" value="el-check-tag"/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="短信认证"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000032"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="邮件认证"/>
+            <column name="dict_value" value="email"/>
+            <column name="dict_type" value="sys_grant_type"/>
+            <column name="css_class" value="el-check-tag"/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="邮件认证"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000033"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="小程序认证"/>
+            <column name="dict_value" value="xcx"/>
+            <column name="dict_type" value="sys_grant_type"/>
+            <column name="css_class" value="el-check-tag"/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="小程序认证"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000034"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="三方登录认证"/>
+            <column name="dict_value" value="social"/>
+            <column name="dict_type" value="sys_grant_type"/>
+            <column name="css_class" value="el-check-tag"/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="三方登录认证"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000035"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="PC"/>
+            <column name="dict_value" value="pc"/>
+            <column name="dict_type" value="sys_device_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="PC"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000036"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="安卓"/>
+            <column name="dict_value" value="android"/>
+            <column name="dict_type" value="sys_device_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="安卓"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000037"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="iOS"/>
+            <column name="dict_value" value="ios"/>
+            <column name="dict_type" value="sys_device_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="iOS"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000000038"/>
+            <column name="dict_sort" valueNumeric="0"/>
+            <column name="dict_label" value="小程序"/>
+            <column name="dict_value" value="xcx"/>
+            <column name="dict_type" value="sys_device_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="default"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="小程序"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

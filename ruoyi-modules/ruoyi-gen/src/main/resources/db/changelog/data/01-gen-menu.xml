@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!--
+        gen 菜单数据，抽取自 script/sql/ry_vue.sql sys_menu 初始化数据（源 228/230/304-309 行）。
+        menu_id 清单：1761400000000000115、1761400000000000116、1761400000000001055 ~ 1761400000000001060，共 8 条。
+        说明：源文件 sys_role_menu 全部 91 条 insert 中无任何 menu_id 属于上述 gen 菜单，
+        故未生成 changeset 20261005-62-gen-role-menu-data（Liquibase 空 changeset 会校验失败）。
+    -->
+    <changeSet id="20261005-61-gen-menu-data" author="zhiku">
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000115"/>
+            <column name="menu_name" value="代码生成"/>
+            <column name="parent_id" valueNumeric="1761400000000000003"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="gen"/>
+            <column name="component" value="tool/gen/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="tool:gen:list"/>
+            <column name="icon" value="code"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="代码生成菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000116"/>
+            <column name="menu_name" value="修改生成配置"/>
+            <column name="parent_id" valueNumeric="1761400000000000003"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="gen-edit/index/:tableId"/>
+            <column name="component" value="tool/gen/editTable"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="N"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="1"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="tool:gen:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value="/tool/gen"/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001055"/>
+            <column name="menu_name" value="生成查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000115"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="tool:gen:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001056"/>
+            <column name="menu_name" value="生成修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000115"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="tool:gen:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001057"/>
+            <column name="menu_name" value="生成删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000115"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="tool:gen:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001058"/>
+            <column name="menu_name" value="导入代码"/>
+            <column name="parent_id" valueNumeric="1761400000000000115"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="tool:gen:import"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001059"/>
+            <column name="menu_name" value="预览代码"/>
+            <column name="parent_id" valueNumeric="1761400000000000115"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="tool:gen:preview"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001060"/>
+            <column name="menu_name" value="生成代码"/>
+            <column name="parent_id" valueNumeric="1761400000000000115"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="tool:gen:code"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

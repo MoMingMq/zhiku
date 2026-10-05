@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-01-sys-social" author="zhiku">
+        <createTable tableName="sys_social" remarks="社会化关系表">
+            <column name="id" type="bigint" remarks="主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint" remarks="用户ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="auth_id" type="varchar(255)" remarks="平台+平台唯一id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source" type="varchar(255)" remarks="用户来源">
+                <constraints nullable="false"/>
+            </column>
+            <column name="open_id" type="varchar(255)" remarks="平台编号唯一id"/>
+            <column name="user_name" type="varchar(30)" remarks="登录账号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nick_name" type="varchar(30)" remarks="用户昵称" defaultValue=""/>
+            <column name="email" type="varchar(255)" remarks="用户邮箱" defaultValue=""/>
+            <column name="avatar" type="varchar(500)" remarks="头像地址" defaultValue=""/>
+            <column name="access_token" type="varchar(2000)" remarks="用户的授权令牌">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expire_in" type="int" remarks="用户的授权令牌的有效期，部分平台可能没有"/>
+            <column name="refresh_token" type="varchar(2000)" remarks="刷新令牌，部分平台可能没有"/>
+            <column name="access_code" type="varchar(255)" remarks="平台的授权信息，部分平台可能没有"/>
+            <column name="union_id" type="varchar(255)" remarks="用户的 unionid"/>
+            <column name="scope" type="varchar(255)" remarks="授予的权限，部分平台可能没有"/>
+            <column name="token_type" type="varchar(255)" remarks="个别平台的授权信息，部分平台可能没有"/>
+            <column name="id_token" type="varchar(2000)" remarks="id token，部分平台可能没有"/>
+            <column name="mac_algorithm" type="varchar(255)" remarks="小米平台用户的附带属性，部分平台可能没有"/>
+            <column name="mac_key" type="varchar(255)" remarks="小米平台用户的附带属性，部分平台可能没有"/>
+            <column name="code" type="varchar(255)" remarks="用户的授权code，部分平台可能没有"/>
+            <column name="oauth_token" type="varchar(255)" remarks="Twitter平台用户的附带属性，部分平台可能没有"/>
+            <column name="oauth_token_secret" type="varchar(255)" remarks="Twitter平台用户的附带属性，部分平台可能没有"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="del_flag" type="char(1)" remarks="删除标志（0代表存在 1代表删除）" defaultValue="0"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

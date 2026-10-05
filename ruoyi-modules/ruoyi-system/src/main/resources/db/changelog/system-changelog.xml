@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <include file="db/changelog/schema/01-sys-social.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/schema/02-sys-org.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/schema/03-sys-menu.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/schema/04-sys-ops.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/schema/05-sys-dict.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/schema/06-sys-oss.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/data/01-org-data.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/data/02-menu-data.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/data/03-dict-data.xml" relativeToChangelogFile="true"/>
+    <include file="db/changelog/data/04-config-data.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

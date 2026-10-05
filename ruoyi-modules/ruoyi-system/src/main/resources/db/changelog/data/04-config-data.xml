@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-60-sys-config-data" author="zhiku">
+        <insert tableName="sys_config">
+            <column name="config_id" valueNumeric="1761700000000000001"/>
+            <column name="config_name" value="用户管理-账号初始密码"/>
+            <column name="config_key" value="sys.user.initPassword"/>
+            <column name="config_value" value="123456"/>
+            <column name="config_type" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="初始化密码 123456"/>
+        </insert>
+        <insert tableName="sys_config">
+            <column name="config_id" valueNumeric="1761700000000000002"/>
+            <column name="config_name" value="账号自助-是否开启用户注册功能"/>
+            <column name="config_key" value="sys.account.registerUser"/>
+            <column name="config_value" value="false"/>
+            <column name="config_type" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="是否开启注册用户功能（true开启，false关闭）"/>
+        </insert>
+        <insert tableName="sys_config">
+            <column name="config_id" valueNumeric="1761700000000000003"/>
+            <column name="config_name" value="OSS预览列表资源开关"/>
+            <column name="config_key" value="sys.oss.previewListResource"/>
+            <column name="config_value" value="true"/>
+            <column name="config_type" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="true:开启, false:关闭"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20261005-61-sys-notice-data" author="zhiku">
+        <insert tableName="sys_notice">
+            <column name="notice_id" valueNumeric="1761800000000000001"/>
+            <column name="notice_title" value="温馨提醒：2018-07-01 新版本发布啦"/>
+            <column name="notice_type" value="2"/>
+            <column name="notice_content" value="新版本内容"/>
+            <column name="status" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="管理员"/>
+        </insert>
+        <insert tableName="sys_notice">
+            <column name="notice_id" valueNumeric="1761800000000000002"/>
+            <column name="notice_title" value="维护通知：2018-07-01 系统凌晨维护"/>
+            <column name="notice_type" value="1"/>
+            <column name="notice_content" value="维护内容"/>
+            <column name="status" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="管理员"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20261005-62-sys-client-data" author="zhiku">
+        <insert tableName="sys_client">
+            <column name="id" valueNumeric="1762000000000000001"/>
+            <column name="client_id" value="e5cd7e4891bf95d1d19206ce24a7b32e"/>
+            <column name="client_key" value="pc"/>
+            <column name="client_secret" value="pc123"/>
+            <column name="grant_type" value="password,social"/>
+            <column name="device_type" value="pc"/>
+            <column name="active_timeout" valueNumeric="1800"/>
+            <column name="timeout" valueNumeric="604800"/>
+            <column name="status" value="0"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="sys_client">
+            <column name="id" valueNumeric="1762000000000000002"/>
+            <column name="client_id" value="428a8310cd442757ae699df5d894f051"/>
+            <column name="client_key" value="app"/>
+            <column name="client_secret" value="app123"/>
+            <column name="grant_type" value="password,sms,social"/>
+            <column name="device_type" value="android"/>
+            <column name="access_path" value="/app/**"/>
+            <column name="active_timeout" valueNumeric="1800"/>
+            <column name="timeout" valueNumeric="604800"/>
+            <column name="status" value="0"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20261005-63-sys-oss-config-data" author="zhiku">
+        <insert tableName="sys_oss_config">
+            <column name="oss_config_id" valueNumeric="1761900000000000001"/>
+            <column name="config_key" value="minio"/>
+            <column name="access_key" value="ruoyi"/>
+            <column name="secret_key" value="ruoyi123"/>
+            <column name="bucket_name" value="ruoyi"/>
+            <column name="prefix" value=""/>
+            <column name="endpoint" value="127.0.0.1:9000"/>
+            <column name="domain_url" value=""/>
+            <column name="is_https" value="N"/>
+            <column name="region" value=""/>
+            <column name="access_policy" value="1"/>
+            <column name="status" value="Y"/>
+            <column name="ext1" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="sys_oss_config">
+            <column name="oss_config_id" valueNumeric="1761900000000000002"/>
+            <column name="config_key" value="qiniu"/>
+            <column name="access_key" value="XXXXXXXXXXXXXXX"/>
+            <column name="secret_key" value="XXXXXXXXXXXXXXX"/>
+            <column name="bucket_name" value="ruoyi"/>
+            <column name="prefix" value=""/>
+            <column name="endpoint" value="s3-cn-north-1.qiniucs.com"/>
+            <column name="domain_url" value=""/>
+            <column name="is_https" value="N"/>
+            <column name="region" value=""/>
+            <column name="access_policy" value="1"/>
+            <column name="status" value="N"/>
+            <column name="ext1" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="sys_oss_config">
+            <column name="oss_config_id" valueNumeric="1761900000000000003"/>
+            <column name="config_key" value="aliyun"/>
+            <column name="access_key" value="XXXXXXXXXXXXXXX"/>
+            <column name="secret_key" value="XXXXXXXXXXXXXXX"/>
+            <column name="bucket_name" value="ruoyi"/>
+            <column name="prefix" value=""/>
+            <column name="endpoint" value="oss-cn-beijing.aliyuncs.com"/>
+            <column name="domain_url" value=""/>
+            <column name="is_https" value="N"/>
+            <column name="region" value=""/>
+            <column name="access_policy" value="1"/>
+            <column name="status" value="N"/>
+            <column name="ext1" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="sys_oss_config">
+            <column name="oss_config_id" valueNumeric="1761900000000000004"/>
+            <column name="config_key" value="qcloud"/>
+            <column name="access_key" value="XXXXXXXXXXXXXXX"/>
+            <column name="secret_key" value="XXXXXXXXXXXXXXX"/>
+            <column name="bucket_name" value="ruoyi-1240000000"/>
+            <column name="prefix" value=""/>
+            <column name="endpoint" value="cos.ap-beijing.myqcloud.com"/>
+            <column name="domain_url" value=""/>
+            <column name="is_https" value="N"/>
+            <column name="region" value="ap-beijing"/>
+            <column name="access_policy" value="1"/>
+            <column name="status" value="N"/>
+            <column name="ext1" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="sys_oss_config">
+            <column name="oss_config_id" valueNumeric="1761900000000000005"/>
+            <column name="config_key" value="image"/>
+            <column name="access_key" value="ruoyi"/>
+            <column name="secret_key" value="ruoyi123"/>
+            <column name="bucket_name" value="ruoyi"/>
+            <column name="prefix" value="image"/>
+            <column name="endpoint" value="127.0.0.1:9000"/>
+            <column name="domain_url" value=""/>
+            <column name="is_https" value="N"/>
+            <column name="region" value=""/>
+            <column name="access_policy" value="1"/>
+            <column name="status" value="N"/>
+            <column name="ext1" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-11-sys-oper-log" author="zhiku">
+        <createTable tableName="sys_oper_log" remarks="操作日志记录">
+            <column name="oper_id" type="bigint" remarks="日志主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(50)" remarks="模块标题" defaultValue=""/>
+            <column name="business_type" type="int" remarks="业务类型（0其它 1新增 2修改 3删除）" defaultValueNumeric="0"/>
+            <column name="method" type="varchar(100)" remarks="方法名称" defaultValue=""/>
+            <column name="request_method" type="varchar(10)" remarks="请求方式" defaultValue=""/>
+            <column name="operator_type" type="int" remarks="操作类别（0其它 1后台用户 2手机端用户）" defaultValueNumeric="0"/>
+            <column name="oper_name" type="varchar(50)" remarks="操作人员" defaultValue=""/>
+            <column name="user_id" type="bigint" remarks="操作用户ID"/>
+            <column name="dept_id" type="bigint" remarks="操作部门ID"/>
+            <column name="dept_name" type="varchar(50)" remarks="部门名称" defaultValue=""/>
+            <column name="client_key" type="varchar(32)" remarks="客户端" defaultValue=""/>
+            <column name="device_type" type="varchar(32)" remarks="设备类型" defaultValue=""/>
+            <column name="browser" type="varchar(50)" remarks="浏览器类型" defaultValue=""/>
+            <column name="os" type="varchar(50)" remarks="操作系统" defaultValue=""/>
+            <column name="oper_url" type="varchar(255)" remarks="请求URL" defaultValue=""/>
+            <column name="oper_ip" type="varchar(128)" remarks="主机地址" defaultValue=""/>
+            <column name="oper_location" type="varchar(255)" remarks="操作地点" defaultValue=""/>
+            <column name="oper_param" type="varchar(4000)" remarks="请求参数" defaultValue=""/>
+            <column name="json_result" type="varchar(4000)" remarks="返回参数" defaultValue=""/>
+            <column name="status" type="int" remarks="操作状态（0正常 1异常）" defaultValueNumeric="0"/>
+            <column name="error_msg" type="varchar(4000)" remarks="错误消息" defaultValue=""/>
+            <column name="oper_time" type="datetime" remarks="操作时间"/>
+            <column name="cost_time" type="bigint" remarks="消耗时间" defaultValueNumeric="0"/>
+        </createTable>
+        <createIndex indexName="idx_sys_oper_log_bt" tableName="sys_oper_log">
+            <column name="business_type"/>
+        </createIndex>
+        <createIndex indexName="idx_sys_oper_log_uid" tableName="sys_oper_log">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex indexName="idx_sys_oper_log_s" tableName="sys_oper_log">
+            <column name="status"/>
+        </createIndex>
+        <createIndex indexName="idx_sys_oper_log_ot" tableName="sys_oper_log">
+            <column name="oper_time"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-14-sys-config" author="zhiku">
+        <createTable tableName="sys_config" remarks="参数配置表">
+            <column name="config_id" type="bigint" remarks="参数主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="config_name" type="varchar(100)" remarks="参数名称" defaultValue=""/>
+            <column name="config_key" type="varchar(100)" remarks="参数键名" defaultValue=""/>
+            <column name="config_value" type="varchar(500)" remarks="参数键值" defaultValue=""/>
+            <column name="config_type" type="char(1)" remarks="系统内置（Y是 N否）" defaultValue="N"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-15-sys-login-info" author="zhiku">
+        <createTable tableName="sys_login_info" remarks="系统访问记录">
+            <column name="info_id" type="bigint" remarks="访问ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_name" type="varchar(50)" remarks="用户账号" defaultValue=""/>
+            <column name="client_key" type="varchar(32)" remarks="客户端" defaultValue=""/>
+            <column name="device_type" type="varchar(32)" remarks="设备类型" defaultValue=""/>
+            <column name="ipaddr" type="varchar(128)" remarks="登录IP地址" defaultValue=""/>
+            <column name="login_location" type="varchar(255)" remarks="登录地点" defaultValue=""/>
+            <column name="browser" type="varchar(50)" remarks="浏览器类型" defaultValue=""/>
+            <column name="os" type="varchar(50)" remarks="操作系统" defaultValue=""/>
+            <column name="status" type="char(1)" remarks="登录状态（0正常 1异常）" defaultValue="0"/>
+            <column name="msg" type="varchar(255)" remarks="提示消息" defaultValue=""/>
+            <column name="login_time" type="datetime" remarks="访问时间"/>
+        </createTable>
+        <createIndex indexName="idx_sys_login_info_s" tableName="sys_login_info">
+            <column name="status"/>
+        </createIndex>
+        <createIndex indexName="idx_sys_login_info_lt" tableName="sys_login_info">
+            <column name="login_time"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-16-sys-notice" author="zhiku">
+        <createTable tableName="sys_notice" remarks="通知公告表">
+            <column name="notice_id" type="bigint" remarks="公告ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="notice_title" type="varchar(50)" remarks="公告标题">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notice_type" type="char(1)" remarks="公告类型（1通知 2公告）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="notice_content" type="blob" remarks="公告内容"/>
+            <column name="status" type="char(1)" remarks="公告状态（0正常 1关闭）" defaultValue="0"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(255)" remarks="备注"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-17-sys-message" author="zhiku">
+        <createTable tableName="sys_message" remarks="消息记录表">
+            <column name="message_id" type="bigint" remarks="消息ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="category" type="varchar(20)" remarks="消息分组(system/notice/workflow)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(20)" remarks="消息类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="source" type="varchar(20)" remarks="消息来源">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(100)" remarks="标题" defaultValue=""/>
+            <column name="message" type="varchar(500)" remarks="摘要消息" defaultValue=""/>
+            <column name="content" type="clob" remarks="详细内容"/>
+            <column name="data_json" type="clob" remarks="扩展数据JSON"/>
+            <column name="path" type="varchar(500)" remarks="前端跳转路径"/>
+            <column name="send_user_ids" type="varchar(2000)" remarks="目标用户ID串，0表示全局" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+        <createIndex indexName="idx_sys_message_category_time" tableName="sys_message">
+            <column name="category"/>
+            <column name="create_time"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-20-sys-client" author="zhiku">
+        <createTable tableName="sys_client" remarks="系统授权表">
+            <column name="id" type="bigint" remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="client_id" type="varchar(64)" remarks="客户端id"/>
+            <column name="client_key" type="varchar(32)" remarks="客户端key"/>
+            <column name="client_secret" type="varchar(255)" remarks="客户端秘钥"/>
+            <column name="grant_type" type="varchar(255)" remarks="授权类型"/>
+            <column name="device_type" type="varchar(32)" remarks="设备类型"/>
+            <column name="access_path" type="varchar(2000)" remarks="允许访问路径"/>
+            <column name="ip_whitelist" type="varchar(1000)" remarks="IP白名单"/>
+            <column name="active_timeout" type="int" remarks="token活跃超时时间" defaultValueNumeric="1800"/>
+            <column name="timeout" type="int" remarks="token固定超时" defaultValueNumeric="604800"/>
+            <column name="status" type="char(1)" remarks="状态（0正常 1停用）" defaultValue="0"/>
+            <column name="del_flag" type="char(1)" remarks="删除标志（0代表存在 1代表删除）" defaultValue="0"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

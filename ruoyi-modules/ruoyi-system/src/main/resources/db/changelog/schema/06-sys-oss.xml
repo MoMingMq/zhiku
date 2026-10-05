@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-18-sys-oss" author="zhiku">
+        <createTable tableName="sys_oss" remarks="OSS对象存储表">
+            <column name="oss_id" type="bigint" remarks="对象存储主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="file_name" type="varchar(255)" remarks="文件名" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+            <column name="original_name" type="varchar(255)" remarks="原名" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_suffix" type="varchar(10)" remarks="文件后缀名" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="varchar(500)" remarks="URL地址">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ext1" type="text" remarks="扩展字段"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="create_by" type="bigint" remarks="上传人"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="update_by" type="bigint" remarks="更新人"/>
+            <column name="service" type="varchar(20)" remarks="服务商" defaultValue="minio">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-19-sys-oss-config" author="zhiku">
+        <createTable tableName="sys_oss_config" remarks="对象存储配置表">
+            <column name="oss_config_id" type="bigint" remarks="主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="config_key" type="varchar(20)" remarks="配置key" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+            <column name="access_key" type="varchar(255)" remarks="accessKey" defaultValue=""/>
+            <column name="secret_key" type="varchar(255)" remarks="秘钥" defaultValue=""/>
+            <column name="bucket_name" type="varchar(255)" remarks="桶名称" defaultValue=""/>
+            <column name="prefix" type="varchar(255)" remarks="前缀" defaultValue=""/>
+            <column name="endpoint" type="varchar(255)" remarks="访问站点" defaultValue=""/>
+            <column name="domain_url" type="varchar(255)" remarks="自定义域名" defaultValue=""/>
+            <column name="is_https" type="char(1)" remarks="是否https（Y=是,N=否）" defaultValue="N"/>
+            <column name="region" type="varchar(255)" remarks="域" defaultValue=""/>
+            <column name="access_policy" type="char(1)" remarks="桶权限类型(0=private 1=public 2=custom)" defaultValue="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="char(1)" remarks="是否默认（Y=是,N=否）" defaultValue="N"/>
+            <column name="ext1" type="varchar(255)" remarks="扩展字段" defaultValue=""/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

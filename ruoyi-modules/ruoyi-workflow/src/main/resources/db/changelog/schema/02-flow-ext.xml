@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-38-flow-category" author="zhiku">
+        <createTable tableName="flow_category" remarks="流程分类">
+            <column name="category_id" type="bigint" remarks="流程分类ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="parent_id" type="bigint" defaultValueNumeric="0" remarks="父流程分类id"/>
+            <column name="ancestors" type="varchar(500)" defaultValue="" remarks="祖级列表"/>
+            <column name="category_name" type="varchar(30)" remarks="流程分类名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_num" type="int" defaultValueNumeric="0" remarks="显示顺序"/>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志（0代表存在 1代表删除）"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-39-flow-spel" author="zhiku">
+        <createTable tableName="flow_spel" remarks="流程spel表达式定义表">
+            <column name="id" type="bigint" remarks="主键id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="component_name" type="varchar(255)" remarks="组件名称"/>
+            <column name="method_name" type="varchar(255)" remarks="方法名"/>
+            <column name="method_params" type="varchar(255)" remarks="参数"/>
+            <column name="view_spel" type="varchar(255)" remarks="预览spel表达式"/>
+            <column name="remark" type="varchar(255)" remarks="备注"/>
+            <column name="status" type="char(1)" defaultValue="0" remarks="状态（0正常 1停用）"/>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-40-flow-instance-biz-ext" author="zhiku">
+        <createTable tableName="flow_instance_biz_ext" remarks="流程实例业务扩展表">
+            <column name="id" type="bigint" remarks="主键id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="business_code" type="varchar(255)" remarks="业务编码"/>
+            <column name="business_title" type="varchar(1000)" remarks="业务标题"/>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志（0代表存在 1代表删除）"/>
+            <column name="instance_id" type="bigint" remarks="流程实例Id"/>
+            <column name="business_id" type="varchar(255)" remarks="业务Id"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-41-test-leave" author="zhiku">
+        <createTable tableName="test_leave" remarks="请假申请表">
+            <column name="id" type="bigint" remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="apply_code" type="varchar(50)" remarks="申请编号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="leave_type" type="varchar(255)" remarks="请假类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="start_date" type="datetime" remarks="开始时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="datetime" remarks="结束时间">
+                <constraints nullable="false"/>
+            </column>
+            <column name="leave_days" type="int" remarks="请假天数">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remark" type="varchar(255)" remarks="请假原因"/>
+            <column name="status" type="varchar(255)" remarks="状态"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

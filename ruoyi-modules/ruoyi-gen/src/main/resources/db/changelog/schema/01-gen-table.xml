@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-21-gen-table" author="zhiku">
+        <createTable tableName="gen_table" remarks="代码生成业务表">
+            <column name="table_id" type="bigint" remarks="编号">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="data_name" type="varchar(200)" defaultValue="" remarks="数据源名称"/>
+            <column name="table_name" type="varchar(200)" defaultValue="" remarks="表名称"/>
+            <column name="table_comment" type="varchar(500)" defaultValue="" remarks="表描述"/>
+            <column name="class_name" type="varchar(100)" defaultValue="" remarks="实体类名称"/>
+            <column name="tpl_category" type="varchar(200)" defaultValue="crud" remarks="使用的模板（crud单表操作 tree树表操作）"/>
+            <column name="frontend_type" type="varchar(50)" defaultValue="vue" remarks="前端模板类型，对应 vm 下的模板目录"/>
+            <column name="package_name" type="varchar(100)" remarks="生成包路径"/>
+            <column name="module_name" type="varchar(30)" remarks="生成模块名"/>
+            <column name="business_name" type="varchar(30)" remarks="生成业务名"/>
+            <column name="function_name" type="varchar(50)" remarks="生成功能名"/>
+            <column name="function_author" type="varchar(50)" remarks="生成功能作者"/>
+            <column name="gen_type" type="char(1)" defaultValue="0" remarks="生成代码方式（0zip压缩包 1自定义路径）"/>
+            <column name="gen_path" type="varchar(200)" defaultValue="/" remarks="生成路径（不填默认项目路径）"/>
+            <column name="options" type="varchar(1000)" remarks="其它生成选项"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-22-gen-table-column" author="zhiku">
+        <createTable tableName="gen_table_column" remarks="代码生成业务表字段">
+            <column name="column_id" type="bigint" remarks="编号">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="table_id" type="bigint" remarks="归属表编号"/>
+            <column name="column_name" type="varchar(200)" remarks="列名称"/>
+            <column name="column_comment" type="varchar(500)" remarks="列描述"/>
+            <column name="column_type" type="varchar(100)" remarks="列类型"/>
+            <column name="java_type" type="varchar(500)" remarks="JAVA类型"/>
+            <column name="java_field" type="varchar(200)" remarks="JAVA字段名"/>
+            <column name="is_pk" type="char(1)" remarks="是否主键（1是）"/>
+            <column name="is_increment" type="char(1)" remarks="是否自增（1是）"/>
+            <column name="is_required" type="char(1)" remarks="是否必填（1是）"/>
+            <column name="is_insert" type="char(1)" remarks="是否为插入字段（1是）"/>
+            <column name="is_edit" type="char(1)" remarks="是否编辑字段（1是）"/>
+            <column name="is_list" type="char(1)" remarks="是否列表字段（1是）"/>
+            <column name="is_query" type="char(1)" remarks="是否查询字段（1是）"/>
+            <column name="query_type" type="varchar(200)" defaultValue="EQ" remarks="查询方式（等于、不等于、大于、小于、范围）"/>
+            <column name="html_type" type="varchar(200)" remarks="显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）"/>
+            <column name="dict_type" type="varchar(200)" defaultValue="" remarks="字典类型"/>
+            <column name="sort" type="int" remarks="排序"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

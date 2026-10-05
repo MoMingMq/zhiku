@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-02-sys-dept" author="zhiku">
+        <createTable tableName="sys_dept" remarks="部门表">
+            <column name="dept_id" type="bigint" remarks="部门id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="parent_id" type="bigint" remarks="父部门id" defaultValueNumeric="0"/>
+            <column name="ancestors" type="varchar(500)" remarks="祖级列表" defaultValue=""/>
+            <column name="dept_name" type="varchar(30)" remarks="部门名称" defaultValue=""/>
+            <column name="dept_category" type="varchar(100)" remarks="部门类别编码"/>
+            <column name="order_num" type="int" remarks="显示顺序" defaultValueNumeric="0"/>
+            <column name="leader" type="bigint" remarks="负责人"/>
+            <column name="phone" type="varchar(11)" remarks="联系电话"/>
+            <column name="email" type="varchar(50)" remarks="邮箱"/>
+            <column name="status" type="char(1)" remarks="部门状态（0正常 1停用）" defaultValue="0"/>
+            <column name="del_flag" type="char(1)" remarks="删除标志（0代表存在 1代表删除）" defaultValue="0"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+        <createIndex indexName="idx_sys_dept_parent_id" tableName="sys_dept">
+            <column name="parent_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-03-sys-user" author="zhiku">
+        <createTable tableName="sys_user" remarks="用户信息表">
+            <column name="user_id" type="bigint" remarks="用户ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dept_id" type="bigint" remarks="部门ID"/>
+            <column name="user_name" type="varchar(30)" remarks="用户账号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nick_name" type="varchar(30)" remarks="用户昵称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_type" type="varchar(10)" remarks="用户类型（sys_user系统用户）" defaultValue="sys_user"/>
+            <column name="email" type="varchar(50)" remarks="用户邮箱" defaultValue=""/>
+            <column name="phone_number" type="varchar(11)" remarks="手机号码" defaultValue=""/>
+            <column name="gender" type="char(1)" remarks="用户性别（0男 1女 2未知）" defaultValue="0"/>
+            <column name="avatar" type="bigint" remarks="头像地址"/>
+            <column name="password" type="varchar(100)" remarks="密码" defaultValue=""/>
+            <column name="status" type="char(1)" remarks="账号状态（0正常 1停用）" defaultValue="0"/>
+            <column name="del_flag" type="char(1)" remarks="删除标志（0代表存在 1代表删除）" defaultValue="0"/>
+            <column name="login_ip" type="varchar(128)" remarks="最后登录IP" defaultValue=""/>
+            <column name="login_date" type="datetime" remarks="最后登录时间"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注"/>
+        </createTable>
+        <createIndex indexName="idx_sys_user_dept_id" tableName="sys_user">
+            <column name="dept_id"/>
+        </createIndex>
+        <createIndex indexName="idx_sys_user_create_by" tableName="sys_user">
+            <column name="create_by"/>
+        </createIndex>
+        <createIndex indexName="idx_sys_user_user_name" tableName="sys_user">
+            <column name="user_name"/>
+        </createIndex>
+        <createIndex indexName="idx_sys_user_phone" tableName="sys_user">
+            <column name="phone_number"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-04-sys-post" author="zhiku">
+        <createTable tableName="sys_post" remarks="岗位信息表">
+            <column name="post_id" type="bigint" remarks="岗位ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dept_id" type="bigint" remarks="部门id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post_code" type="varchar(64)" remarks="岗位编码">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post_category" type="varchar(100)" remarks="岗位类别编码"/>
+            <column name="post_name" type="varchar(50)" remarks="岗位名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="post_sort" type="int" remarks="显示顺序">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="char(1)" remarks="状态（0正常 1停用）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="del_flag" type="char(1)" remarks="删除标志（0代表存在 1代表删除）" defaultValue="0"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注"/>
+        </createTable>
+        <createIndex indexName="idx_sys_post_dept_id" tableName="sys_post">
+            <column name="dept_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-05-sys-role" author="zhiku">
+        <createTable tableName="sys_role" remarks="角色信息表">
+            <column name="role_id" type="bigint" remarks="角色ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role_name" type="varchar(30)" remarks="角色名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_key" type="varchar(100)" remarks="角色权限字符串">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_sort" type="int" remarks="显示顺序">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_scope" type="char(1)" remarks="数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限 5：仅本人数据权限 6：部门及以下或本人数据权限）" defaultValue="1"/>
+            <column name="menu_check_strictly" type="tinyint" remarks="菜单树选择项是否关联显示" defaultValueNumeric="1"/>
+            <column name="dept_check_strictly" type="tinyint" remarks="部门树选择项是否关联显示" defaultValueNumeric="1"/>
+            <column name="status" type="char(1)" remarks="角色状态（0正常 1停用）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="del_flag" type="char(1)" remarks="删除标志（0代表存在 1代表删除）" defaultValue="0"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注"/>
+        </createTable>
+        <createIndex indexName="idx_sys_role_create_dept" tableName="sys_role">
+            <column name="create_dept"/>
+        </createIndex>
+        <createIndex indexName="idx_sys_role_create_by" tableName="sys_role">
+            <column name="create_by"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-07-sys-user-role" author="zhiku">
+        <createTable tableName="sys_user_role" remarks="用户和角色关联表">
+            <column name="user_id" type="bigint" remarks="用户ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role_id" type="bigint" remarks="角色ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex indexName="idx_sys_user_role_rid" tableName="sys_user_role">
+            <column name="role_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-10-sys-user-post" author="zhiku">
+        <createTable tableName="sys_user_post" remarks="用户与岗位关联表">
+            <column name="user_id" type="bigint" remarks="用户ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="post_id" type="bigint" remarks="岗位ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

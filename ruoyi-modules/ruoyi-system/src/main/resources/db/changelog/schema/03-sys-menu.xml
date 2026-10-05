@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-06-sys-menu" author="zhiku">
+        <createTable tableName="sys_menu" remarks="菜单权限表">
+            <column name="menu_id" type="bigint" remarks="菜单ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="menu_name" type="varchar(50)" remarks="菜单名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parent_id" type="bigint" remarks="父菜单ID" defaultValueNumeric="0"/>
+            <column name="order_num" type="int" remarks="显示顺序" defaultValueNumeric="0"/>
+            <column name="path" type="varchar(200)" remarks="路由地址" defaultValue=""/>
+            <column name="component" type="varchar(255)" remarks="组件路径"/>
+            <column name="query_param" type="varchar(255)" remarks="路由参数"/>
+            <column name="is_frame" type="char(1)" remarks="是否为外链（Y是 N否）" defaultValue="N"/>
+            <column name="is_cache" type="char(1)" remarks="是否缓存（Y缓存 N不缓存）" defaultValue="Y"/>
+            <column name="menu_type" type="char(1)" remarks="菜单类型（M目录 C菜单 F按钮）" defaultValue=""/>
+            <column name="visible" type="char(1)" remarks="显示状态（0显示 1隐藏）" defaultValue="0"/>
+            <column name="status" type="char(1)" remarks="菜单状态（0正常 1停用）" defaultValue="0"/>
+            <column name="perms" type="varchar(100)" remarks="权限标识"/>
+            <column name="icon" type="varchar(100)" remarks="菜单图标" defaultValue="#"/>
+            <column name="active_menu" type="varchar(255)" remarks="激活菜单路径" defaultValue=""/>
+            <column name="ext" type="varchar(2000)" remarks="扩展字段" defaultValue=""/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注" defaultValue=""/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-08-sys-role-menu" author="zhiku">
+        <createTable tableName="sys_role_menu" remarks="角色和菜单关联表">
+            <column name="role_id" type="bigint" remarks="角色ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="menu_id" type="bigint" remarks="菜单ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20261005-09-sys-role-dept" author="zhiku">
+        <createTable tableName="sys_role_dept" remarks="角色和部门关联表">
+            <column name="role_id" type="bigint" remarks="角色ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dept_id" type="bigint" remarks="部门ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-12-sys-dict-type" author="zhiku">
+        <createTable tableName="sys_dict_type" remarks="字典类型表">
+            <column name="dict_id" type="bigint" remarks="字典主键">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dict_name" type="varchar(100)" remarks="字典名称" defaultValue=""/>
+            <column name="dict_type" type="varchar(100)" remarks="字典类型" defaultValue=""/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注"/>
+        </createTable>
+        <addUniqueConstraint tableName="sys_dict_type" columnNames="dict_type"/>
+    </changeSet>
+
+    <changeSet id="20261005-13-sys-dict-data" author="zhiku">
+        <createTable tableName="sys_dict_data" remarks="字典数据表">
+            <column name="dict_code" type="bigint" remarks="字典编码">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dict_sort" type="int" remarks="字典排序" defaultValueNumeric="0"/>
+            <column name="dict_label" type="varchar(100)" remarks="字典标签" defaultValue=""/>
+            <column name="dict_value" type="varchar(100)" remarks="字典键值" defaultValue=""/>
+            <column name="dict_type" type="varchar(100)" remarks="字典类型" defaultValue=""/>
+            <column name="css_class" type="varchar(100)" remarks="样式属性（其他样式扩展）"/>
+            <column name="list_class" type="varchar(100)" remarks="表格回显样式"/>
+            <column name="is_default" type="char(1)" remarks="是否默认（Y是 N否）" defaultValue="N"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+            <column name="remark" type="varchar(500)" remarks="备注"/>
+        </createTable>
+        <createIndex indexName="idx_sys_dict_data_type" tableName="sys_dict_data">
+            <column name="dict_type"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-71-flow-category-data" author="zhiku">
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000100"/>
+            <column name="parent_id" valueNumeric="0"/>
+            <column name="ancestors" value="0"/>
+            <column name="category_name" value="OA审批"/>
+            <column name="order_num" valueNumeric="0"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000101"/>
+            <column name="parent_id" valueNumeric="1762300000000000100"/>
+            <column name="ancestors" value="0,1762300000000000100"/>
+            <column name="category_name" value="假勤管理"/>
+            <column name="order_num" valueNumeric="0"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000102"/>
+            <column name="parent_id" valueNumeric="1762300000000000100"/>
+            <column name="ancestors" value="0,1762300000000000100"/>
+            <column name="category_name" value="人事管理"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000103"/>
+            <column name="parent_id" valueNumeric="1762300000000000101"/>
+            <column name="ancestors" value="0,1762300000000000100,1762300000000000101"/>
+            <column name="category_name" value="请假"/>
+            <column name="order_num" valueNumeric="0"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000104"/>
+            <column name="parent_id" valueNumeric="1762300000000000101"/>
+            <column name="ancestors" value="0,1762300000000000100,1762300000000000101"/>
+            <column name="category_name" value="出差"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000105"/>
+            <column name="parent_id" valueNumeric="1762300000000000101"/>
+            <column name="ancestors" value="0,1762300000000000100,1762300000000000101"/>
+            <column name="category_name" value="加班"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000106"/>
+            <column name="parent_id" valueNumeric="1762300000000000101"/>
+            <column name="ancestors" value="0,1762300000000000100,1762300000000000101"/>
+            <column name="category_name" value="换班"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000107"/>
+            <column name="parent_id" valueNumeric="1762300000000000101"/>
+            <column name="ancestors" value="0,1762300000000000100,1762300000000000101"/>
+            <column name="category_name" value="外出"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000108"/>
+            <column name="parent_id" valueNumeric="1762300000000000102"/>
+            <column name="ancestors" value="0,1762300000000000100,1762300000000000102"/>
+            <column name="category_name" value="转正"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_category">
+            <column name="category_id" valueNumeric="1762300000000000109"/>
+            <column name="parent_id" valueNumeric="1762300000000000102"/>
+            <column name="ancestors" value="0,1762300000000000100,1762300000000000102"/>
+            <column name="category_name" value="离职"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20261005-72-flow-spel-data" author="zhiku">
+        <insert tableName="flow_spel">
+            <column name="id" valueNumeric="1762400000000000001"/>
+            <column name="component_name" value="spelRuleComponent"/>
+            <column name="method_name" value="selectDeptLeaderById"/>
+            <column name="method_params" value="initiatorDeptId"/>
+            <column name="view_spel" value="#{@spelRuleComponent.selectDeptLeaderById(#initiatorDeptId)}"/>
+            <column name="remark" value="根据部门id获取部门负责人"/>
+            <column name="status" value="0"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+        <insert tableName="flow_spel">
+            <column name="id" valueNumeric="1762400000000000002"/>
+            <column name="method_params" value="initiator"/>
+            <column name="view_spel" value="${initiator}"/>
+            <column name="remark" value="流程发起人"/>
+            <column name="status" value="0"/>
+            <column name="del_flag" value="0"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="update_by" valueNumeric="1761100000000000001"/>
+            <column name="update_time" valueComputed="CURRENT_TIMESTAMP"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
