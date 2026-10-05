@@ -3,15 +3,31 @@ package org.zhiku.ai.knowledge.service;
 import org.zhiku.ai.knowledge.domain.vo.KbDocumentVo;
 import org.zhiku.common.core.domain.PageResult;
 import org.zhiku.common.mybatis.core.page.PageQuery;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 /**
- * 知识库文档Service接口（上传/重试/重切接口由 Task 12 的入库管线补充）
+ * 知识库文档Service接口
  *
  * @author zhiku
  */
 public interface IKbDocumentService {
+
+    /**
+     * 上传文档（存储→落库(状态0)→发入库事件异步处理）
+     */
+    Long upload(Long datasetId, MultipartFile file);
+
+    /**
+     * 重试失败文档（清旧产物→重新入库）
+     */
+    Boolean retry(Long documentId);
+
+    /**
+     * 重切文档（换分块策略后整文档重跑）
+     */
+    Boolean reingest(Long documentId);
 
     /**
      * 分页查询文档列表（左树：按知识库过滤）
