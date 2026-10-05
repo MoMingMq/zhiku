@@ -2,6 +2,7 @@ package org.zhiku.ai.model.service;
 
 import org.zhiku.ai.model.domain.bo.AiModelBo;
 import org.zhiku.ai.model.domain.vo.AiModelVo;
+import org.zhiku.ai.model.domain.vo.ModelParamDef;
 import org.zhiku.ai.model.domain.vo.ModelTestResult;
 import org.zhiku.common.mybatis.core.page.PageQuery;
 import org.zhiku.common.core.domain.PageResult;
@@ -53,8 +54,18 @@ public interface IAiModelService {
     ModelTestResult testConnection(Long modelId);
 
     /**
-     * 更新模型参数（Map 承载：参数名→默认值，应用侧按值类型动态生成控件；独立于编辑表单）
+     * 模型参数定义列表（含渲染组件元数据，应用侧按 inputType 动态渲染控件）
      */
-    Boolean updateModelParams(Long modelId, Map<String, Object> params);
+    List<ModelParamDef> queryParams(Long modelId);
+
+    /**
+     * 更新模型参数（Map 承载：参数定义列表，独立于编辑表单）
+     */
+    Boolean updateModelParams(Long modelId, List<ModelParamDef> params);
+
+    /**
+     * 参数名→默认值 Map（便捷出口，应用侧拉取配置用）
+     */
+    Map<String, Object> queryParamValues(Long modelId);
 
 }

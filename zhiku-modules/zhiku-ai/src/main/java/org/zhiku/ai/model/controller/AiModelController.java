@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.zhiku.ai.model.domain.bo.AiModelBo;
 import org.zhiku.ai.model.domain.vo.AiModelVo;
+import org.zhiku.ai.model.domain.vo.ModelParamDef;
 import org.zhiku.ai.model.domain.vo.ModelTestResult;
 import org.zhiku.ai.model.service.IAiModelService;
 import org.zhiku.common.core.domain.PageResult;
@@ -29,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * AI 模型配置
@@ -106,13 +106,22 @@ public class AiModelController extends BaseController {
     }
 
     /**
-     * 模型参数设置（Map 承载：参数名→默认值；应用侧按值类型动态生成调整控件）
+     * 模型参数定义列表（应用侧按 inputType 渲染组件）
+     */
+    @SaCheckPermission("ai:model:query")
+    @GetMapping("/{modelId}/params")
+    public R<List<ModelParamDef>> getParams(@NotNull @PathVariable Long modelId) {
+        return R.ok(modelService.queryParams(modelId));
+    }
+
+    /**
+     * 模型参数设置（参数定义含渲染组件元数据；独立于编辑表单）
      */
     @SaCheckPermission("ai:model:edit")
     @Log(title = "模型管理", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
     @PutMapping("/{modelId}/params")
-    public R<Void> updateParams(@NotNull @PathVariable Long modelId, @RequestBody Map<String, Object> params) {
+    public R<Void> updateParams(@NotNull @PathVariable Long modelId, @RequestBody List<ModelParamDef> params) {
         return toAjax(modelService.updateModelParams(modelId, params));
     }
 

@@ -10,8 +10,10 @@ import org.zhiku.ai.model.client.RerankClient;
 import org.zhiku.ai.model.domain.AiModel;
 import org.zhiku.ai.model.domain.bo.AiModelBo;
 import org.zhiku.ai.model.domain.vo.AiModelVo;
+import org.zhiku.ai.model.domain.vo.ModelParamDef;
 import org.zhiku.ai.model.domain.vo.ModelTestResult;
 import org.zhiku.ai.model.mapper.AiModelMapper;
+import org.zhiku.ai.model.provider.AiModelParamsHelper;
 import org.zhiku.ai.model.service.IAiModelService;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.zhiku.common.core.domain.PageResult;
@@ -139,17 +141,16 @@ public class AiModelServiceImpl implements IAiModelService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Boolean updateModelParams(Long modelId, Map<String, Object> params) {
+    public Boolean updateModelParams(Long modelId, List<ModelParamDef> params) {
         AiModel model = baseMapper.selectById(modelId);
         if (model == null) {
             throw new ServiceException("模型不存在：" + modelId);
         }
-        Map<String, Object> safeParams = params == null ? Map.of() : params;
-        safeParams.keySet().forEach(key -> {
-            if (StringUtils.isBlank(key)) {
-                throw new ServiceException("参数名不能为空");
-            }
-        });
+        List<ModelParamDef> safeParams = params == null ? List.of() : params;
+        List<String> errors = AiModelParamsHelper.validate(safeParams);
+        if (!errors.isEmpty()) {
+            throw new ServiceException(String.join("；", errors));
+        }
         LambdaUpdateWrapper<AiModel> luw = new LambdaUpdateWrapper<>();
         luw.eq(AiModel::getModelId, modelId)
             .set(AiModel::getParams, JsonUtils.toJsonString(safeParams));
@@ -158,6 +159,26 @@ public class AiModelServiceImpl implements IAiModelService {
             clientFactory.evict(modelId);
         }
         return ok;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ModelParamDef> queryParams(Long modelId) {
+        AiModel model = baseMapper.selectById(modelId);
+        if (model == null) {
+            throw new ServiceException("模型不存在：" + modelId);
+        }
+        return AiModelParamsHelper.parseDefs(model.getParams());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Object> queryParamValues(Long modelId) {
+        AiModel model = baseMapper.selectById(modelId);
+        if (model == null) {
+            throw new ServiceException("模型不存在：" + modelId);
+        }
+        return AiModelParamsHelper.toValueMap(model.getParams());
     }
 
     @Override

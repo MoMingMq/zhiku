@@ -163,18 +163,48 @@ class AiModelServiceTest {
     }
 
     @Test
-    void updateModelParamsBlankKeyThrows() {
+    void updateModelParamsBlankNameThrows() {
         when(baseMapper.selectById(1L)).thenReturn(new AiModel());
-        java.util.Map<String, Object> bad = new java.util.HashMap<>();
-        bad.put(" ", 1);
-        ServiceException ex = assertThrows(ServiceException.class, () -> service.updateModelParams(1L, bad));
+        org.zhiku.ai.model.domain.vo.ModelParamDef def = new org.zhiku.ai.model.domain.vo.ModelParamDef();
+        def.setName(" ");
+        def.setInputType("input");
+        ServiceException ex = assertThrows(ServiceException.class,
+            () -> service.updateModelParams(1L, java.util.List.of(def)));
         assertTrue(ex.getMessage().contains("参数名"));
+    }
+
+    @Test
+    void updateModelParamsDuplicateNameThrows() {
+        when(baseMapper.selectById(1L)).thenReturn(new AiModel());
+        org.zhiku.ai.model.domain.vo.ModelParamDef a = new org.zhiku.ai.model.domain.vo.ModelParamDef();
+        a.setName("temperature");
+        a.setInputType("slider");
+        a.setMin(0.0);
+        a.setMax(2.0);
+        org.zhiku.ai.model.domain.vo.ModelParamDef b = new org.zhiku.ai.model.domain.vo.ModelParamDef();
+        b.setName("temperature");
+        b.setInputType("input");
+        ServiceException ex = assertThrows(ServiceException.class,
+            () -> service.updateModelParams(1L, java.util.List.of(a, b)));
+        assertTrue(ex.getMessage().contains("重复"));
+    }
+
+    @Test
+    void updateModelParamsSliderWithoutRangeThrows() {
+        when(baseMapper.selectById(1L)).thenReturn(new AiModel());
+        org.zhiku.ai.model.domain.vo.ModelParamDef def = new org.zhiku.ai.model.domain.vo.ModelParamDef();
+        def.setName("temperature");
+        def.setInputType("slider");
+        ServiceException ex = assertThrows(ServiceException.class,
+            () -> service.updateModelParams(1L, java.util.List.of(def)));
+        assertTrue(ex.getMessage().contains("滑块"));
     }
 
     @Test
     void updateModelParamsMissingModelThrows() {
         when(baseMapper.selectById(9L)).thenReturn(null);
-        assertThrows(ServiceException.class, () -> service.updateModelParams(9L, java.util.Map.of("temperature", 0.5)));
+        assertThrows(ServiceException.class,
+            () -> service.updateModelParams(9L, java.util.List.of(new org.zhiku.ai.model.domain.vo.ModelParamDef())));
     }
 
     @Test
@@ -183,7 +213,12 @@ class AiModelServiceTest {
         model.setModelId(1L);
         when(baseMapper.selectById(1L)).thenReturn(model);
         when(baseMapper.update(isNull(), any())).thenReturn(1);
-        assertTrue(service.updateModelParams(1L, java.util.Map.of("temperature", 0.5, "enable_search", true)));
+        org.zhiku.ai.model.domain.vo.ModelParamDef def = new org.zhiku.ai.model.domain.vo.ModelParamDef();
+        def.setName("temperature");
+        def.setInputType("slider");
+        def.setMin(0.0);
+        def.setMax(2.0);
+        assertTrue(service.updateModelParams(1L, java.util.List.of(def)));
         verify(clientFactory).evict(1L);
     }
 
