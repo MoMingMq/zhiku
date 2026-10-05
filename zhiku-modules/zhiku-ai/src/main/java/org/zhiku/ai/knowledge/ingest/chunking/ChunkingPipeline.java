@@ -21,11 +21,36 @@ public class ChunkingPipeline {
     private final List<ChunkStage> stages;
 
     /**
-     * 执行分块：IR → 结构切分 →（语义档时）语义聚合 → 递归兜底
+     * 执行分块：IR → 结构切分 → 递归兜底（无语义档）
      */
     public List<ChunkDraft> run(DocumentIR ir, ChunkParams params) {
+        return run(ir, params, null);
+    }
+
+    /**
+     * 执行分块：IR → 结构切分 →（语义档且提供 embeddingFn 时）语义聚合 → 递归兜底
+     *
+     * @param embeddingFn 绑定知识库 embedding 模型的向量化函数（语义档必传）
+     */
+    public List<ChunkDraft> run(DocumentIR ir, ChunkParams params, SemanticAggregator.EmbeddingFn embeddingFn) {
         List<ChunkDraft> current = toDrafts(ir);
-        for (ChunkStage stage : stages) {
+        List<ChunkStage> active = new ArrayList<>(stages);
+        if (params.semanticEnabled() && embeddingFn != null) {
+            // 语义聚合非单例：运行时按 modelId 绑定构造，插在递归兜底（@Order(2)）之前
+            int fallbackIndex = -1;
+            for (int i = 0; i < active.size(); i++) {
+                if (active.get(i) instanceof RecursiveFallback) {
+                    fallbackIndex = i;
+                    break;
+                }
+            }
+            if (fallbackIndex >= 0) {
+                active.add(fallbackIndex, new SemanticAggregator(embeddingFn));
+            } else {
+                active.add(new SemanticAggregator(embeddingFn));
+            }
+        }
+        for (ChunkStage stage : active) {
             if (stage.supports(params)) {
                 current = stage.process(current, params);
             }

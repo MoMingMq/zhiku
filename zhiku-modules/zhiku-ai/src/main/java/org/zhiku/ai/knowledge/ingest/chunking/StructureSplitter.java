@@ -1,5 +1,6 @@
 package org.zhiku.ai.knowledge.ingest.chunking;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.List;
  *
  * @author zhiku
  */
+@Order(1)
 @Component
 public class StructureSplitter implements ChunkStage {
 
