@@ -23,6 +23,12 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
 
+        <!-- Liquibase 数据库自动初始化（版本由 spring-boot-dependencies BOM 管理） -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-liquibase</artifactId>
+        </dependency>
+
 <!--        &lt;!&ndash; mp支持的数据库均支持 只需要增加对应的jdbc依赖即可 &ndash;&gt;-->
 <!--        &lt;!&ndash; Oracle &ndash;&gt;-->
 <!--        <dependency>-->

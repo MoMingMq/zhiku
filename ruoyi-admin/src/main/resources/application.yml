@@ -83,6 +83,10 @@ spring:
     deserialization:
       # 允许对象忽略json中不存在的属性
       fail_on_unknown_properties: false
+  # Liquibase 数据库自动初始化 (启动时按 changelog 建表与初始化数据 详见 db/changelog)
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
 
 # Sa-Token配置
 sa-token:
