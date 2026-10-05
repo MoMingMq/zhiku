@@ -5,6 +5,8 @@
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <!-- zhiku-ai 模块 changelog：schema 与 data 按域分组 include（相对路径） -->
     <include file="schema/01-ai-model.xml" relativeToChangelogFile="true"/>
+    <include file="schema/02-kb.xml" relativeToChangelogFile="true"/>
     <include file="data/01-ai-menu.xml" relativeToChangelogFile="true"/>
     <include file="data/02-ai-dict.xml" relativeToChangelogFile="true"/>
+    <include file="data/03-kb-menu.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
