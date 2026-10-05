@@ -21,6 +21,7 @@ import org.zhiku.ai.knowledge.vector.KbVectorStore;
 import org.zhiku.ai.model.client.AiModelClientFactory;
 import org.zhiku.common.core.exception.ServiceException;
 import org.zhiku.common.core.utils.StringUtils;
+import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.stereotype.Component;
 
@@ -44,9 +45,17 @@ public class DocumentIngestPipeline {
     private final KbChunkMapper chunkMapper;
     private final List<DocumentParser> parsers;
     private final ChunkingPipeline chunkingPipeline;
-    private final KbVectorStore vectorStore;
+    /** Milvus 未启用时向量库 bean 不存在（管线可装配，执行入口检查可用性） */
+    private final ObjectProvider<KbVectorStore> vectorStoreProvider;
     private final AiModelClientFactory modelClientFactory;
     private final StorageService storageService;
+
+    /**
+     * 向量服务是否可用（上传/重试/重切入口的降级判定）
+     */
+    public boolean isAvailable() {
+        return vectorStoreProvider.getIfAvailable() != null;
+    }
 
     /**
      * embedding 批量大小（供应商批量接口上限内保守取值）
@@ -57,6 +66,11 @@ public class DocumentIngestPipeline {
      * 执行整文档入库
      */
     public void ingest(Long documentId) {
+        KbVectorStore vectorStore = vectorStoreProvider.getIfAvailable();
+        if (vectorStore == null) {
+            fail(documentId, "向量服务未启用（zhiku.ai.milvus.enabled=false）");
+            return;
+        }
         try {
             KbDocument doc = loadAndTransition(documentId, DocumentStatus.UPLOADED, DocumentStatus.FAILED,
                 DocumentStatus.PARSING);
@@ -82,7 +96,7 @@ public class DocumentIngestPipeline {
             List<KbChunk> chunks = persistChunks(doc, drafts);
             transition(documentId, DocumentStatus.EMBEDDING);
             // 4. 向量化入库
-            embedAndUpsert(doc, dataset, drafts, chunks);
+            embedAndUpsert(vectorStore, doc, dataset, drafts, chunks);
             // 5. 完成
             LambdaUpdateWrapper<KbDocument> luw = new LambdaUpdateWrapper<>();
             luw.eq(KbDocument::getDocumentId, documentId)
@@ -104,8 +118,9 @@ public class DocumentIngestPipeline {
         if (doc == null) {
             return;
         }
+        KbVectorStore vectorStore = vectorStoreProvider.getIfAvailable();
         KbDataset dataset = datasetMapper.selectById(doc.getDatasetId());
-        if (dataset != null && dataset.getEmbedDim() != null) {
+        if (vectorStore != null && dataset != null && dataset.getEmbedDim() != null) {
             vectorStore.deleteByExpr(dataset.getEmbedDim(), "document_id == " + documentId);
         }
         chunkMapper.delete(new com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<KbChunk>()
@@ -177,7 +192,8 @@ public class DocumentIngestPipeline {
         return chunks;
     }
 
-    private void embedAndUpsert(KbDocument doc, KbDataset dataset, List<ChunkDraft> drafts, List<KbChunk> chunks) {
+    private void embedAndUpsert(KbVectorStore vectorStore, KbDocument doc, KbDataset dataset,
+                                List<ChunkDraft> drafts, List<KbChunk> chunks) {
         EmbeddingModel model = modelClientFactory.getEmbeddingModel(dataset.getEmbedModelId());
         int dim = dataset.getEmbedDim();
         vectorStore.ensureCollection(dim);

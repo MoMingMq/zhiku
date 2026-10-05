@@ -6,6 +6,9 @@ Copyright (c) 2026 莫名
 - RuoYi-Vue-Plus 6.0.0 — MIT License — Copyright (c) 2019 RuoYi-Vue-Plus
 - Spring Boot / Spring AI — Apache License 2.0 — Copyright (c) the original author or authors
 - OpenAI Java SDK (com.openai:openai-java-client-okhttp，Spring AI 2.0 底层依赖) — Apache License 2.0
+- Apache Tika — Apache License 2.0 — Copyright (c) The Apache Software Foundation
+- flexmark-java — Apache License 2.0 — Copyright (c) 2015-2016 Vladislav Vaizer
+- Milvus Java SDK (io.milvus:milvus-sdk-java) — Apache License 2.0
 - MyBatis-Plus — Apache License 2.0
 - Sa-Token — MIT License — Copyright (c) 2020-2026 lzh
 - Hutool — Mulan Permissive Software License v2 (MulanPSL2)

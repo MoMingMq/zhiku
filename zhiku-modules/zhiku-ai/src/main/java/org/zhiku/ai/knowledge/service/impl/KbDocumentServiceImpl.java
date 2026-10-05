@@ -126,7 +126,7 @@ public class KbDocumentServiceImpl implements IKbDocumentService {
 
     private DocumentIngestPipeline requirePipeline() {
         DocumentIngestPipeline pipeline = pipelineProvider.getIfAvailable();
-        if (pipeline == null) {
+        if (pipeline == null || !pipeline.isAvailable()) {
             throw new ServiceException("向量服务未启用（zhiku.ai.milvus.enabled=false），无法处理文档");
         }
         return pipeline;

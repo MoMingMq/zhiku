@@ -256,3 +256,15 @@ justauth:
       client-id: 10**********6
       client-secret: 1f7d08**********5b7**********29e
       redirect-uri: ${justauth.address}/social-callback?source=gitea
+
+# AI 知识库（M2）
+zhiku:
+  ai:
+    milvus:
+      # 未部署 Milvus 时保持 false：知识库列表可看，上传/检索明确报错降级
+      enabled: false
+      uri: http://127.0.0.1:19530
+      database: default
+    storage:
+      # 文档存储根目录（docker 挂卷点）
+      base-path: ./data/kb-files
