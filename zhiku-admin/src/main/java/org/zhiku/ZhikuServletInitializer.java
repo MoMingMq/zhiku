@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  *
  * @author Lion Li
  */
-public class DromaraServletInitializer extends SpringBootServletInitializer {
+public class ZhikuServletInitializer extends SpringBootServletInitializer {
 
     /**
      * 配置外部 Web 容器启动源。

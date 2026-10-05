@@ -173,7 +173,7 @@ springdoc:
     contact:
       name: Lion Li
       email: crazylionli@163.com
-      url: https://gitee.com/dromara/知库 ZhiKu
+      url: https://github.com/MoMingMq/zhiku
   #这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
     - group: 1.通用模块
