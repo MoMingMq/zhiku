@@ -13,6 +13,7 @@ Copyright (c) 2026 知库贡献者
 - Apache Fesod — Apache License 2.0（Apache 孵化项目，EasyExcel 后继）
 - warm-flow — Apache License 2.0 — Copyright (c) dromara/warm-flow
 - dynamic-datasource — Apache License 2.0
+- Liquibase — Apache License 2.0 — Copyright (c) 2026 Liquibase Inc. / DB ChangeOps
 - springdoc-openapi — Apache License 2.0
 - Lombok — MIT License
 

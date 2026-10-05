@@ -36,9 +36,9 @@
 环境要求：JDK 21、MySQL 8.x、Redis 6+、Maven 3.9+（可用自带 `mvnw`）
 
 ```bash
-# 1. 初始化数据库：建库 ry-vue 后依次执行
-#    script/sql/ry_vue.sql          （必执行）
-#    script/sql/ry_workflow.sql     （需要工作流时）
+# 1. 初始化数据库：仅需建空库，无需手工执行 SQL
+#    create database `ry-vue` default character set utf8mb4;
+#    （首此启动时 Liquibase 按 db/changelog 自动建表并写入初始数据）
 
 # 2. 修改配置：ruoyi-admin/src/main/resources/application-dev.yml
 #    spring.datasource（MySQL）与 spring.data.redis 连接信息
