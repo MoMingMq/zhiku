@@ -108,8 +108,6 @@ security:
     - /*/api-docs
     - /*/api-docs/**
     - /warm-flow-ui/config
-    - /snail-chat/**
-    - /api/snail/chat/**
 
 # MyBatisPlus配置
 # https://baomidou.com/config/
@@ -174,15 +172,13 @@ springdoc:
       url: https://gitee.com/dromara/RuoYi-Vue-Plus
   #这里定义了两个分组，可定义多个，也可以不定义
   group-configs:
-    - group: 1.演示模块
-      packages-to-scan: org.dromara.demo
-    - group: 2.通用模块
+    - group: 1.通用模块
       packages-to-scan: org.dromara.web
-    - group: 3.系统模块
+    - group: 2.系统模块
       packages-to-scan: org.dromara.system
-    - group: 4.代码生成模块
+    - group: 3.代码生成模块
       packages-to-scan: org.dromara.gen
-    - group: 5.工作流模块
+    - group: 4.工作流模块
       packages-to-scan: org.dromara.workflow
 
 # 防止XSS攻击

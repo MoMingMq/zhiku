@@ -13,7 +13,6 @@
 - **企业级权限**：RBAC 菜单/按钮权限 + 数据权限（`@DataPermission`）+ Sa-Token JWT 认证
 - **系统管理**：用户/角色/菜单/部门/岗位/字典/参数/通知公告/操作与登录日志
 - **代码生成**：表结构导入 → Java/Vue/SQL（含四方言菜单脚本）一键生成
-- **任务调度**：SnailJob 分布式调度与重试（独立服务部署）
 - **工作流**：WarmFlow 审批流 + LiteFlow 规则流
 - **AI 能力**：Spring AI MCP（`/mcp` 端点将业务能力暴露为 AI 工具）；知识库 RAG 模块自建开发中
 - **Excel**：Apache Fesod（EasyExcel 后继）注解化导入导出
@@ -39,8 +38,6 @@
 ```bash
 # 1. 初始化数据库：建库 ry-vue 后依次执行
 #    script/sql/ry_vue.sql          （必执行）
-#    script/sql/ry_job.sql          （需要任务调度时）
-#    script/sql/ry_ai.sql           （需要 AI 能力时）
 #    script/sql/ry_workflow.sql     （需要工作流时）
 
 # 2. 修改配置：ruoyi-admin/src/main/resources/application-dev.yml
@@ -52,7 +49,7 @@
 
 前端：clone [zhiku-ui](https://github.com/MoMingMq/zhiku-ui) → `pnpm i` → `pnpm dev`
 
-Docker 全套环境（MySQL/Redis/Nginx/监控/调度/AI 服务）见 `script/docker/docker-compose.yml`。
+Docker 全套环境（MySQL/Redis/Nginx/监控）见 `script/docker/docker-compose.yml`。
 
 ## 模块说明
 
@@ -60,9 +57,9 @@ Docker 全套环境（MySQL/Redis/Nginx/监控/调度/AI 服务）见 `script/do
 zhiku-backend
 ├─ ruoyi-admin        # Web 入口与认证
 ├─ ruoyi-api          # 跨模块 API 契约
-├─ ruoyi-common       # 24 个公共能力子模块（core/mybatis/web/redis/satoken/mcp/ai...）
-├─ ruoyi-modules      # 业务模块：system / gen / job / workflow / ai / demo
-└─ ruoyi-extend       # 独立部署服务：monitor-admin / snailjob-server
+├─ ruoyi-common       # 22 个公共能力子模块（core/mybatis/web/redis/satoken/mcp...）
+├─ ruoyi-modules      # 业务模块：system / gen / workflow
+└─ ruoyi-extend       # 独立部署服务：monitor-admin
 ```
 
 ## Roadmap
