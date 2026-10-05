@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.zhiku</groupId>
-    <artifactId>zhiku-vue-plus</artifactId>
+    <artifactId>zhiku</artifactId>
     <version>${revision}</version>
 
     <name>ZhiKu</name>
