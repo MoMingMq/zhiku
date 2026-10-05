@@ -5,6 +5,7 @@ Copyright (c) 2026 莫名
 
 - RuoYi-Vue-Plus 6.0.0 — MIT License — Copyright (c) 2019 RuoYi-Vue-Plus
 - Spring Boot / Spring AI — Apache License 2.0 — Copyright (c) the original author or authors
+- OpenAI Java SDK (com.openai:openai-java-client-okhttp，Spring AI 2.0 底层依赖) — Apache License 2.0
 - MyBatis-Plus — Apache License 2.0
 - Sa-Token — MIT License — Copyright (c) 2020-2026 lzh
 - Hutool — Mulan Permissive Software License v2 (MulanPSL2)
@@ -18,5 +19,6 @@ Copyright (c) 2026 莫名
 - Lombok — MIT License
 
 以上协议已于 2026-10-05 逐项核实（来源：各项目官方仓库 LICENSE）。
+（2026-10-05 追加核实：openai-java-client-okhttp 协议 Apache-2.0，以其 pom 声明为准；Spring AI 2.0 传递引入并显式声明）
 新增依赖时必须同步更新本清单（规范见 wiki/platform/open-source-license.md）。
 本仓库 LICENSE 文件为上游 MIT 许可证，按协议要求原样保留，不得删除或篡改。
