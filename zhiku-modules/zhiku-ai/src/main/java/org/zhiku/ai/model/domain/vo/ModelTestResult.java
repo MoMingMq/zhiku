@@ -8,7 +8,7 @@ import java.io.Serializable;
  *
  * @author zhiku
  */
-public record ModelTestResult(boolean success, long costMs, String message) implements Serializable {
+public record ModelTestResult(boolean success, long costMs, String message, Integer embedDim) implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

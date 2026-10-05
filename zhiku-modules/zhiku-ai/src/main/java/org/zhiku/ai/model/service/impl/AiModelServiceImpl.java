@@ -111,32 +111,51 @@ public class AiModelServiceImpl implements IAiModelService {
     public ModelTestResult testConnection(Long modelId) {
         AiModel model = baseMapper.selectById(modelId);
         if (model == null) {
-            return new ModelTestResult(false, 0, "模型不存在");
+            return new ModelTestResult(false, 0, "模型不存在", null);
         }
         long start = System.currentTimeMillis();
         try {
-            String message = switch (model.getModelType() == null ? "" : model.getModelType()) {
+            switch (model.getModelType() == null ? "" : model.getModelType()) {
                 case "1" -> {
                     clientFactory.getChatModel(modelId).call(new Prompt("你好"));
-                    yield "对话模型连通正常";
+                    return new ModelTestResult(true, System.currentTimeMillis() - start, "对话模型连通正常", null);
                 }
                 case "2" -> {
                     float[] vector = clientFactory.getEmbeddingModel(modelId).embed("连通性测试");
-                    yield "向量模型连通正常（维度 " + vector.length + "）";
+                    int realDim = vector.length;
+                    boolean updated = syncEmbedDim(model, realDim);
+                    String message = updated
+                        ? "向量模型连通正常，维度已自动回填为 " + realDim
+                        : "向量模型连通正常（维度 " + realDim + "）";
+                    return new ModelTestResult(true, System.currentTimeMillis() - start, message, realDim);
                 }
                 case "3" -> {
                     rerankClient.rerank(model, "连通性", java.util.List.of("连通性测试", "无关文本"));
-                    yield "重排模型连通正常";
+                    return new ModelTestResult(true, System.currentTimeMillis() - start, "重排模型连通正常", null);
                 }
                 default -> throw new ServiceException("未知模型类型：" + model.getModelType());
-            };
-            return new ModelTestResult(true, System.currentTimeMillis() - start, message);
+            }
         } catch (Exception e) {
             log.warn("模型连通性测试失败 id={}", modelId, e);
             String reason = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
             return new ModelTestResult(false, System.currentTimeMillis() - start,
-                StringUtils.substring(reason, 0, 200));
+                StringUtils.substring(reason, 0, 200), null);
         }
+    }
+
+    /**
+     * 实测维度回写：为空或不一致时自动更新 embed_dim（用户无法预知模型真实维度，以实测为准）
+     */
+    private boolean syncEmbedDim(AiModel model, int realDim) {
+        if (model.getEmbedDim() != null && model.getEmbedDim() == realDim) {
+            return false;
+        }
+        LambdaUpdateWrapper<AiModel> luw = new LambdaUpdateWrapper<>();
+        luw.eq(AiModel::getModelId, model.getModelId())
+            .set(AiModel::getEmbedDim, realDim);
+        baseMapper.update(null, luw);
+        clientFactory.evict(model.getModelId());
+        return true;
     }
 
     @Override
@@ -204,12 +223,9 @@ public class AiModelServiceImpl implements IAiModelService {
     }
 
     /**
-     * 业务校验：向量模型必须指定维度；params 必须是合法 JSON
+     * 业务校验：params 必须是合法 JSON（向量维度允许留空，测试连接成功后按实测自动回填）
      */
     private void validateParams(AiModelBo bo) {
-        if ("2".equals(bo.getModelType()) && (bo.getEmbedDim() == null || bo.getEmbedDim() <= 0)) {
-            throw new ServiceException("Embedding 向量模型必须配置向量维度");
-        }
         if (StringUtils.isNotBlank(bo.getParams())) {
             try {
                 JsonUtils.parseMap(bo.getParams());

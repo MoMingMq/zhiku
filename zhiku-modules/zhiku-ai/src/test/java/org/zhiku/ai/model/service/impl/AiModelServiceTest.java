@@ -82,14 +82,16 @@ class AiModelServiceTest {
     }
 
     @Test
-    void insertEmbeddingWithoutDimThrows() {
+    void insertEmbeddingWithoutDimAllowed() {
+        // 维度允许留空：测试连接成功后按实测自动回填
         AiModelBo bo = new AiModelBo();
         bo.setModelName("测试向量模型");
         bo.setModelType("2");
         bo.setBaseUrl("https://api.example.com");
         bo.setModelCode("text-embedding-v3");
-        ServiceException ex = assertThrows(ServiceException.class, () -> service.insertByBo(bo));
-        assertTrue(ex.getMessage().contains("向量维度"));
+        doReturn(toEntity(bo)).when(service).toEntity(bo);
+        when(baseMapper.insert(any(AiModel.class))).thenReturn(1);
+        assertTrue(service.insertByBo(bo));
     }
 
     @Test
