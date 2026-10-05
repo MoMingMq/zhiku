@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-61-kb-dataset" author="zhiku">
+        <createTable tableName="kb_dataset" remarks="知识库表">
+            <column name="dataset_id" type="bigint" remarks="知识库ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dataset_name" type="varchar(100)" remarks="知识库名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(500)" remarks="描述"/>
+            <column name="embed_model_id" type="bigint" remarks="绑定的向量模型ID（ai_model）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="embed_dim" type="int" remarks="向量维度（冗余，Milvus collection 路由用）"/>
+            <column name="chunk_params" type="varchar(1000)" remarks="分块参数JSON（mode/maxChars/overlapRatio/semanticThreshold）"/>
+            <column name="status" type="char(1)" defaultValue="0" remarks="状态（0正常 1停用）"/>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志（0存在 2删除）"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+        <createIndex indexName="idx_dataset_model" tableName="kb_dataset">
+            <column name="embed_model_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-62-kb-document" author="zhiku">
+        <createTable tableName="kb_document" remarks="知识库文档表">
+            <column name="document_id" type="bigint" remarks="文档ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dataset_id" type="bigint" remarks="所属知识库ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_name" type="varchar(255)" remarks="原始文件名">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_path" type="varchar(500)" remarks="存储key（StorageService 相对路径）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_size" type="bigint" remarks="文件大小（字节）"/>
+            <column name="file_type" type="varchar(20)" remarks="格式（pdf/docx/xlsx/md/txt/html）"/>
+            <column name="status" type="char(1)" defaultValue="0" remarks="状态机（0已上传 1解析中 2分块中 3向量化中 4可用 D失败）"/>
+            <column name="error_msg" type="varchar(1000)" remarks="失败原因"/>
+            <column name="char_count" type="int" remarks="正文总字符数"/>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志（0存在 2删除）"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+        <createIndex indexName="idx_document_dataset" tableName="kb_document">
+            <column name="dataset_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261005-63-kb-chunk" author="zhiku">
+        <createTable tableName="kb_chunk" remarks="知识库分块表">
+            <column name="chunk_id" type="bigint" remarks="分块ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dataset_id" type="bigint" remarks="所属知识库ID（冗余，检索过滤用）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="document_id" type="bigint" remarks="所属文档ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seq" type="int" remarks="文档内序号">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="clob" remarks="分块正文">
+                <constraints nullable="false"/>
+            </column>
+            <column name="heading_path" type="varchar(500)" remarks="标题路径（如 第一章&gt;1.1）"/>
+            <column name="strategy_tag" type="varchar(20)" remarks="产出标记（structure/semantic/recursive）"/>
+            <column name="char_count" type="int" remarks="字符数"/>
+            <column name="disabled" type="char(1)" defaultValue="0" remarks="禁用（1禁用后不参与检索）"/>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志（0存在 2删除）"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+        <createIndex indexName="idx_chunk_document" tableName="kb_chunk">
+            <column name="document_id"/>
+        </createIndex>
+        <createIndex indexName="idx_chunk_dataset" tableName="kb_chunk">
+            <column name="dataset_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
