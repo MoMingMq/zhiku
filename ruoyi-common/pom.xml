@@ -39,7 +39,6 @@
         <module>ruoyi-common-push</module>
         <module>ruoyi-common-liteflow</module>
         <module>ruoyi-common-mqtt</module>
-        <module>ruoyi-common-ai</module>
         <module>ruoyi-common-mcp</module>
     </modules>
 

@@ -15,7 +15,7 @@
 - **代码生成**：表结构导入 → Java/Vue/SQL（含四方言菜单脚本）一键生成
 - **任务调度**：SnailJob 分布式调度与重试（独立服务部署）
 - **工作流**：WarmFlow 审批流 + LiteFlow 规则流
-- **AI 能力**：Snail AI 对接（独立部署 snailai-server 承载 Agent / RAG / 模型管理）+ Spring AI MCP（`/mcp` 端点将业务能力暴露为 AI 工具）
+- **AI 能力**：Spring AI MCP（`/mcp` 端点将业务能力暴露为 AI 工具）；知识库 RAG 模块自建开发中
 - **Excel**：Apache Fesod（EasyExcel 后继）注解化导入导出
 - **运维监控**：Spring Boot Admin + Actuator、Redisson 多缓存、多数据源
 
@@ -27,7 +27,6 @@
 | Spring Boot | 4.1.x | 基础框架 |
 | Sa-Token | 1.46.x | 认证鉴权 |
 | MyBatis-Plus | 3.5.17 | ORM（含联表/动态数据源/数据权限） |
-| Snail AI | 1.1.x | AI Agent / RAG（独立 snailai-server 部署） |
 | Spring AI | 2.0.x | MCP server/client |
 | Redisson | 4.7.x | 缓存/分布式锁/限流 |
 | mapstruct-plus | 1.5.x | 对象转换 |
@@ -63,7 +62,7 @@ zhiku-backend
 ├─ ruoyi-api          # 跨模块 API 契约
 ├─ ruoyi-common       # 24 个公共能力子模块（core/mybatis/web/redis/satoken/mcp/ai...）
 ├─ ruoyi-modules      # 业务模块：system / gen / job / workflow / ai / demo
-└─ ruoyi-extend       # 独立部署服务：monitor-admin / snailjob-server / snailai-server
+└─ ruoyi-extend       # 独立部署服务：monitor-admin / snailjob-server
 ```
 
 ## Roadmap
