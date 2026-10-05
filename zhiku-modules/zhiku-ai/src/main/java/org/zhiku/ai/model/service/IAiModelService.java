@@ -2,6 +2,7 @@ package org.zhiku.ai.model.service;
 
 import org.zhiku.ai.model.domain.bo.AiModelBo;
 import org.zhiku.ai.model.domain.vo.AiModelVo;
+import org.zhiku.ai.model.domain.vo.ModelTestResult;
 import org.zhiku.common.mybatis.core.page.PageQuery;
 import org.zhiku.common.core.domain.PageResult;
 
@@ -44,5 +45,10 @@ public interface IAiModelService {
      * 批量删除模型配置
      */
     Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
+
+    /**
+     * 连通性测试：按模型类型发最小请求，返回成功与否与耗时
+     */
+    ModelTestResult testConnection(Long modelId);
 
 }

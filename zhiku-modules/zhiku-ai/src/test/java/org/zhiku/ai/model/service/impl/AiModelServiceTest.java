@@ -43,6 +43,9 @@ class AiModelServiceTest {
     @Mock
     private org.zhiku.ai.model.client.AiModelClientFactory clientFactory;
 
+    @Mock
+    private org.zhiku.ai.model.client.RerankClient rerankClient;
+
     @Spy
     @InjectMocks
     private AiModelServiceImpl service;

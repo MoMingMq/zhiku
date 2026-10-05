@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.zhiku.ai.model.domain.bo.AiModelBo;
 import org.zhiku.ai.model.domain.vo.AiModelVo;
+import org.zhiku.ai.model.domain.vo.ModelTestResult;
 import org.zhiku.ai.model.service.IAiModelService;
 import org.zhiku.common.core.domain.PageResult;
 import org.zhiku.common.core.domain.R;
@@ -14,6 +15,7 @@ import org.zhiku.common.core.validate.EditGroup;
 import org.zhiku.common.log.annotation.Log;
 import org.zhiku.common.log.enums.BusinessType;
 import org.zhiku.common.mybatis.core.page.PageQuery;
+import org.zhiku.common.redis.annotation.RateLimiter;
 import org.zhiku.common.redis.annotation.RepeatSubmit;
 import org.zhiku.common.web.core.BaseController;
 import org.springframework.validation.annotation.Validated;
@@ -89,6 +91,17 @@ public class AiModelController extends BaseController {
     @DeleteMapping("/{modelIds}")
     public R<Void> remove(@NotEmpty @PathVariable Long[] modelIds) {
         return toAjax(modelService.deleteWithValidByIds(List.of(modelIds), true));
+    }
+
+    /**
+     * 连通性测试（按模型类型发最小请求，防刷限流）
+     */
+    @SaCheckPermission("ai:model:query")
+    @Log(title = "模型管理", businessType = BusinessType.OTHER)
+    @RateLimiter(key = "aiModelTest", time = 60, count = 10)
+    @PostMapping("/test/{modelId}")
+    public R<ModelTestResult> test(@NotNull @PathVariable Long modelId) {
+        return R.ok(modelService.testConnection(modelId));
     }
 
 }

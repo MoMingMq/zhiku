@@ -6,11 +6,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.zhiku.ai.model.client.AiModelClientFactory;
+import org.zhiku.ai.model.client.RerankClient;
 import org.zhiku.ai.model.domain.AiModel;
 import org.zhiku.ai.model.domain.bo.AiModelBo;
 import org.zhiku.ai.model.domain.vo.AiModelVo;
+import org.zhiku.ai.model.domain.vo.ModelTestResult;
 import org.zhiku.ai.model.mapper.AiModelMapper;
 import org.zhiku.ai.model.service.IAiModelService;
+import org.springframework.ai.chat.prompt.Prompt;
 import org.zhiku.common.core.domain.PageResult;
 import org.zhiku.common.core.exception.ServiceException;
 import org.zhiku.common.core.utils.MapstructUtils;
@@ -36,6 +39,7 @@ public class AiModelServiceImpl implements IAiModelService {
 
     private final AiModelMapper baseMapper;
     private final AiModelClientFactory clientFactory;
+    private final RerankClient rerankClient;
 
     @Override
     public PageResult<AiModelVo> queryPageList(AiModelBo bo, PageQuery pageQuery) {
@@ -99,6 +103,38 @@ public class AiModelServiceImpl implements IAiModelService {
      */
     protected AiModel toEntity(AiModelBo bo) {
         return MapstructUtils.convert(bo, AiModel.class);
+    }
+
+    @Override
+    public ModelTestResult testConnection(Long modelId) {
+        AiModel model = baseMapper.selectById(modelId);
+        if (model == null) {
+            return new ModelTestResult(false, 0, "模型不存在");
+        }
+        long start = System.currentTimeMillis();
+        try {
+            String message = switch (model.getModelType() == null ? "" : model.getModelType()) {
+                case "1" -> {
+                    clientFactory.getChatModel(modelId).call(new Prompt("你好"));
+                    yield "对话模型连通正常";
+                }
+                case "2" -> {
+                    float[] vector = clientFactory.getEmbeddingModel(modelId).embed("连通性测试");
+                    yield "向量模型连通正常（维度 " + vector.length + "）";
+                }
+                case "3" -> {
+                    rerankClient.rerank(model, "连通性", java.util.List.of("连通性测试", "无关文本"));
+                    yield "重排模型连通正常";
+                }
+                default -> throw new ServiceException("未知模型类型：" + model.getModelType());
+            };
+            return new ModelTestResult(true, System.currentTimeMillis() - start, message);
+        } catch (Exception e) {
+            log.warn("模型连通性测试失败 id={}", modelId, e);
+            String reason = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
+            return new ModelTestResult(false, System.currentTimeMillis() - start,
+                StringUtils.substring(reason, 0, 200));
+        }
     }
 
     @Override
