@@ -40,6 +40,9 @@ class AiModelServiceTest {
     @Mock
     private AiModelMapper baseMapper;
 
+    @Mock
+    private org.zhiku.ai.model.client.AiModelClientFactory clientFactory;
+
     @Spy
     @InjectMocks
     private AiModelServiceImpl service;

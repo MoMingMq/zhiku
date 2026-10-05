@@ -82,6 +82,13 @@
             <artifactId>spring-ai-openai</artifactId>
         </dependency>
 
+        <!-- OpenAI 官方 SDK OkHttp 客户端（Spring AI 2.0 底层依赖，okhttp 客户端不传递需显式引入；版本对齐 openai-java-core） -->
+        <dependency>
+            <groupId>com.openai</groupId>
+            <artifactId>openai-java-client-okhttp</artifactId>
+            <version>4.49.0</version>
+        </dependency>
+
         <!-- 测试 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

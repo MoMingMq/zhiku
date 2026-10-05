@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.zhiku.ai.model.client.AiModelClientFactory;
 import org.zhiku.ai.model.domain.AiModel;
 import org.zhiku.ai.model.domain.bo.AiModelBo;
 import org.zhiku.ai.model.domain.vo.AiModelVo;
@@ -34,6 +35,7 @@ import java.util.Map;
 public class AiModelServiceImpl implements IAiModelService {
 
     private final AiModelMapper baseMapper;
+    private final AiModelClientFactory clientFactory;
 
     @Override
     public PageResult<AiModelVo> queryPageList(AiModelBo bo, PageQuery pageQuery) {
@@ -85,7 +87,11 @@ public class AiModelServiceImpl implements IAiModelService {
         if ("1".equals(update.getIsDefault())) {
             clearDefaultOf(update.getModelType(), update.getModelId());
         }
-        return baseMapper.updateById(update) > 0;
+        boolean ok = baseMapper.updateById(update) > 0;
+        if (ok) {
+            clientFactory.evict(bo.getModelId());
+        }
+        return ok;
     }
 
     /**
@@ -98,7 +104,11 @@ public class AiModelServiceImpl implements IAiModelService {
     @Override
     public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
         // TODO M2: 被知识库（kb_dataset.embed_model_id）/应用引用中的模型不可删，提示引用清单
-        return baseMapper.deleteByIds(ids) > 0;
+        boolean ok = baseMapper.deleteByIds(ids) > 0;
+        if (ok) {
+            ids.forEach(clientFactory::evict);
+        }
+        return ok;
     }
 
     /**
