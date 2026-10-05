@@ -1,0 +1,2242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-57-sys-menu-data" author="zhiku">
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000001"/>
+            <column name="menu_name" value="系统管理"/>
+            <column name="parent_id" valueNumeric="0"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="system"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="M"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value=""/>
+            <column name="icon" value="system"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="系统管理目录"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000002"/>
+            <column name="menu_name" value="系统监控"/>
+            <column name="parent_id" valueNumeric="0"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="monitor"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="M"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value=""/>
+            <column name="icon" value="monitor"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="系统监控目录"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000003"/>
+            <column name="menu_name" value="系统工具"/>
+            <column name="parent_id" valueNumeric="0"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="tool"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="M"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value=""/>
+            <column name="icon" value="tool"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="系统工具目录"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000004"/>
+            <column name="menu_name" value="知库仓库"/>
+            <column name="parent_id" valueNumeric="0"/>
+            <column name="order_num" valueNumeric="9"/>
+            <column name="path" value="https://github.com/MoMingMq/zhiku"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="Y"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="M"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value=""/>
+            <column name="icon" value="guide"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="知库开源仓库地址"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000100"/>
+            <column name="menu_name" value="用户管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="user"/>
+            <column name="component" value="system/user/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:list"/>
+            <column name="icon" value="user"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="用户管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000101"/>
+            <column name="menu_name" value="角色管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="role"/>
+            <column name="component" value="system/role/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:role:list"/>
+            <column name="icon" value="peoples"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="角色管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000102"/>
+            <column name="menu_name" value="菜单管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="menu"/>
+            <column name="component" value="system/menu/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:menu:list"/>
+            <column name="icon" value="tree-table"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="菜单管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000103"/>
+            <column name="menu_name" value="部门管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="dept"/>
+            <column name="component" value="system/dept/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dept:list"/>
+            <column name="icon" value="tree"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="部门管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000104"/>
+            <column name="menu_name" value="岗位管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="post"/>
+            <column name="component" value="system/post/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:post:list"/>
+            <column name="icon" value="post"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="岗位管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000105"/>
+            <column name="menu_name" value="字典管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="6"/>
+            <column name="path" value="dict"/>
+            <column name="component" value="system/dict/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dict:list"/>
+            <column name="icon" value="dict"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="字典管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000106"/>
+            <column name="menu_name" value="参数设置"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="7"/>
+            <column name="path" value="config"/>
+            <column name="component" value="system/config/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:config:list"/>
+            <column name="icon" value="edit"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="参数设置菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000107"/>
+            <column name="menu_name" value="通知公告"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="8"/>
+            <column name="path" value="notice"/>
+            <column name="component" value="system/notice/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:notice:list"/>
+            <column name="icon" value="message"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="通知公告菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000108"/>
+            <column name="menu_name" value="日志管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="9"/>
+            <column name="path" value="log"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="M"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value=""/>
+            <column name="icon" value="log"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="日志管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000109"/>
+            <column name="menu_name" value="在线用户"/>
+            <column name="parent_id" valueNumeric="1761400000000000002"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="online"/>
+            <column name="component" value="monitor/online/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:online:list"/>
+            <column name="icon" value="online"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="在线用户菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000113"/>
+            <column name="menu_name" value="缓存监控"/>
+            <column name="parent_id" valueNumeric="1761400000000000002"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="cache"/>
+            <column name="component" value="monitor/cache/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:cache:list"/>
+            <column name="icon" value="redis"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="缓存监控菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000123"/>
+            <column name="menu_name" value="客户端管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="11"/>
+            <column name="path" value="client"/>
+            <column name="component" value="system/client/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:client:list"/>
+            <column name="icon" value="international"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="客户端管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000130"/>
+            <column name="menu_name" value="分配用户"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="role-auth/user/:roleId"/>
+            <column name="component" value="system/role/authUser"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="N"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="1"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:role:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value="/system/role"/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000131"/>
+            <column name="menu_name" value="分配角色"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="user-auth/role/:userId"/>
+            <column name="component" value="system/user/authRole"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="N"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="1"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value="/system/user"/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000133"/>
+            <column name="menu_name" value="文件配置管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="10"/>
+            <column name="path" value="oss-config/index"/>
+            <column name="component" value="system/oss/config"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="N"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="1"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:ossConfig:list"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value="/system/oss"/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000117"/>
+            <column name="menu_name" value="Admin监控"/>
+            <column name="parent_id" valueNumeric="1761400000000000002"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="Admin"/>
+            <column name="component" value="monitor/admin/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:admin:list"/>
+            <column name="icon" value="dashboard"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="Admin监控菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000118"/>
+            <column name="menu_name" value="文件管理"/>
+            <column name="parent_id" valueNumeric="1761400000000000001"/>
+            <column name="order_num" valueNumeric="10"/>
+            <column name="path" value="oss"/>
+            <column name="component" value="system/oss/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:oss:list"/>
+            <column name="icon" value="upload"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="文件管理菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000500"/>
+            <column name="menu_name" value="操作日志"/>
+            <column name="parent_id" valueNumeric="1761400000000000108"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="operlog"/>
+            <column name="component" value="monitor/operlog/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:operlog:list"/>
+            <column name="icon" value="form"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="操作日志菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000000501"/>
+            <column name="menu_name" value="登录日志"/>
+            <column name="parent_id" valueNumeric="1761400000000000108"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="logininfo"/>
+            <column name="component" value="monitor/logininfo/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:logininfo:list"/>
+            <column name="icon" value="logininfo"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="登录日志菜单"/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001001"/>
+            <column name="menu_name" value="用户查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000100"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001002"/>
+            <column name="menu_name" value="用户新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000100"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001003"/>
+            <column name="menu_name" value="用户修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000100"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001004"/>
+            <column name="menu_name" value="用户删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000100"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001005"/>
+            <column name="menu_name" value="用户导出"/>
+            <column name="parent_id" valueNumeric="1761400000000000100"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:export"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001006"/>
+            <column name="menu_name" value="用户导入"/>
+            <column name="parent_id" valueNumeric="1761400000000000100"/>
+            <column name="order_num" valueNumeric="6"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:import"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001007"/>
+            <column name="menu_name" value="重置密码"/>
+            <column name="parent_id" valueNumeric="1761400000000000100"/>
+            <column name="order_num" valueNumeric="7"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:user:resetPwd"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001008"/>
+            <column name="menu_name" value="角色查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000101"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:role:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001009"/>
+            <column name="menu_name" value="角色新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000101"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:role:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001010"/>
+            <column name="menu_name" value="角色修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000101"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:role:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001011"/>
+            <column name="menu_name" value="角色删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000101"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:role:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001012"/>
+            <column name="menu_name" value="角色导出"/>
+            <column name="parent_id" valueNumeric="1761400000000000101"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:role:export"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001013"/>
+            <column name="menu_name" value="菜单查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000102"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:menu:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001014"/>
+            <column name="menu_name" value="菜单新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000102"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:menu:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001015"/>
+            <column name="menu_name" value="菜单修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000102"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:menu:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001016"/>
+            <column name="menu_name" value="菜单删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000102"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:menu:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001017"/>
+            <column name="menu_name" value="部门查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000103"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dept:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001018"/>
+            <column name="menu_name" value="部门新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000103"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dept:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001019"/>
+            <column name="menu_name" value="部门修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000103"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dept:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001020"/>
+            <column name="menu_name" value="部门删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000103"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dept:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001021"/>
+            <column name="menu_name" value="岗位查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000104"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:post:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001022"/>
+            <column name="menu_name" value="岗位新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000104"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:post:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001023"/>
+            <column name="menu_name" value="岗位修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000104"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:post:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001024"/>
+            <column name="menu_name" value="岗位删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000104"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:post:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001025"/>
+            <column name="menu_name" value="岗位导出"/>
+            <column name="parent_id" valueNumeric="1761400000000000104"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:post:export"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001026"/>
+            <column name="menu_name" value="字典查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000105"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dict:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001027"/>
+            <column name="menu_name" value="字典新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000105"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dict:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001028"/>
+            <column name="menu_name" value="字典修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000105"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dict:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001029"/>
+            <column name="menu_name" value="字典删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000105"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dict:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001030"/>
+            <column name="menu_name" value="字典导出"/>
+            <column name="parent_id" valueNumeric="1761400000000000105"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:dict:export"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001031"/>
+            <column name="menu_name" value="参数查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000106"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:config:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001032"/>
+            <column name="menu_name" value="参数新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000106"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:config:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001033"/>
+            <column name="menu_name" value="参数修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000106"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:config:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001034"/>
+            <column name="menu_name" value="参数删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000106"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:config:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001035"/>
+            <column name="menu_name" value="参数导出"/>
+            <column name="parent_id" valueNumeric="1761400000000000106"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:config:export"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001036"/>
+            <column name="menu_name" value="公告查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000107"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:notice:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001037"/>
+            <column name="menu_name" value="公告新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000107"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:notice:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001038"/>
+            <column name="menu_name" value="公告修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000107"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:notice:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001039"/>
+            <column name="menu_name" value="公告删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000107"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:notice:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001040"/>
+            <column name="menu_name" value="操作查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000500"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:operlog:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001041"/>
+            <column name="menu_name" value="操作删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000500"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:operlog:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001042"/>
+            <column name="menu_name" value="日志导出"/>
+            <column name="parent_id" valueNumeric="1761400000000000500"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:operlog:export"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001043"/>
+            <column name="menu_name" value="登录查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000501"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:logininfo:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001044"/>
+            <column name="menu_name" value="登录删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000501"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:logininfo:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001045"/>
+            <column name="menu_name" value="日志导出"/>
+            <column name="parent_id" valueNumeric="1761400000000000501"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:logininfo:export"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001050"/>
+            <column name="menu_name" value="账户解锁"/>
+            <column name="parent_id" valueNumeric="1761400000000000501"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:logininfo:unlock"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001046"/>
+            <column name="menu_name" value="在线查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000109"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:online:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001047"/>
+            <column name="menu_name" value="批量强退"/>
+            <column name="parent_id" valueNumeric="1761400000000000109"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:online:batchLogout"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001048"/>
+            <column name="menu_name" value="单条强退"/>
+            <column name="parent_id" valueNumeric="1761400000000000109"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="monitor:online:forceLogout"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001600"/>
+            <column name="menu_name" value="文件查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000118"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:oss:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001601"/>
+            <column name="menu_name" value="文件上传"/>
+            <column name="parent_id" valueNumeric="1761400000000000118"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:oss:upload"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001602"/>
+            <column name="menu_name" value="文件下载"/>
+            <column name="parent_id" valueNumeric="1761400000000000118"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:oss:download"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001603"/>
+            <column name="menu_name" value="文件删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000118"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:oss:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001620"/>
+            <column name="menu_name" value="配置列表"/>
+            <column name="parent_id" valueNumeric="1761400000000000118"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:ossConfig:list"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001621"/>
+            <column name="menu_name" value="配置添加"/>
+            <column name="parent_id" valueNumeric="1761400000000000118"/>
+            <column name="order_num" valueNumeric="6"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:ossConfig:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001622"/>
+            <column name="menu_name" value="配置编辑"/>
+            <column name="parent_id" valueNumeric="1761400000000000118"/>
+            <column name="order_num" valueNumeric="6"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:ossConfig:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001623"/>
+            <column name="menu_name" value="配置删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000118"/>
+            <column name="order_num" valueNumeric="6"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:ossConfig:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001061"/>
+            <column name="menu_name" value="客户端管理查询"/>
+            <column name="parent_id" valueNumeric="1761400000000000123"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:client:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001062"/>
+            <column name="menu_name" value="客户端管理新增"/>
+            <column name="parent_id" valueNumeric="1761400000000000123"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:client:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001063"/>
+            <column name="menu_name" value="客户端管理修改"/>
+            <column name="parent_id" valueNumeric="1761400000000000123"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:client:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001064"/>
+            <column name="menu_name" value="客户端管理删除"/>
+            <column name="parent_id" valueNumeric="1761400000000000123"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:client:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761400000000001065"/>
+            <column name="menu_name" value="客户端管理导出"/>
+            <column name="parent_id" valueNumeric="1761400000000000123"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="#"/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="system:client:export"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20261005-57-sys-role-menu-data" author="zhiku">
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000001"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000100"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000101"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000102"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000103"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000104"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000105"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000106"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000107"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000108"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000118"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000123"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000130"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000131"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000133"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000500"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000000501"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001001"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001002"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001003"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001004"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001005"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001006"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001007"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001008"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001009"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001010"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001011"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001012"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001013"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001014"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001015"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001016"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001017"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001018"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001019"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001020"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001021"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001022"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001023"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001024"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001025"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001026"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001027"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001028"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001029"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001030"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001031"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001032"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001033"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001034"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001035"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001036"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001037"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001038"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001039"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001040"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001041"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001042"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001043"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001044"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001045"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001050"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001061"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001062"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001063"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001064"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001065"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001600"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001601"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001602"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001603"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001620"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001621"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001622"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000001623"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011616"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011618"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011619"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011622"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011623"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011629"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011632"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011633"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011638"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011639"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011640"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011641"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011642"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011643"/>
+        </insert>
+        <insert tableName="sys_role_menu">
+            <column name="role_id" valueNumeric="1761300000000000003"/>
+            <column name="menu_id" valueNumeric="1761400000000011701"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

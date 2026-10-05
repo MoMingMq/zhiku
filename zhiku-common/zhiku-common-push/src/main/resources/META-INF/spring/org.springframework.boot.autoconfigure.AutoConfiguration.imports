@@ -1,0 +1,3 @@
+org.zhiku.common.push.config.MessageAutoConfiguration
+org.zhiku.common.push.config.MessageSseConfiguration
+org.zhiku.common.push.config.MessageWebSocketConfiguration

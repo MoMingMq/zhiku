@@ -1,0 +1,4 @@
+org.zhiku.common.web.config.CaptchaConfig
+org.zhiku.common.web.config.FilterConfig
+org.zhiku.common.web.config.I18nConfig
+org.zhiku.common.web.config.ResourcesConfig

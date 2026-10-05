@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>zhiku-vue-plus</artifactId>
+        <groupId>org.zhiku</groupId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>zhiku-common</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        common 通用模块
+    </description>
+
+    <modules>
+        <module>zhiku-common-bom</module>
+        <module>zhiku-common-social</module>
+        <module>zhiku-common-core</module>
+        <module>zhiku-common-doc</module>
+        <module>zhiku-common-excel</module>
+        <module>zhiku-common-log</module>
+        <module>zhiku-common-mail</module>
+        <module>zhiku-common-mybatis</module>
+        <module>zhiku-common-oss</module>
+        <module>zhiku-common-redis</module>
+        <module>zhiku-common-satoken</module>
+        <module>zhiku-common-security</module>
+        <module>zhiku-common-sms</module>
+        <module>zhiku-common-elasticsearch</module>
+        <module>zhiku-common-web</module>
+        <module>zhiku-common-translation</module>
+        <module>zhiku-common-sensitive</module>
+        <module>zhiku-common-json</module>
+        <module>zhiku-common-encrypt</module>
+        <module>zhiku-common-push</module>
+        <module>zhiku-common-liteflow</module>
+        <module>zhiku-common-mqtt</module>
+        <module>zhiku-common-mcp</module>
+    </modules>
+
+</project>

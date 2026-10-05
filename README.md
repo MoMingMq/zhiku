@@ -40,11 +40,11 @@
 #    create database `ry-vue` default character set utf8mb4;
 #    （首此启动时 Liquibase 按 db/changelog 自动建表并写入初始数据）
 
-# 2. 修改配置：ruoyi-admin/src/main/resources/application-dev.yml
+# 2. 修改配置：zhiku-admin/src/main/resources/application-dev.yml
 #    spring.datasource（MySQL）与 spring.data.redis 连接信息
 
 # 3. 启动（默认 8080）
-./mvnw spring-boot:run -pl ruoyi-admin
+./mvnw spring-boot:run -pl zhiku-admin
 ```
 
 前端：clone [zhiku-ui](https://github.com/MoMingMq/zhiku-ui) → `pnpm i` → `pnpm dev`
@@ -55,11 +55,11 @@ Docker 全套环境（MySQL/Redis/Nginx/监控）见 `script/docker/docker-compo
 
 ```
 zhiku-backend
-├─ ruoyi-admin        # Web 入口与认证
-├─ ruoyi-api          # 跨模块 API 契约
-├─ ruoyi-common       # 22 个公共能力子模块（core/mybatis/web/redis/satoken/mcp...）
-├─ ruoyi-modules      # 业务模块：system / gen / workflow
-└─ ruoyi-extend       # 独立部署服务：monitor-admin
+├─ zhiku-admin        # Web 入口与认证
+├─ zhiku-api          # 跨模块 API 契约
+├─ zhiku-common       # 22 个公共能力子模块（core/mybatis/web/redis/satoken/mcp...）
+├─ zhiku-modules      # 业务模块：system / gen / workflow
+└─ zhiku-extend       # 独立部署服务：monitor-admin
 ```
 
 ## Roadmap

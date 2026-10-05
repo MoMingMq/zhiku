@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.dromara</groupId>
-    <artifactId>ruoyi-vue-plus</artifactId>
+    <groupId>org.zhiku</groupId>
+    <artifactId>zhiku-vue-plus</artifactId>
     <version>${revision}</version>
 
-    <name>RuoYi-Vue-Plus</name>
-    <url>https://gitee.com/dromara/RuoYi-Vue-Plus</url>
-    <description>Dromara RuoYi-Vue-Plus后台管理系统</description>
+    <name>ZhiKu</name>
+    <url>https://github.com/MoMingMq/zhiku</url>
+    <description>知库 ZhiKu 企业 AI 知识库平台后端</description>
 
     <properties>
         <!-- 项目基础配置 -->
@@ -83,7 +83,7 @@
                 <!-- 环境标识，需要与配置文件的名称相对应 -->
                 <profiles.active>local</profiles.active>
                 <logging.level>info</logging.level>
-                <monitor.username>ruoyi</monitor.username>
+                <monitor.username>zhiku</monitor.username>
                 <monitor.password>123456</monitor.password>
             </properties>
         </profile>
@@ -93,7 +93,7 @@
                 <!-- 环境标识，需要与配置文件的名称相对应 -->
                 <profiles.active>dev</profiles.active>
                 <logging.level>info</logging.level>
-                <monitor.username>ruoyi</monitor.username>
+                <monitor.username>zhiku</monitor.username>
                 <monitor.password>123456</monitor.password>
             </properties>
             <activation>
@@ -106,7 +106,7 @@
             <properties>
                 <profiles.active>prod</profiles.active>
                 <logging.level>warn</logging.level>
-                <monitor.username>ruoyi</monitor.username>
+                <monitor.username>zhiku</monitor.username>
                 <monitor.password>123456</monitor.password>
             </properties>
         </profile>
@@ -164,8 +164,8 @@
 
             <!-- common 的依赖配置-->
             <dependency>
-                <groupId>org.dromara</groupId>
-                <artifactId>ruoyi-common-bom</artifactId>
+                <groupId>org.zhiku</groupId>
+                <artifactId>zhiku-common-bom</artifactId>
                 <version>${revision}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -376,29 +376,29 @@
 
             <!-- 系统模块 -->
             <dependency>
-                <groupId>org.dromara</groupId>
-                <artifactId>ruoyi-system</artifactId>
+                <groupId>org.zhiku</groupId>
+                <artifactId>zhiku-system</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <!-- 代码生成模块 -->
             <dependency>
-                <groupId>org.dromara</groupId>
-                <artifactId>ruoyi-gen</artifactId>
+                <groupId>org.zhiku</groupId>
+                <artifactId>zhiku-gen</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <!--  工作流模块  -->
             <dependency>
-                <groupId>org.dromara</groupId>
-                <artifactId>ruoyi-workflow</artifactId>
+                <groupId>org.zhiku</groupId>
+                <artifactId>zhiku-workflow</artifactId>
                 <version>${revision}</version>
             </dependency>
 
             <!--  api模块  -->
             <dependency>
-                <groupId>org.dromara</groupId>
-                <artifactId>ruoyi-api</artifactId>
+                <groupId>org.zhiku</groupId>
+                <artifactId>zhiku-api</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -407,15 +407,15 @@
 
     <modules>
         <!-- web服务入口 -->
-        <module>ruoyi-admin</module>
+        <module>zhiku-admin</module>
         <!-- common 通用模块 -->
-        <module>ruoyi-common</module>
+        <module>zhiku-common</module>
         <!-- 扩展模块 -->
-        <module>ruoyi-extend</module>
+        <module>zhiku-extend</module>
         <!-- 业务模块 -->
-        <module>ruoyi-modules</module>
+        <module>zhiku-modules</module>
         <!-- api模块 -->
-        <module>ruoyi-api</module>
+        <module>zhiku-api</module>
     </modules>
     <packaging>pom</packaging>
 

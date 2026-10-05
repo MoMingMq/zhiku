@@ -1,0 +1,2 @@
+org.zhiku.common.security.handler.AllUrlHandler
+org.zhiku.common.security.config.SecurityConfig
