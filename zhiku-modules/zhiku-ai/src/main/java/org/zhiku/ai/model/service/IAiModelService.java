@@ -1,0 +1,48 @@
+package org.zhiku.ai.model.service;
+
+import org.zhiku.ai.model.domain.bo.AiModelBo;
+import org.zhiku.ai.model.domain.vo.AiModelVo;
+import org.zhiku.common.mybatis.core.page.PageQuery;
+import org.zhiku.common.core.domain.PageResult;
+
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * AI 模型配置Service接口
+ *
+ * @author zhiku
+ */
+public interface IAiModelService {
+
+    /**
+     * 分页查询模型配置列表
+     */
+    PageResult<AiModelVo> queryPageList(AiModelBo bo, PageQuery pageQuery);
+
+    /**
+     * 查询模型配置列表
+     */
+    List<AiModelVo> queryList(AiModelBo bo);
+
+    /**
+     * 根据ID查询模型配置（apiKey 掩码输出）
+     */
+    AiModelVo queryById(Long modelId);
+
+    /**
+     * 新增模型配置
+     */
+    Boolean insertByBo(AiModelBo bo);
+
+    /**
+     * 修改模型配置（apiKey 为空则不更新）
+     */
+    Boolean updateByBo(AiModelBo bo);
+
+    /**
+     * 批量删除模型配置
+     */
+    Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid);
+
+}
