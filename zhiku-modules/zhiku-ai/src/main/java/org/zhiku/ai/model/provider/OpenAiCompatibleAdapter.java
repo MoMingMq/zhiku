@@ -10,6 +10,8 @@ import org.springframework.ai.openai.OpenAiEmbeddingModel;
 import org.springframework.ai.openai.OpenAiEmbeddingOptions;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * OpenAI 兼容格式适配器（Spring AI 2.0：连接信息随 options 携带，构建时由 OpenAiSetup 自动装配客户端）
  * <p>覆盖 DeepSeek / 通义兼容端点 / Ollama / SiliconFlow 等一切 OpenAI 兼容服务，
@@ -37,16 +39,19 @@ public class OpenAiCompatibleAdapter implements ModelProviderAdapter {
 
     @Override
     public ChatModel buildChatModel(AiModel model) {
-        return OpenAiChatModel.builder()
-            .options(OpenAiChatOptions.builder()
-                .model(model.getModelCode())
-                .baseUrl(model.getBaseUrl())
-                .apiKey(resolveKey(model))
-                .temperature(AiModelParamsHelper.temperature(model.getParams()))
-                .maxTokens(AiModelParamsHelper.maxTokens(model.getParams()))
-                .topP(AiModelParamsHelper.topP(model.getParams()))
-                .build())
-            .build();
+        OpenAiChatOptions.Builder options = OpenAiChatOptions.builder()
+            .model(model.getModelCode())
+            .baseUrl(model.getBaseUrl())
+            .apiKey(resolveKey(model))
+            .temperature(AiModelParamsHelper.temperature(model.getParams()))
+            .maxTokens(AiModelParamsHelper.maxTokens(model.getParams()))
+            .topP(AiModelParamsHelper.topP(model.getParams()));
+        // 自定义参数（enable_search/response_format 等）经 extraBody 透传
+        Map<String, Object> extra = AiModelParamsHelper.extraBody(model.getParams());
+        if (extra != null) {
+            options.extraBody(extra);
+        }
+        return OpenAiChatModel.builder().options(options.build()).build();
     }
 
     @Override

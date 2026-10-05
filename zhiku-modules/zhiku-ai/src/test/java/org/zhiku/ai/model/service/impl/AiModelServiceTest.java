@@ -162,4 +162,29 @@ class AiModelServiceTest {
         verify(baseMapper).deleteByIds(anyCollection());
     }
 
+    @Test
+    void updateModelParamsBlankKeyThrows() {
+        when(baseMapper.selectById(1L)).thenReturn(new AiModel());
+        java.util.Map<String, Object> bad = new java.util.HashMap<>();
+        bad.put(" ", 1);
+        ServiceException ex = assertThrows(ServiceException.class, () -> service.updateModelParams(1L, bad));
+        assertTrue(ex.getMessage().contains("参数名"));
+    }
+
+    @Test
+    void updateModelParamsMissingModelThrows() {
+        when(baseMapper.selectById(9L)).thenReturn(null);
+        assertThrows(ServiceException.class, () -> service.updateModelParams(9L, java.util.Map.of("temperature", 0.5)));
+    }
+
+    @Test
+    void updateModelParamsEjectsCache() {
+        AiModel model = new AiModel();
+        model.setModelId(1L);
+        when(baseMapper.selectById(1L)).thenReturn(model);
+        when(baseMapper.update(isNull(), any())).thenReturn(1);
+        assertTrue(service.updateModelParams(1L, java.util.Map.of("temperature", 0.5, "enable_search", true)));
+        verify(clientFactory).evict(1L);
+    }
+
 }

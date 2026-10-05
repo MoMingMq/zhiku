@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * AI 模型配置
@@ -102,6 +103,17 @@ public class AiModelController extends BaseController {
     @PostMapping("/test/{modelId}")
     public R<ModelTestResult> test(@NotNull @PathVariable Long modelId) {
         return R.ok(modelService.testConnection(modelId));
+    }
+
+    /**
+     * 模型参数设置（Map 承载：参数名→默认值；应用侧按值类型动态生成调整控件）
+     */
+    @SaCheckPermission("ai:model:edit")
+    @Log(title = "模型管理", businessType = BusinessType.UPDATE)
+    @RepeatSubmit()
+    @PutMapping("/{modelId}/params")
+    public R<Void> updateParams(@NotNull @PathVariable Long modelId, @RequestBody Map<String, Object> params) {
+        return toAjax(modelService.updateModelParams(modelId, params));
     }
 
 }

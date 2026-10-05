@@ -8,6 +8,7 @@ import org.zhiku.common.core.domain.PageResult;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * AI 模型配置Service接口
@@ -50,5 +51,10 @@ public interface IAiModelService {
      * 连通性测试：按模型类型发最小请求，返回成功与否与耗时
      */
     ModelTestResult testConnection(Long modelId);
+
+    /**
+     * 更新模型参数（Map 承载：参数名→默认值，应用侧按值类型动态生成控件；独立于编辑表单）
+     */
+    Boolean updateModelParams(Long modelId, Map<String, Object> params);
 
 }

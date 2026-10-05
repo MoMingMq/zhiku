@@ -138,6 +138,29 @@ public class AiModelServiceImpl implements IAiModelService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean updateModelParams(Long modelId, Map<String, Object> params) {
+        AiModel model = baseMapper.selectById(modelId);
+        if (model == null) {
+            throw new ServiceException("模型不存在：" + modelId);
+        }
+        Map<String, Object> safeParams = params == null ? Map.of() : params;
+        safeParams.keySet().forEach(key -> {
+            if (StringUtils.isBlank(key)) {
+                throw new ServiceException("参数名不能为空");
+            }
+        });
+        LambdaUpdateWrapper<AiModel> luw = new LambdaUpdateWrapper<>();
+        luw.eq(AiModel::getModelId, modelId)
+            .set(AiModel::getParams, JsonUtils.toJsonString(safeParams));
+        boolean ok = baseMapper.update(null, luw) > 0;
+        if (ok) {
+            clientFactory.evict(modelId);
+        }
+        return ok;
+    }
+
+    @Override
     public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
         // TODO M2: 被知识库（kb_dataset.embed_model_id）/应用引用中的模型不可删，提示引用清单
         boolean ok = baseMapper.deleteByIds(ids) > 0;
