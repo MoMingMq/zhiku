@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-51-ai-model" author="zhiku">
+        <createTable tableName="ai_model" remarks="AI 模型配置表">
+            <column name="model_id" type="bigint" remarks="模型ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="model_name" type="varchar(100)" remarks="模型名称（显示用）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model_type" type="char(1)" defaultValue="1" remarks="模型类型（1LLM对话 2Embedding向量 3Rerank重排）"/>
+            <column name="provider" type="varchar(50)" defaultValue="openai_compatible" remarks="供应商标识（openai_compatible 兼容 DeepSeek/通义兼容端点/Ollama 等）"/>
+            <column name="base_url" type="varchar(255)" remarks="API 地址">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model_code" type="varchar(100)" remarks="模型标识（如 deepseek-chat）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="api_key" type="varchar(1000)" remarks="API Key（加密存储）"/>
+            <column name="embed_dim" type="int" remarks="向量维度（模型类型=2 时必填）"/>
+            <column name="params" type="varchar(1000)" remarks="默认参数JSON（temperature/maxTokens/topP）"/>
+            <column name="is_default" type="char(1)" defaultValue="0" remarks="是否默认模型（0否 1是，每类型至多一个）"/>
+            <column name="status" type="char(1)" defaultValue="0" remarks="状态（0正常 1停用）"/>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志（0存在 2删除）"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+        <createIndex indexName="idx_ai_model_type" tableName="ai_model">
+            <column name="model_type"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

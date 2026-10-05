@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261005-53-ai-dict" author="zhiku">
+        <insert tableName="sys_dict_type">
+            <column name="dict_id" valueNumeric="1761500000000000016"/>
+            <column name="dict_name" value="AI模型类型"/>
+            <column name="dict_type" value="ai_model_type"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="AI 模型类型列表"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000001001"/>
+            <column name="dict_sort" valueNumeric="1"/>
+            <column name="dict_label" value="LLM对话"/>
+            <column name="dict_value" value="1"/>
+            <column name="dict_type" value="ai_model_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="primary"/>
+            <column name="is_default" value="Y"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="对话生成模型"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000001002"/>
+            <column name="dict_sort" valueNumeric="2"/>
+            <column name="dict_label" value="Embedding向量"/>
+            <column name="dict_value" value="2"/>
+            <column name="dict_type" value="ai_model_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="success"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="向量化模型"/>
+        </insert>
+        <insert tableName="sys_dict_data">
+            <column name="dict_code" valueNumeric="1761600000000001003"/>
+            <column name="dict_sort" valueNumeric="3"/>
+            <column name="dict_label" value="Rerank重排"/>
+            <column name="dict_value" value="3"/>
+            <column name="dict_type" value="ai_model_type"/>
+            <column name="css_class" value=""/>
+            <column name="list_class" value="warning"/>
+            <column name="is_default" value="N"/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value="检索重排模型"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
