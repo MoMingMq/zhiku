@@ -19,6 +19,7 @@
         <module>zhiku-gen</module>
         <module>zhiku-system</module>
         <module>zhiku-workflow</module>
+        <module>zhiku-ai</module>
     </modules>
 
 </project>

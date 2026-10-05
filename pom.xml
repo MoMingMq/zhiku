@@ -395,6 +395,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <!--  AI 知识库模块  -->
+            <dependency>
+                <groupId>org.zhiku</groupId>
+                <artifactId>zhiku-ai</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
             <!--  api模块  -->
             <dependency>
                 <groupId>org.zhiku</groupId>

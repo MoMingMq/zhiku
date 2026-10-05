@@ -92,6 +92,12 @@
             <artifactId>zhiku-workflow</artifactId>
         </dependency>
 
+        <!--  AI 知识库模块  -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-ai</artifactId>
+        </dependency>
+
         <!-- Spring Boot Admin 客户端 -->
         <dependency>
             <groupId>de.codecentric</groupId>

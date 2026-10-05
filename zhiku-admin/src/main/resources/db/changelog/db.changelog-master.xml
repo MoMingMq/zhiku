@@ -3,8 +3,9 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <!-- 模块 changelog 按序接入：system（宿主表+基础数据）→ gen → workflow -->
+    <!-- 模块 changelog 按序接入：system（宿主表+基础数据）→ gen → workflow → ai -->
     <include file="db/changelog/system-changelog.xml"/>
     <include file="db/changelog/gen-changelog.xml"/>
     <include file="db/changelog/workflow-changelog.xml"/>
+    <include file="db/changelog/ai-changelog.xml"/>
 </databaseChangeLog>

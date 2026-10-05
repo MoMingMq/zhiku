@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.zhiku</groupId>
+        <artifactId>zhiku-modules</artifactId>
+        <version>${revision}</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>zhiku-ai</artifactId>
+
+    <description>
+        zhiku-ai AI 知识库模块（模型管理/知识库RAG/工具/应用）
+    </description>
+
+    <dependencies>
+        <!-- 通用工具-->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-core</artifactId>
+        </dependency>
+
+        <!-- 接口模块 -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-doc</artifactId>
+        </dependency>
+
+        <!-- 数据库服务 -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-mybatis</artifactId>
+        </dependency>
+
+        <!-- web服务 -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-web</artifactId>
+        </dependency>
+
+        <!-- 安全模块 -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-security</artifactId>
+        </dependency>
+
+        <!-- 日志记录 -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-log</artifactId>
+        </dependency>
+
+        <!-- JSON 处理 -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-json</artifactId>
+        </dependency>
+
+        <!-- 缓存与限流 -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-redis</artifactId>
+        </dependency>
+
+        <!-- excel -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-excel</artifactId>
+        </dependency>
+
+        <!-- 字段加解密模块 -->
+        <dependency>
+            <groupId>org.zhiku</groupId>
+            <artifactId>zhiku-common-encrypt</artifactId>
+        </dependency>
+
+        <!-- Spring AI OpenAI 兼容模型（版本由 spring-ai-bom 管理） -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-openai</artifactId>
+        </dependency>
+
+        <!-- 测试 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>
