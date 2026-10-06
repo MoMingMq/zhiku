@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyCollection;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -45,6 +46,21 @@ class KbDatasetServiceTest {
     @Mock
     private IAiModelRefService modelRefService;
 
+    @Mock
+    private org.zhiku.ai.knowledge.service.IKbDocumentService documentService;
+
+    @Mock
+    private org.zhiku.ai.knowledge.mapper.KbProblemMapper problemMapper;
+
+    @Mock
+    private org.zhiku.ai.knowledge.mapper.KbProblemChunkRelMapper problemRelMapper;
+
+    @Mock
+    private org.zhiku.ai.app.mapper.AiAppKbRelMapper appKbRelMapper;
+
+    @Mock
+    private org.springframework.beans.factory.ObjectProvider<org.zhiku.ai.knowledge.vector.KbVectorStore> vectorStoreProvider;
+
     @Spy
     @InjectMocks
     private KbDatasetServiceImpl service;
@@ -61,6 +77,15 @@ class KbDatasetServiceTest {
         TableInfoHelper.initTableInfo(
             new MapperBuilderAssistant(new com.baomidou.mybatisplus.core.MybatisConfiguration(), ""),
             KbDocument.class);
+        TableInfoHelper.initTableInfo(
+            new MapperBuilderAssistant(new com.baomidou.mybatisplus.core.MybatisConfiguration(), ""),
+            org.zhiku.ai.knowledge.domain.KbProblem.class);
+        TableInfoHelper.initTableInfo(
+            new MapperBuilderAssistant(new com.baomidou.mybatisplus.core.MybatisConfiguration(), ""),
+            org.zhiku.ai.knowledge.domain.KbProblemChunkRel.class);
+        TableInfoHelper.initTableInfo(
+            new MapperBuilderAssistant(new com.baomidou.mybatisplus.core.MybatisConfiguration(), ""),
+            org.zhiku.ai.app.domain.AiAppKbRel.class);
     }
 
     private KbDatasetBo bo() {
@@ -100,16 +125,42 @@ class KbDatasetServiceTest {
     }
 
     @Test
-    void deleteWithDocumentsRejected() {
-        when(documentMapper.selectCount(any())).thenReturn(3L);
+    void deleteCascadesDocuments() {
+        // 新语义：有文档→逐文档复用删除链路级联清库
+        org.zhiku.ai.knowledge.domain.KbDataset ds = new org.zhiku.ai.knowledge.domain.KbDataset();
+        ds.setDatasetId(1L);
+        when(baseMapper.selectById(1L)).thenReturn(ds);
+        org.zhiku.ai.knowledge.domain.KbDocument doc = new org.zhiku.ai.knowledge.domain.KbDocument();
+        doc.setDocumentId(9L);
+        doc.setFileName("a.docx");
+        doc.setStatus("4");
+        when(documentMapper.selectList(any())).thenReturn(java.util.List.of(doc));
+        when(baseMapper.deleteByIds(anyCollection())).thenReturn(1);
+        assertTrue(service.deleteWithValidByIds(java.util.List.of(1L), true));
+        verify(documentService).deleteById(9L);
+    }
+
+    @Test
+    void deleteRejectsInProgressDocument() {
+        org.zhiku.ai.knowledge.domain.KbDataset ds = new org.zhiku.ai.knowledge.domain.KbDataset();
+        ds.setDatasetId(1L);
+        when(baseMapper.selectById(1L)).thenReturn(ds);
+        org.zhiku.ai.knowledge.domain.KbDocument doc = new org.zhiku.ai.knowledge.domain.KbDocument();
+        doc.setDocumentId(9L);
+        doc.setFileName("b.docx");
+        doc.setStatus("2");
+        when(documentMapper.selectList(any())).thenReturn(java.util.List.of(doc));
         ServiceException ex = assertThrows(ServiceException.class,
             () -> service.deleteWithValidByIds(java.util.List.of(1L), true));
-        assertTrue(ex.getMessage().contains("3 个文档"));
+        assertTrue(ex.getMessage().contains("处理中"));
     }
 
     @Test
     void deleteEmptyDatasetProceeds() {
-        when(documentMapper.selectCount(any())).thenReturn(0L);
+        org.zhiku.ai.knowledge.domain.KbDataset ds = new org.zhiku.ai.knowledge.domain.KbDataset();
+        ds.setDatasetId(1L);
+        when(baseMapper.selectById(1L)).thenReturn(ds);
+        when(documentMapper.selectList(any())).thenReturn(java.util.List.of());
         when(baseMapper.deleteByIds(anyCollection())).thenReturn(1);
         assertTrue(service.deleteWithValidByIds(java.util.List.of(1L), true));
     }
