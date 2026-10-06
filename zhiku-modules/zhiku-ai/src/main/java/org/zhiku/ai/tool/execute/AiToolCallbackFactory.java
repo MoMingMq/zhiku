@@ -30,6 +30,8 @@ public class AiToolCallbackFactory {
 
     /**
      * 包装单工具：name=工具名、description=配置描述、inputSchema=入参 JSON Schema 原文
+     * <p>结果转换器：执行器返回的已是文本（含截断/错误可读包装），String 原样返回——
+     * 2.0 默认转换器会对一切结果 JSON 序列化（String 会多出一层引号，模型读到转义文本）。
      */
     public ToolCallback build(AiTool tool) {
         return FunctionToolCallback.builder(tool.getToolName(),
@@ -37,6 +39,7 @@ public class AiToolCallbackFactory {
             .description(tool.getDescription())
             .inputSchema(tool.getParamSchema() == null ? "{\"type\":\"object\"}" : tool.getParamSchema())
             .inputType(Map.class)
+            .toolCallResultConverter((result, type) -> result instanceof String text ? text : String.valueOf(result))
             .build();
     }
 
