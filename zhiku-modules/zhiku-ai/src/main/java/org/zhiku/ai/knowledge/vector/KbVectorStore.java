@@ -62,6 +62,9 @@ public interface KbVectorStore {
      * 检索命中（score 越大越相似，COSINE）
      */
     @Data
+    @lombok.Builder
+    @lombok.NoArgsConstructor
+    @lombok.AllArgsConstructor
     class VectorHit {
         private String id;
         private Long kbId;

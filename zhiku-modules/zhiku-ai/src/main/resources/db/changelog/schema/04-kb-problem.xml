@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261006-66-kb-problem" author="zhiku">
+        <createTable tableName="kb_problem" remarks="知识库问题表（问题向量化参与检索，命中后展开到关联分段）">
+            <column name="problem_id" type="bigint" remarks="问题ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="dataset_id" type="bigint" remarks="所属知识库ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="varchar(1000)" remarks="问题文本">
+                <constraints nullable="false"/>
+            </column>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志（0存在 2删除）"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+        <createIndex indexName="idx_problem_dataset" tableName="kb_problem">
+            <column name="dataset_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261006-67-kb-problem-rel" author="zhiku">
+        <createTable tableName="kb_problem_chunk_rel" remarks="问题-分段关联表（多对多）">
+            <column name="rel_id" type="bigint" remarks="关联ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="problem_id" type="bigint" remarks="问题ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chunk_id" type="bigint" remarks="分段ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dataset_id" type="bigint" remarks="知识库ID（冗余）"/>
+            <column name="document_id" type="bigint" remarks="文档ID（冗余）"/>
+        </createTable>
+        <addUniqueConstraint tableName="kb_problem_chunk_rel" columnNames="problem_id,chunk_id" constraintName="uk_problem_chunk"/>
+        <createIndex indexName="idx_rel_problem" tableName="kb_problem_chunk_rel">
+            <column name="problem_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

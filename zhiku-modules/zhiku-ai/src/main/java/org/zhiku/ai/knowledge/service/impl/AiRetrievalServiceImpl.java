@@ -6,11 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.zhiku.ai.knowledge.domain.KbChunk;
 import org.zhiku.ai.knowledge.domain.KbDataset;
 import org.zhiku.ai.knowledge.domain.KbDocument;
+import org.zhiku.ai.knowledge.domain.KbProblemChunkRel;
 import org.zhiku.ai.knowledge.domain.vo.RetrievalHit;
 import org.zhiku.ai.knowledge.domain.vo.RetrievalQuery;
 import org.zhiku.ai.knowledge.mapper.KbChunkMapper;
 import org.zhiku.ai.knowledge.mapper.KbDatasetMapper;
 import org.zhiku.ai.knowledge.mapper.KbDocumentMapper;
+import org.zhiku.ai.knowledge.mapper.KbProblemChunkRelMapper;
 import org.zhiku.ai.knowledge.service.IAiRetrievalService;
 import org.zhiku.ai.knowledge.vector.KbVectorStore;
 import org.zhiku.ai.model.client.AiModelClientFactory;
@@ -46,6 +48,7 @@ public class AiRetrievalServiceImpl implements IAiRetrievalService {
     private final KbDatasetMapper datasetMapper;
     private final KbDocumentMapper documentMapper;
     private final KbChunkMapper chunkMapper;
+    private final KbProblemChunkRelMapper problemRelMapper;
     private final AiModelMapper modelMapper;
     private final AiModelClientFactory modelClientFactory;
     private final IAiModelRefService modelRefService;
@@ -85,6 +88,8 @@ public class AiRetrievalServiceImpl implements IAiRetrievalService {
             candidates.addAll(vectorStore.search(entry.getValue().get(0).getEmbedDim(),
                 queryVector, filter, query.getTopK()));
         }
+        // 问题命中展开：document_id=0 标识问题向量，按关联关系映射为分段命中
+        candidates = expandProblems(candidates);
         if (candidates.isEmpty()) {
             return List.of();
         }
@@ -93,6 +98,50 @@ public class AiRetrievalServiceImpl implements IAiRetrievalService {
             candidates = rerank(query, candidates);
         }
         return assemble(candidates, query.getTopK());
+    }
+
+    /**
+     * 问题命中展开：document_id=0 标识问题向量（chunkId 字段承载 problemId），
+     * 命中后按关联关系展开为分段命中，与普通分段命中合并去重（同分段保最高分）
+     */
+    private List<KbVectorStore.VectorHit> expandProblems(List<KbVectorStore.VectorHit> candidates) {
+        List<Long> problemIds = candidates.stream()
+            .filter(h -> h.getDocumentId() != null && h.getDocumentId() == KbProblemServiceImpl.PROBLEM_DOCUMENT_FLAG)
+            .map(KbVectorStore.VectorHit::getChunkId)
+            .toList();
+        if (problemIds.isEmpty()) {
+            return candidates;
+        }
+        Map<Long, List<KbProblemChunkRel>> relMap = problemRelMapper.selectList(
+                new LambdaQueryWrapper<KbProblemChunkRel>().in(KbProblemChunkRel::getProblemId, problemIds))
+            .stream()
+            .collect(Collectors.groupingBy(KbProblemChunkRel::getProblemId));
+        Map<Long, Float> problemScores = candidates.stream()
+            .filter(h -> h.getDocumentId() != null && h.getDocumentId() == KbProblemServiceImpl.PROBLEM_DOCUMENT_FLAG)
+            .collect(Collectors.toMap(KbVectorStore.VectorHit::getChunkId, KbVectorStore.VectorHit::getScore, Math::max));
+        List<KbVectorStore.VectorHit> expanded = new ArrayList<>();
+        for (KbVectorStore.VectorHit hit : candidates) {
+            if (hit.getDocumentId() != null && hit.getDocumentId() == KbProblemServiceImpl.PROBLEM_DOCUMENT_FLAG) {
+                List<KbProblemChunkRel> rels = relMap.getOrDefault(hit.getChunkId(), List.of());
+                for (KbProblemChunkRel rel : rels) {
+                    expanded.add(KbVectorStore.VectorHit.builder()
+                        .id(hit.getId())
+                        .kbId(rel.getDatasetId())
+                        .documentId(rel.getDocumentId())
+                        .chunkId(rel.getChunkId())
+                        .score(problemScores.get(hit.getChunkId()))
+                        .build());
+                }
+            } else {
+                expanded.add(hit);
+            }
+        }
+        // 去重：同一分段（可能同时被分段直中与问题展开命中）保最高分
+        Map<Long, KbVectorStore.VectorHit> dedup = new java.util.LinkedHashMap<>();
+        for (KbVectorStore.VectorHit hit : expanded) {
+            dedup.merge(hit.getChunkId(), hit, (a, b) -> a.getScore() >= b.getScore() ? a : b);
+        }
+        return new ArrayList<>(dedup.values());
     }
 
     /**
