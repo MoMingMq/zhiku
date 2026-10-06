@@ -179,6 +179,7 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
             int maxTurns = MAX_HISTORY_TURNS;
 
             // ① 会话与用户消息先落库；assistant 消息ID 预生成（工具审计挂此ID，M3 契约零改动）
+            boolean isNewConversation = command.getConversationId() == null;
             conversationId = conversationService.ensureConversation(
                 command.getAppId(), command.getConversationId(), command.getQuestion(), command.getSource(), command.getUserId());
             conversationService.appendUserMessage(conversationId, command.getQuestion(), command.getUserId());
@@ -275,12 +276,44 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
                 toolCalls.isEmpty() ? null : JsonUtils.toJsonString(toolCalls), tokens[0], tokens[1], command.getUserId());
             writer.done(assistantMessageId, conversationId, tokens[0], tokens[1]);
             emitter.complete();
+            // 新会话：AI 生成简短标题（市面惯例：首条回复完成后触发；此时 SSE 已关闭不影响体验）
+            if (isNewConversation && content.length() > 0) {
+                generateTitle(command.getAppId(), conversationId, command.getQuestion(), content.toString());
+            }
         } catch (Exception e) {
             log.warn("应用对话失败 appId={}", command.getAppId(), e);
             String message = e.getMessage() == null ? e.getClass().getSimpleName() : e.getMessage();
             writer.error("对话失败：" + message, true);
             savePartial(conversationId, command, content, citations, toolCalls);
             emitter.complete();
+        }
+    }
+
+    /**
+     * AI 生成简短会话标题（3-10 字中文，直接输出标题；失败静默保留默认截断首问标题）
+     */
+    private void generateTitle(Long appId, Long conversationId, String question, String answer) {
+        try {
+            AiApp app = appMapper.selectById(appId);
+            if (app == null) {
+                return;
+            }
+            String hint = "根据下面的对话生成一个简短的会话标题。要求：不超过 10 个字；使用对话的主要语言；直接输出标题本身，不要引号、标点或任何解释。\n问："
+                + question + "\n答：" + (answer.length() > 200 ? answer.substring(0, 200) : answer);
+            String title = clientFactory.getChatModel(app.getModelId())
+                .call(new Prompt(List.of(new UserMessage(hint)),
+                    OpenAiChatOptions.builder().maxTokens(30).build()))
+                .getResult().getOutput().getText();
+            if (title != null) {
+                title = title.trim();
+                title = title.replace(String.valueOf((char) 96), "").replace(String.valueOf((char) 34), "")
+                    .replace(String.valueOf((char) 8220), "").replace(String.valueOf((char) 8221), "");
+                if (!title.isEmpty() && title.length() <= 30) {
+                    conversationService.rename(conversationId, title);
+                }
+            }
+        } catch (Exception e) {
+            log.debug("AI 标题生成失败（保留默认标题）：{}", e.getMessage());
         }
     }
 
