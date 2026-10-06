@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261006-76-ai-app-menu" author="zhiku">
+        <!-- 应用管理 菜单（挂 AI 平台目录下） -->
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761500000000020040"/>
+            <column name="menu_name" value="应用管理"/>
+            <column name="parent_id" valueNumeric="1761500000000020001"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value="app"/>
+            <column name="component" value="ai/app/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="ai:app:list"/>
+            <column name="icon" value="build"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <!-- 应用管理 按钮权限 -->
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761500000000020041"/>
+            <column name="menu_name" value="应用查询"/>
+            <column name="parent_id" valueNumeric="1761500000000020040"/>
+            <column name="order_num" valueNumeric="1"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="ai:app:query"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761500000000020042"/>
+            <column name="menu_name" value="应用新增"/>
+            <column name="parent_id" valueNumeric="1761500000000020040"/>
+            <column name="order_num" valueNumeric="2"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="ai:app:add"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761500000000020043"/>
+            <column name="menu_name" value="应用修改"/>
+            <column name="parent_id" valueNumeric="1761500000000020040"/>
+            <column name="order_num" valueNumeric="3"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="ai:app:edit"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761500000000020044"/>
+            <column name="menu_name" value="应用删除"/>
+            <column name="parent_id" valueNumeric="1761500000000020040"/>
+            <column name="order_num" valueNumeric="4"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="ai:app:remove"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761500000000020045"/>
+            <column name="menu_name" value="应用对话"/>
+            <column name="parent_id" valueNumeric="1761500000000020040"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value=""/>
+            <column name="component" value=""/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="F"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="ai:app:chat"/>
+            <column name="icon" value="#"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="20261006-77-ai-chat-menu" author="zhiku">
+        <!-- AI 对话 菜单（挂 AI 平台目录下，直接使用对话权限） -->
+        <insert tableName="sys_menu">
+            <column name="menu_id" valueNumeric="1761500000000020050"/>
+            <column name="menu_name" value="AI 对话"/>
+            <column name="parent_id" valueNumeric="1761500000000020001"/>
+            <column name="order_num" valueNumeric="5"/>
+            <column name="path" value="chat"/>
+            <column name="component" value="ai/chat/index"/>
+            <column name="query_param" value=""/>
+            <column name="is_frame" value="N"/>
+            <column name="is_cache" value="Y"/>
+            <column name="menu_type" value="C"/>
+            <column name="visible" value="0"/>
+            <column name="status" value="0"/>
+            <column name="perms" value="ai:app:chat"/>
+            <column name="icon" value="message"/>
+            <column name="active_menu" value=""/>
+            <column name="ext" value=""/>
+            <column name="create_dept" valueNumeric="1761000000000000103"/>
+            <column name="create_by" valueNumeric="1761100000000000001"/>
+            <column name="create_time" valueComputed="CURRENT_TIMESTAMP"/>
+            <column name="remark" value=""/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

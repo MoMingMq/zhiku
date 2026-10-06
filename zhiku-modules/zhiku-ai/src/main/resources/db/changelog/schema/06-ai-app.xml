@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261006-72-ai-app" author="zhiku">
+        <createTable tableName="ai_app" remarks="AI 应用表（编排容器：类型+模型+提示词+知识库+工具）">
+            <column name="app_id" type="bigint" remarks="应用ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="app_name" type="varchar(100)" remarks="应用名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(500)" remarks="描述"/>
+            <column name="icon" type="varchar(32)" remarks="图标"/>
+            <column name="app_type" type="varchar(20)" remarks="应用类型（simple简易应用 workflow高级编排-预留）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="chat_type" type="varchar(32)" remarks="对话类型码（knowledge_qa 等，ChatTypeHandler 路由）"/>
+            <column name="config" type="clob" remarks="对话类型专属配置 JSON（结构由类型定义）"/>
+            <column name="model_id" type="bigint" remarks="对话模型ID（ai_model）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="model_params" type="clob" remarks="模型参数覆盖 JSON {name:value}"/>
+            <column name="system_prompt" type="clob" remarks="系统提示词"/>
+            <column name="prologue" type="clob" remarks="开场白（Markdown）"/>
+            <column name="suggested_questions" type="varchar(2000)" remarks="推荐问题 JSON 数组"/>
+            <column name="share_enabled" type="char(1)" defaultValue="0" remarks="公开访问开关（0否 1是）"/>
+            <column name="share_code" type="varchar(64)" remarks="公开访问码（开启生成，关闭失效）"/>
+            <column name="ip_whitelist" type="varchar(1000)" remarks="IP 白名单（单IP/CIDR 逗号分隔，空=不限）"/>
+            <column name="status" type="char(1)" defaultValue="0" remarks="状态（0启用 1停用）"/>
+            <column name="del_flag" type="char(1)" defaultValue="0" remarks="删除标志（0存在 2删除）"/>
+            <column name="create_dept" type="bigint" remarks="创建部门"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+            <column name="update_by" type="bigint" remarks="更新者"/>
+            <column name="update_time" type="datetime" remarks="更新时间"/>
+        </createTable>
+        <createIndex indexName="idx_app_share_code" tableName="ai_app">
+            <column name="share_code"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261006-73-ai-app-kb-rel" author="zhiku">
+        <createTable tableName="ai_app_kb_rel" remarks="应用-知识库关联表（多对多，knowledge_qa 检索范围）">
+            <column name="rel_id" type="bigint" remarks="关联ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="app_id" type="bigint" remarks="应用ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dataset_id" type="bigint" remarks="知识库ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+        </createTable>
+        <addUniqueConstraint tableName="ai_app_kb_rel" columnNames="app_id,dataset_id" constraintName="uk_app_kb"/>
+        <createIndex indexName="idx_app_kb_app" tableName="ai_app_kb_rel">
+            <column name="app_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261006-74-ai-conversation" author="zhiku">
+        <createTable tableName="ai_conversation" remarks="对话会话表">
+            <column name="conversation_id" type="bigint" remarks="会话ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="app_id" type="bigint" remarks="应用ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="varchar(100)" remarks="会话标题（默认首问前20字）"/>
+            <column name="source" type="char(1)" defaultValue="0" remarks="来源（0内部 1公开匿名，公开会话 create_by 空）"/>
+            <column name="create_by" type="bigint" remarks="创建者（公开会话为空）"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+        </createTable>
+        <createIndex indexName="idx_conv_app" tableName="ai_conversation">
+            <column name="app_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="20261006-75-ai-message" author="zhiku">
+        <createTable tableName="ai_message" remarks="对话消息表（含 citation 引用溯源与工具调用记录）">
+            <column name="message_id" type="bigint" remarks="消息ID">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="conversation_id" type="bigint" remarks="会话ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="seq" type="int" remarks="会话内序号"/>
+            <column name="role" type="char(1)" remarks="角色（1用户 2助手）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="clob" remarks="消息内容"/>
+            <column name="citation" type="clob" remarks="引用溯源 JSON [{chunkId,documentId,documentName,seq,headingPath,score,snippet}]"/>
+            <column name="tool_calls" type="clob" remarks="工具调用记录 JSON [{name,args,result}]"/>
+            <column name="prompt_tokens" type="int" remarks="输入 token 用量（计费预留）"/>
+            <column name="completion_tokens" type="int" remarks="输出 token 用量（计费预留）"/>
+            <column name="create_by" type="bigint" remarks="创建者"/>
+            <column name="create_time" type="datetime" remarks="创建时间"/>
+        </createTable>
+        <createIndex indexName="idx_msg_conv" tableName="ai_message">
+            <column name="conversation_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
