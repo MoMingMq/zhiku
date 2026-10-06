@@ -64,7 +64,7 @@ public class AiAppServiceImpl implements IAiAppService {
      * IP 白名单格式：单 IP 或 CIDR，逗号分隔
      */
     private static final Pattern IP_OR_CIDR =
-        Pattern.compile("^(\\d{1,3}\\.){3}\\d{1,3}(/\\d{1,2})?$");
+        Pattern.compile("^(\\d{1,3}|\\*)(\\.(\\d{1,3}|\\*)){3}(/\\d{1,2})?$");
 
     private static final SecureRandom RANDOM = new SecureRandom();
 

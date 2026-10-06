@@ -48,8 +48,9 @@ public class AiPublicAppController extends BaseController {
      * 公开应用信息（名称/描述/开场白/推荐问题；不含配置）
      */
     @GetMapping("/{shareCode}")
-    public R<Map<String, Object>> info(@NotBlank @PathVariable String shareCode) {
-        AiAppVo app = requirePublicApp(shareCode, null);
+    public R<Map<String, Object>> info(@NotBlank @PathVariable String shareCode,
+                                       jakarta.servlet.http.HttpServletRequest request) {
+        AiAppVo app = requirePublicApp(shareCode, request);
         return R.ok(Map.of(
             "appName", app.getAppName(),
             "description", app.getDescription() == null ? "" : app.getDescription(),
