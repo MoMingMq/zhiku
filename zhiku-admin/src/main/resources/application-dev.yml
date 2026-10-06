@@ -261,7 +261,7 @@ justauth:
 zhiku:
   ai:
     milvus:
-      # 未部署 Milvus 时保持 false：知识库列表可看，上传/检索明确报错降级
+      # 提交卫生：仓库内只保留本地占位地址；真实环境地址通过环境变量/本地修改注入，禁止提交
       enabled: false
       uri: http://127.0.0.1:19530
       database: default

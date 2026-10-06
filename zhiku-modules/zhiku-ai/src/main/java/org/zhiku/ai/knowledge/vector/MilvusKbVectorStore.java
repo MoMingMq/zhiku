@@ -150,6 +150,8 @@ public class MilvusKbVectorStore implements KbVectorStore {
                 .filter(filter)
                 .limit(topK)
                 .outputFields(List.of(FIELD_KB_ID, FIELD_DOCUMENT_ID, FIELD_CHUNK_ID))
+                // 强一致：入库后立即检索（命中测试/对账）必须可见（BOUNDED 窗口会读到旧快照）
+                .consistencyLevel(io.milvus.v2.common.ConsistencyLevel.STRONG)
                 .build());
             List<VectorHit> hits = new ArrayList<>();
             for (List<SearchResp.SearchResult> results : resp.getSearchResults()) {
@@ -195,6 +197,8 @@ public class MilvusKbVectorStore implements KbVectorStore {
                 .databaseName(database)
                 .filter(StringUtils.isBlank(filter) ? "" : filter)
                 .outputFields(List.of("count(*)"))
+                // 强一致：对账/删后核对必须读到最新状态（默认 BOUNDED 可能读到删除前快照）
+                .consistencyLevel(io.milvus.v2.common.ConsistencyLevel.STRONG)
                 .build());
             for (QueryResp.QueryResult row : resp.getQueryResults()) {
                 Object value = row.getEntity().get("count(*)");
