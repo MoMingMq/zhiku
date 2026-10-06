@@ -23,6 +23,7 @@ import org.zhiku.common.json.utils.JsonUtils;
 import org.springframework.ai.chat.messages.AssistantMessage;
 import org.springframework.ai.chat.messages.Message;
 import org.springframework.ai.chat.messages.SystemMessage;
+import org.springframework.ai.chat.messages.ToolResponseMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.ChatOptions;
@@ -74,6 +75,11 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
     private static final int DEFAULT_TOKEN_BUDGET = 24_000;
 
     /**
+     * 工具循环熔断上限（Spring AI 2.0 移除模型内部工具循环，由本 handler 显式驱动；防无限调用烧 token）
+     */
+    private static final int MAX_TOOL_ROUNDS = 5;
+
+    /**
      * 上下文预算 = 模型上下文窗口 - 预留输出（模型 maxOutputTokens 或默认 4096）- 提示词余量
      */
     private int resolveTokenBudget(AiModel model) {
@@ -120,7 +126,7 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
     @Override
     public List<AppConfigField> configFields() {
         return List.of(
-            AppConfigField.multi("retrieval", "知识库与检索设置", "kb-config", true,
+            AppConfigField.multi("retrieval", "知识库", "kb-config", true,
                 "关联知识库并配置检索条数/相似度阈值（重排由各知识库自身配置驱动）"));
     }
 
@@ -204,33 +210,66 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
             toolContext.put(AiToolCallbackFactory.CTX_APP_ID, command.getAppId());
             toolContext.put(AiToolCallbackFactory.CTX_MESSAGE_ID, assistantMessageId);
             OpenAiChatOptions runtimeOptions = buildRuntimeOptions(model, app.getModelParams(), callbacks, toolContext);
-            Prompt prompt = new Prompt(messages, runtimeOptions);
+            Map<String, ToolCallback> callbackByName = new HashMap<>();
+            callbacks.forEach(cb -> callbackByName.put(cb.getToolDefinition().name(), cb));
 
-            // ⑤ 流式订阅（工具循环由 Spring AI 内部执行）；完成/异常释放闭锁
+            // ⑤ 显式工具循环（Spring AI 2.0 移除模型内部循环：模型返回 tool_calls 不自动执行，由本 handler 驱动）
             ChatModel chatModel = clientFactory.getChatModel(app.getModelId());
-            Disposable d = chatModel.stream(prompt)
-                .doOnNext(resp -> {
-                    Integer[] usage = extractor.handle(resp, content, writer::delta);
-                    if (usage != null) {
-                        tokens[0] = usage[0];
-                        tokens[1] = usage[1];
-                    }
-                })
-                .doFinally(signal -> latch.countDown())
-                .subscribe();
-            disposable.set(d);
             final Long convId = conversationId;
-            emitter.onCompletion(() -> safeDispose(disposable));
-            emitter.onError(t -> {
-                safeDispose(disposable);
-                log.info("对话流中断（客户端 abort）conversationId={}", convId);
-            });
-            emitter.onTimeout(() -> {
-                safeDispose(disposable);
-                writer.error("生成超时，请缩短问题或稍后重试", true);
-            });
-            // ⑥ 虚拟线程阻塞等待流结束（超时由 SseEmitter 120s 兜底）
-            latch.await();
+            Disposable d = null;
+            for (int round = 0; round < MAX_TOOL_ROUNDS; round++) {
+                final CountDownLatch roundLatch = new CountDownLatch(1);
+                latch = roundLatch;
+                ToolCallAggregator aggregator = new ToolCallAggregator();
+                Disposable roundDisposable = chatModel.stream(new Prompt(messages, runtimeOptions))
+                    .doOnNext(resp -> {
+                        Integer[] usage = extractor.handle(resp, content, writer::delta);
+                        if (usage != null) {
+                            tokens[0] = usage[0];
+                            tokens[1] = usage[1];
+                        }
+                        if (resp.getResult() != null && resp.getResult().getOutput() != null) {
+                            aggregator.accept(resp.getResult().getOutput());
+                        }
+                    })
+                    .doFinally(signal -> roundLatch.countDown())
+                    .subscribe();
+                if (d == null) {
+                    d = roundDisposable;
+                    disposable.set(d);
+                    emitter.onCompletion(() -> safeDispose(disposable));
+                    emitter.onError(t -> {
+                        safeDispose(disposable);
+                        log.info("对话流中断（客户端 abort）conversationId={}", convId);
+                    });
+                    emitter.onTimeout(() -> {
+                        safeDispose(disposable);
+                        writer.error("生成超时，请缩短问题或稍后重试", true);
+                    });
+                }
+                // 本轮流结束（虚拟线程阻塞；超时由 SseEmitter 120s 兜底）
+                latch.await();
+                List<AssistantMessage.ToolCall> calls = aggregator.toolCalls();
+                if (calls.isEmpty()) {
+                    break;
+                }
+                // 执行工具：decorated callback 发 tool_call/tool_result 帧并收集落库记录
+                List<ToolResponseMessage.ToolResponse> responses = new ArrayList<>();
+                for (int i = 0; i < calls.size(); i++) {
+                    AssistantMessage.ToolCall call = calls.get(i);
+                    ToolCallback callback = callbackByName.get(call.name());
+                    String result = callback == null
+                        ? "工具不可用：" + call.name()
+                        : callback.call(call.arguments(), new org.springframework.ai.chat.model.ToolContext(toolContext));
+                    responses.add(new ToolResponseMessage.ToolResponse(
+                        call.id() == null || call.id().isBlank() ? "call_" + i : call.id(), call.name(), result));
+                }
+                messages.add(AssistantMessage.builder()
+                    .content("")
+                    .toolCalls(calls)
+                    .build());
+                messages.add(ToolResponseMessage.builder().responses(responses).build());
+            }
             // ⑦ 落库 + 终帧
             conversationService.appendAssistantMessage(conversationId, content.toString(), citations,
                 toolCalls.isEmpty() ? null : JsonUtils.toJsonString(toolCalls), tokens[0], tokens[1], command.getUserId());
@@ -339,5 +378,46 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
      * knowledge_qa 专属配置
      */
     record QaConfig(List<Long> kbIds, int topK, float minScore) {
+    }
+
+    /**
+     * 流式 tool_calls 聚合器：OpenAI 兼容流分片（index+arguments 增量）合并为完整调用
+     */
+    static class ToolCallAggregator {
+
+        private final java.util.Map<Integer, String> ids = new java.util.LinkedHashMap<>();
+        private final java.util.Map<Integer, String> names = new java.util.LinkedHashMap<>();
+        private final java.util.Map<Integer, StringBuilder> args = new java.util.LinkedHashMap<>();
+
+        void accept(AssistantMessage output) {
+            if (!output.hasToolCalls()) {
+                return;
+            }
+            List<AssistantMessage.ToolCall> calls = output.getToolCalls();
+            for (int i = 0; i < calls.size(); i++) {
+                AssistantMessage.ToolCall call = calls.get(i);
+                Integer index = calls.size() == 1 ? 0 : i;
+                if (call.id() != null && !call.id().isBlank()) {
+                    ids.put(index, call.id());
+                }
+                if (call.name() != null && !call.name().isBlank()) {
+                    names.put(index, call.name());
+                }
+                if (call.arguments() != null && !call.arguments().isEmpty()
+                    && !"{}".equals(call.arguments())) {
+                    args.computeIfAbsent(index, k -> new StringBuilder()).append(call.arguments());
+                }
+            }
+        }
+
+        List<AssistantMessage.ToolCall> toolCalls() {
+            List<AssistantMessage.ToolCall> result = new ArrayList<>();
+            for (Integer index : names.keySet()) {
+                result.add(new AssistantMessage.ToolCall(
+                    ids.getOrDefault(index, ""), "function", names.get(index),
+                    args.containsKey(index) ? args.get(index).toString() : "{}"));
+            }
+            return result;
+        }
     }
 }
