@@ -10,6 +10,7 @@
     <include file="schema/04-kb-problem.xml" relativeToChangelogFile="true"/>
     <include file="schema/05-ai-tool.xml" relativeToChangelogFile="true"/>
     <include file="schema/06-ai-app.xml" relativeToChangelogFile="true"/>
+    <include file="schema/07-app-feedback.xml" relativeToChangelogFile="true"/>
     <include file="data/01-ai-menu.xml" relativeToChangelogFile="true"/>
     <include file="data/02-ai-dict.xml" relativeToChangelogFile="true"/>
     <include file="data/03-kb-menu.xml" relativeToChangelogFile="true"/>

@@ -190,7 +190,7 @@ public class AiAppServiceImpl implements IAiAppService {
         requireApp(appId);
         String normalized = ipWhitelist == null ? "" : ipWhitelist.trim();
         if (!normalized.isEmpty()) {
-            for (String segment : normalized.split("[,，]")) {
+            for (String segment : normalized.split("[,，\n\r]")) {
                 if (!IP_OR_CIDR.matcher(segment.trim()).matches()) {
                     throw new ServiceException("IP 白名单格式不正确：" + segment + "（支持单 IP 或 CIDR，逗号分隔）");
                 }

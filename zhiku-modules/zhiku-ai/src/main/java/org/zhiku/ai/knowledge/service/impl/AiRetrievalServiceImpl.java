@@ -33,6 +33,7 @@ import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -93,7 +94,13 @@ public class AiRetrievalServiceImpl implements IAiRetrievalService {
         if (candidates.isEmpty()) {
             return List.of();
         }
-        // 可选重排：候选全文送默认 Rerank 模型，截 topK
+        // 相似度阈值过滤（低于 minScore 的命中丢弃，Dify 同款语义）
+        if (query.getMinScore() > 0f) {
+            candidates = candidates.stream()
+                .filter(h -> h.getScore() >= query.getMinScore())
+                .collect(java.util.stream.Collectors.toList());
+        }
+        // 可选重排：按候选所属库配置的重排模型（库未配置回落系统默认），截 topK
         if (query.isRerankEnabled()) {
             candidates = rerank(query, candidates);
         }
@@ -145,15 +152,54 @@ public class AiRetrievalServiceImpl implements IAiRetrievalService {
     }
 
     /**
-     * 重排（存在默认 Rerank 模型时生效）
+     * 重排：按候选所属知识库配置的重排模型分组执行（库未配置回落系统默认，无任何可用模型跳过）
      */
     private List<KbVectorStore.VectorHit> rerank(RetrievalQuery query, List<KbVectorStore.VectorHit> candidates) {
-        AiModelVo rerankModelVo = modelRefService.getDefaultModel("3");
-        if (rerankModelVo == null) {
-            log.debug("未配置默认 Rerank 模型，跳过重排");
+        AiModelVo defaultRerank = modelRefService.getDefaultModel("3");
+        // 库级重排模型：kbId -> 模型（配置了且存在才生效）
+        Map<Long, AiModel> kbRerankModels = new java.util.HashMap<>();
+        Set<Long> kbIds = candidates.stream().map(KbVectorStore.VectorHit::getKbId).filter(java.util.Objects::nonNull)
+            .collect(java.util.stream.Collectors.toSet());
+        if (!kbIds.isEmpty()) {
+            for (KbDataset dataset : datasetMapper.selectBatchIds(kbIds)) {
+                if (dataset.getRerankModelId() != null) {
+                    AiModel model = modelMapper.selectById(dataset.getRerankModelId());
+                    if (model != null) {
+                        kbRerankModels.put(dataset.getDatasetId(), model);
+                    }
+                }
+            }
+        }
+        // 无库级配置且无默认：跳过
+        if (kbRerankModels.isEmpty() && defaultRerank == null) {
+            log.debug("未配置任何 Rerank 模型（库级与默认均无），跳过重排");
             return candidates;
         }
-        AiModel rerankModel = modelMapper.selectById(rerankModelVo.getModelId());
+        // 未配置库的候选：有默认模型时并入默认组重排，否则原样保留
+        List<KbVectorStore.VectorHit> result = new ArrayList<>(candidates.size());
+        Map<Long, List<KbVectorStore.VectorHit>> groups = candidates.stream()
+            .collect(java.util.stream.Collectors.groupingBy(
+                h -> kbRerankModels.containsKey(h.getKbId()) ? h.getKbId() : -1L,
+                java.util.LinkedHashMap::new, java.util.stream.Collectors.toList()));
+        for (Map.Entry<Long, List<KbVectorStore.VectorHit>> entry : groups.entrySet()) {
+            AiModel rerankModel = entry.getKey() == -1L
+                ? (defaultRerank == null ? null : modelMapper.selectById(defaultRerank.getModelId()))
+                : kbRerankModels.get(entry.getKey());
+            if (rerankModel == null) {
+                result.addAll(entry.getValue());
+                continue;
+            }
+            result.addAll(rerankByModel(query, entry.getValue(), rerankModel));
+        }
+        // 总量仍受 topK 约束
+        return result.size() > query.getTopK() ? new ArrayList<>(result.subList(0, query.getTopK())) : result;
+    }
+
+    /**
+     * 单模型重排（原逻辑：失败回退向量排序）
+     */
+    private List<KbVectorStore.VectorHit> rerankByModel(RetrievalQuery query, List<KbVectorStore.VectorHit> candidates,
+                                                        AiModel rerankModel) {
         Map<Long, String> contents = loadContents(candidates);
         List<String> documents = candidates.stream()
             .map(hit -> contents.getOrDefault(hit.getChunkId(), ""))

@@ -51,6 +51,11 @@ public class KbDatasetVo implements Serializable {
     private String chunkParams;
 
     /**
+     * 重排模型ID（空=用系统默认，无默认则不重排）
+     */
+    private Long rerankModelId;
+
+    /**
      * 状态（0正常 1停用）
      */
     private String status;

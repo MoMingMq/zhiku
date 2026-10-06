@@ -31,5 +31,9 @@ public class RetrievalQuery {
      * 是否启用 Rerank 重排（存在默认 Rerank 模型时生效）
      */
     private boolean rerankEnabled = false;
+    /**
+     * 相似度阈值（0-1，低于该分数的命中过滤；0=不过滤）
+     */
+    private float minScore = 0f;
 
 }

@@ -37,6 +37,7 @@ public class KbDatasetServiceImpl implements IKbDatasetService {
     private final KbDatasetMapper baseMapper;
     private final KbDocumentMapper documentMapper;
     private final IAiModelRefService modelRefService;
+    private final org.zhiku.ai.model.mapper.AiModelMapper aiModelMapper;
 
     @Override
     public PageResult<KbDatasetVo> queryPageList(KbDatasetBo bo, PageQuery pageQuery) {
@@ -106,6 +107,12 @@ public class KbDatasetServiceImpl implements IKbDatasetService {
      * 业务校验：chunkParams 必须是合法 JSON
      */
     private void validate(KbDatasetBo bo) {
+        if (bo.getRerankModelId() != null) {
+            var rerankModel = aiModelMapper.selectById(bo.getRerankModelId());
+            if (rerankModel == null || !"3".equals(rerankModel.getModelType())) {
+                throw new ServiceException("重排模型不存在或类型不是 Rerank");
+            }
+        }
         if (StringUtils.isNotBlank(bo.getChunkParams())) {
             try {
                 JsonUtils.parseMap(bo.getChunkParams());

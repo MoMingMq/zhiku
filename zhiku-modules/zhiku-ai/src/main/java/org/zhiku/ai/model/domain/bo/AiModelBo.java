@@ -78,6 +78,16 @@ public class AiModelBo implements Serializable {
     private String params;
 
     /**
+     * 上下文长度上限（token，可空）
+     */
+    private Integer contextWindow;
+
+    /**
+     * 最大输出 token（可空=不限制）
+     */
+    private Integer maxOutputTokens;
+
+    /**
      * 是否默认模型（0否 1是）
      */
     private String isDefault;

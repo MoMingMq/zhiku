@@ -70,6 +70,16 @@ public class AiModelVo implements Serializable {
     private String params;
 
     /**
+     * 上下文长度上限（token，空=未知）
+     */
+    private Integer contextWindow;
+
+    /**
+     * 最大输出 token（空=不限制）
+     */
+    private Integer maxOutputTokens;
+
+    /**
      * 是否默认模型（0否 1是）
      */
     private String isDefault;

@@ -66,6 +66,16 @@ public class AiModel extends BaseEntity {
     private String params;
 
     /**
+     * 上下文长度上限（token，空=未知按默认预算）
+     */
+    private Integer contextWindow;
+
+    /**
+     * 最大输出 token（空=不限制）
+     */
+    private Integer maxOutputTokens;
+
+    /**
      * 是否默认模型（0否 1是，每类型至多一个）
      */
     private String isDefault;

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261006-78-ai-model-limits" author="zhiku">
+        <comment>模型级默认配置：上下文长度与最大输出（UI 点验反馈：应用对话预算与输出上限的依据）</comment>
+        <addColumn tableName="ai_model">
+            <column name="context_window" type="int" remarks="上下文长度上限（token，空=未知按默认预算）"/>
+            <column name="max_output_tokens" type="int" remarks="最大输出 token（空=不限制）"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="20261006-79-kb-rerank-model" author="zhiku">
+        <comment>知识库级重排模型（UI 点验反馈：重排由知识库配置驱动，应用侧不再配置）</comment>
+        <addColumn tableName="kb_dataset">
+            <column name="rerank_model_id" type="bigint" remarks="重排模型ID（空=用系统默认，无默认则不重排）"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

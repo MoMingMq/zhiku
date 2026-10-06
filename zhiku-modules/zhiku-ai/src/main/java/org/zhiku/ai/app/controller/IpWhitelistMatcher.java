@@ -18,7 +18,7 @@ public final class IpWhitelistMatcher {
             return true;
         }
         String clientIp = clientIp(request);
-        for (String segment : whitelist.split("[,，]")) {
+        for (String segment : whitelist.split("[,，\n\r]")) {
             String rule = segment.trim();
             if (rule.isEmpty()) {
                 continue;
@@ -27,7 +27,7 @@ public final class IpWhitelistMatcher {
                 if (cidrMatch(clientIp, rule)) {
                     return true;
                 }
-            } else if (rule.equals(clientIp)) {
+            } else if (wildcardMatch(clientIp, rule)) {
                 return true;
             }
         }
@@ -58,6 +58,23 @@ public final class IpWhitelistMatcher {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    /**
+     * 通配符匹配（每段独立比较：值相等或规则段为 *；纯 IP 即精确匹配）
+     */
+    static boolean wildcardMatch(String ip, String rule) {
+        String[] ipParts = ip.split("\\.");
+        String[] ruleParts = rule.split("\\.");
+        if (ipParts.length != 4 || ruleParts.length != 4) {
+            return false;
+        }
+        for (int i = 0; i < 4; i++) {
+            if (!"*".equals(ruleParts[i]) && !ipParts[i].equals(ruleParts[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static long ipv4ToLong(String ip) {

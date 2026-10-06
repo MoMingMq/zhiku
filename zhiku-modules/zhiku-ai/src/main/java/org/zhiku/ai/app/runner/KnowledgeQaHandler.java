@@ -64,9 +64,26 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
     private static final ExecutorService STREAM_EXECUTOR = Executors.newVirtualThreadPerTaskExecutor();
 
     /**
-     * 防御性 token 预算（简估触发裁剪）
+     * 滑窗保留的最大历史轮数（超出按 token 预算从最旧裁剪）
      */
-    private static final int TOKEN_BUDGET = 24_000;
+    private static final int MAX_HISTORY_TURNS = 20;
+
+    /**
+     * 模型未配置上下文时的防御性预算
+     */
+    private static final int DEFAULT_TOKEN_BUDGET = 24_000;
+
+    /**
+     * 上下文预算 = 模型上下文窗口 - 预留输出（模型 maxOutputTokens 或默认 4096）- 提示词余量
+     */
+    private int resolveTokenBudget(AiModel model) {
+        if (model.getContextWindow() == null || model.getContextWindow() <= 0) {
+            return DEFAULT_TOKEN_BUDGET;
+        }
+        int reserved = model.getMaxOutputTokens() != null && model.getMaxOutputTokens() > 0
+            ? model.getMaxOutputTokens() : 4096;
+        return Math.max(1024, model.getContextWindow() - reserved - 512);
+    }
 
     /**
      * 默认系统提示词（应用未配置时兜底；防编造是产品底线）
@@ -103,15 +120,14 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
     @Override
     public List<AppConfigField> configFields() {
         return List.of(
-            AppConfigField.multi("kbIds", "关联知识库", "kb-multi", true, "检索范围 = 所选知识库并集"),
+            AppConfigField.multi("kbIds", "知识库与检索设置", "kb-config", true, "关联知识库并配置检索参数（重排由各知识库自身配置驱动）"),
             AppConfigField.number("topK", "检索条数", 5, 1, 20, "多库召回并集后的 Top N"),
-            AppConfigField.switchField("rerankEnabled", "启用重排", false, "使用系统默认 Rerank 模型重排检索结果"),
-            AppConfigField.number("maxTurns", "上下文轮数", 10, 1, 50, "多轮对话保留的最近历史轮数"));
+            AppConfigField.number("minScore", "相似度阈值", 5, 0, 100, "低于该分数的命中被过滤（百分比，0=不过滤）"));
     }
 
     @Override
     public String defaultConfig() {
-        return "{\"kbIds\":[],\"topK\":5,\"rerankEnabled\":false,\"maxTurns\":10}";
+        return "{\"kbIds\":[],\"topK\":5,\"minScore\":50}";
     }
 
     @Override
@@ -119,9 +135,6 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
         QaConfig config = parseConfig(configJson);
         if (config.topK() < 1 || config.topK() > 20) {
             throw new ServiceException("检索条数必须在 1-20 之间");
-        }
-        if (config.maxTurns() < 1 || config.maxTurns() > 50) {
-            throw new ServiceException("上下文轮数必须在 1-50 之间");
         }
     }
 
@@ -156,6 +169,9 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
                 throw new ServiceException("对话模型不存在，请先在设置页选择模型");
             }
             QaConfig config = parseConfig(app.getConfig());
+            // 上下文策略（业界共识：滑窗 + 按模型上下文预算截断；摘要压缩下期增强）
+            int tokenBudget = resolveTokenBudget(model);
+            int maxTurns = MAX_HISTORY_TURNS;
 
             // ① 会话与用户消息先落库；assistant 消息ID 预生成（工具审计挂此ID，M3 契约零改动）
             conversationId = conversationService.ensureConversation(
@@ -169,11 +185,11 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
             writer.citation(citations);
 
             // ③ 组装（预算截断纯函数）+ 消息序列
-            List<ChatTurn> history = conversationService.recentTurns(conversationId, config.maxTurns());
+            List<ChatTurn> history = conversationService.recentTurns(conversationId, maxTurns);
             String systemPrompt = app.getSystemPrompt() == null || app.getSystemPrompt().isBlank()
                 ? DEFAULT_SYSTEM_PROMPT : app.getSystemPrompt();
             PromptAssembler.AssembleResult assembled = assembler.assemble(
-                systemPrompt, hits, history, command.getQuestion(), config.maxTurns(), TOKEN_BUDGET);
+                systemPrompt, hits, history, command.getQuestion(), maxTurns, tokenBudget);
             List<Message> messages = new ArrayList<>();
             messages.add(new SystemMessage(systemPrompt + "\n\n" + assembled.contextBlock()));
             assembled.turns().forEach(t -> {
@@ -261,14 +277,18 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
 
     private QaConfig parseConfig(String configJson) {
         if (configJson == null || configJson.isBlank()) {
-            return new QaConfig(List.of(), 5, false, 10);
+            return new QaConfig(List.of(), 5, 0.5f);
         }
         Map<String, Object> map = JsonUtils.parseMap(configJson);
+        // 兼容旧 config（rerankEnabled/maxTurns 键忽略）；minScore 前端按 0-100 百分比存储
+        float minScore = Convert.toFloat(map.get("minScore"), 50f);
+        if (minScore > 1f) {
+            minScore = minScore / 100f;
+        }
         return new QaConfig(
             Convert.toList(Long.class, map.getOrDefault("kbIds", List.of())),
             Convert.toInt(map.get("topK"), 5),
-            Convert.toBool(map.get("rerankEnabled"), false),
-            Convert.toInt(map.get("maxTurns"), 10));
+            minScore);
     }
 
     private RetrievalQuery buildQuery(QaConfig config, String question) {
@@ -276,7 +296,9 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
         query.setKbIds(config.kbIds());
         query.setText(question);
         query.setTopK(config.topK());
-        query.setRerankEnabled(config.rerankEnabled());
+        query.setMinScore(config.minScore());
+        // 重排是否实际发生由各知识库配置的 rerank_model_id 决定（未配置库回落系统默认，均无则跳过）
+        query.setRerankEnabled(true);
         return query;
     }
 
@@ -300,6 +322,9 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
             if (params.get("topP") instanceof Number n) {
                 builder.topP(n.doubleValue());
             }
+        } else if (model.getMaxOutputTokens() != null && model.getMaxOutputTokens() > 0) {
+            // 应用未覆盖参数时回落模型级最大输出配置
+            builder.maxTokens(model.getMaxOutputTokens());
         }
         return builder.build();
     }
@@ -314,6 +339,6 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
     /**
      * knowledge_qa 专属配置
      */
-    record QaConfig(List<Long> kbIds, int topK, boolean rerankEnabled, int maxTurns) {
+    record QaConfig(List<Long> kbIds, int topK, float minScore) {
     }
 }

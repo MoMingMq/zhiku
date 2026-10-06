@@ -226,6 +226,12 @@ public class AiModelServiceImpl implements IAiModelService {
      * 业务校验：params 必须是合法 JSON（向量维度允许留空，测试连接成功后按实测自动回填）
      */
     private void validateParams(AiModelBo bo) {
+        if (bo.getContextWindow() != null && bo.getContextWindow() <= 0) {
+            throw new ServiceException("上下文长度必须为正整数");
+        }
+        if (bo.getMaxOutputTokens() != null && bo.getMaxOutputTokens() <= 0) {
+            throw new ServiceException("最大输出 token 必须为正整数");
+        }
         if (StringUtils.isNotBlank(bo.getParams())) {
             try {
                 JsonUtils.parseMap(bo.getParams());
