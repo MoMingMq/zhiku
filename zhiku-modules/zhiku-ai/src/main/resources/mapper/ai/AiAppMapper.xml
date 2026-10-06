@@ -4,4 +4,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.zhiku.ai.app.mapper.AiAppMapper">
 
+    <!-- 应用监控统计（总量；MySQL 主线方言） -->
+    <select id="selectAppStatsTotals" resultType="java.util.Map">
+        SELECT
+            (SELECT COUNT(*) FROM ai_message m
+                JOIN ai_conversation c ON m.conversation_id = c.conversation_id
+                WHERE c.app_id = #{appId} AND m.role = '1') AS totalQuestions,
+            (SELECT COUNT(*) FROM ai_conversation WHERE app_id = #{appId}) AS totalConversations,
+            (SELECT COALESCE(SUM(COALESCE(m.prompt_tokens, 0) + COALESCE(m.completion_tokens, 0)), 0)
+                FROM ai_message m
+                JOIN ai_conversation c ON m.conversation_id = c.conversation_id
+                WHERE c.app_id = #{appId} AND m.role = '2') AS totalTokens,
+            (SELECT COUNT(*) FROM ai_message m
+                JOIN ai_conversation c ON m.conversation_id = c.conversation_id
+                WHERE c.app_id = #{appId} AND m.role = '1' AND m.create_time >= CURDATE()) AS todayQuestions
+    </select>
+
+    <!-- 近 7 日按日统计 -->
+    <select id="selectAppStatsDaily" resultType="java.util.Map">
+        SELECT DATE_FORMAT(m.create_time, '%Y-%m-%d') AS date,
+               COUNT(*) AS questions,
+               COALESCE(SUM(COALESCE(m.prompt_tokens, 0) + COALESCE(m.completion_tokens, 0)), 0) AS tokens
+        FROM ai_message m
+        JOIN ai_conversation c ON m.conversation_id = c.conversation_id
+        WHERE c.app_id = #{appId} AND m.role = '1'
+          AND m.create_time >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+        GROUP BY DATE_FORMAT(m.create_time, '%Y-%m-%d')
+        ORDER BY date
+    </select>
 </mapper>

@@ -71,7 +71,7 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
     /**
      * 默认系统提示词（应用未配置时兜底；防编造是产品底线）
      */
-    static final String DEFAULT_SYSTEM_PROMPT =
+    public static final String DEFAULT_SYSTEM_PROMPT =
         "你是企业知识库助手。仅根据提供的【参考资料】回答用户问题；资料中没有答案时明确说明无法回答，不要编造。";
 
     private final AiAppMapper appMapper;
