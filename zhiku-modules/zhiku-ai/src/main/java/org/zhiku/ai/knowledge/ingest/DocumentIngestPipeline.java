@@ -181,6 +181,7 @@ public class DocumentIngestPipeline {
             chunk.setDatasetId(doc.getDatasetId());
             chunk.setDocumentId(doc.getDocumentId());
             chunk.setSeq(i + 1);
+            chunk.setTitle(deriveTitle(draft.getHeadingPath()));
             chunk.setContent(draft.getContent());
             chunk.setHeadingPath(draft.getHeadingPath());
             chunk.setStrategyTag(draft.getStrategyTag());
@@ -190,6 +191,17 @@ public class DocumentIngestPipeline {
         }
         chunks.forEach(chunkMapper::insert);
         return chunks;
+    }
+
+    /**
+     * 默认分段标题：标题路径末级（如「第一章>1.1」→ 1.1），无路径返回 null
+     */
+    private String deriveTitle(String headingPath) {
+        if (StringUtils.isBlank(headingPath)) {
+            return null;
+        }
+        String[] parts = headingPath.split(">");
+        return parts[parts.length - 1];
     }
 
     private void embedAndUpsert(KbVectorStore vectorStore, KbDocument doc, KbDataset dataset,

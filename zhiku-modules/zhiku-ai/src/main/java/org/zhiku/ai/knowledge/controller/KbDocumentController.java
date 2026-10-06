@@ -18,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -105,13 +106,62 @@ public class KbDocumentController extends BaseController {
     }
 
     /**
-     * 切换分块禁用状态（禁用后不参与检索）
+     * 切换分段禁用状态（禁用后不参与检索）
      */
     @SaCheckPermission("ai:kb:edit")
     @Log(title = "知识库管理", businessType = BusinessType.UPDATE)
     @PutMapping("/chunk/{chunkId}/disabled")
     public R<Void> changeChunkDisabled(@NotNull @PathVariable Long chunkId, @RequestParam boolean disabled) {
         return toAjax(chunkService.changeDisabled(chunkId, disabled));
+    }
+
+    /**
+     * 编辑分段（标题/正文；正文变更自动重新向量化）
+     */
+    @SaCheckPermission("ai:kb:edit")
+    @Log(title = "知识库管理", businessType = BusinessType.UPDATE)
+    @RepeatSubmit()
+    @PutMapping("/chunk/{chunkId}")
+    public R<Void> editChunk(@NotNull @PathVariable Long chunkId, @RequestBody ChunkEditBody body) {
+        return toAjax(chunkService.editChunk(chunkId, body.title(), body.content()));
+    }
+
+    /**
+     * 编辑分段请求体
+     */
+    public record ChunkEditBody(String title, String content) {
+    }
+
+    /**
+     * 新增分段（追加到文档末尾并向量化）
+     */
+    @SaCheckPermission("ai:kb:edit")
+    @Log(title = "知识库管理", businessType = BusinessType.INSERT)
+    @RepeatSubmit()
+    @PostMapping("/{documentId}/chunk")
+    public R<Long> addChunk(@NotNull @PathVariable Long documentId, @RequestBody ChunkEditBody body) {
+        return R.ok(chunkService.addChunk(documentId, body.title(), body.content()));
+    }
+
+    /**
+     * 删除分段（同步删除向量）
+     */
+    @SaCheckPermission("ai:kb:edit")
+    @Log(title = "知识库管理", businessType = BusinessType.DELETE)
+    @DeleteMapping("/chunk/{chunkId}")
+    public R<Void> deleteChunk(@NotNull @PathVariable Long chunkId) {
+        return toAjax(chunkService.deleteChunk(chunkId));
+    }
+
+    /**
+     * 分段排序（拖拽后按新顺序重排 seq）
+     */
+    @SaCheckPermission("ai:kb:edit")
+    @Log(title = "知识库管理", businessType = BusinessType.UPDATE)
+    @RepeatSubmit()
+    @PutMapping("/{documentId}/chunks/order")
+    public R<Void> reorderChunks(@NotNull @PathVariable Long documentId, @RequestBody List<Long> chunkIds) {
+        return toAjax(chunkService.reorderChunks(documentId, chunkIds));
     }
 
     /**

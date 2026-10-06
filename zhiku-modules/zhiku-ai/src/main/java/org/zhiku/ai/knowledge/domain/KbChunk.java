@@ -44,6 +44,11 @@ public class KbChunk extends BaseEntity {
     private String content;
 
     /**
+     * 分段标题（默认取标题路径末级，可编辑）
+     */
+    private String title;
+
+    /**
      * 标题路径（如 第一章>1.1）
      */
     private String headingPath;

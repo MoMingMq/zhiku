@@ -41,6 +41,11 @@ public class KbChunkVo implements Serializable {
     private Integer seq;
 
     /**
+     * 分段标题
+     */
+    private String title;
+
+    /**
      * 分块正文
      */
     private String content;
