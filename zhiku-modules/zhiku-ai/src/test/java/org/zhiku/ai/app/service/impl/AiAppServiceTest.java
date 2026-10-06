@@ -84,9 +84,9 @@ class AiAppServiceTest {
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
         lenient().when(qaHandler.type()).thenReturn("knowledge_qa");
-        appService = new AiAppServiceImpl(baseMapper, kbRelMapper, toolRelMapper,
+        appService = org.mockito.Mockito.spy(new AiAppServiceImpl(baseMapper, kbRelMapper, toolRelMapper,
             conversationMapper, messageMapper, modelMapper, datasetMapper,
-            new ChatTypeRegistry(List.of(qaHandler)), mockConversationService);
+            new ChatTypeRegistry(List.of(qaHandler)), mockConversationService));
         conversationService = new AiConversationServiceImpl(conversationMapper, messageMapper, chunkMapper);
     }
 
@@ -102,6 +102,8 @@ class AiAppServiceTest {
             AiConversation.class);
         TableInfoHelper.initTableInfo(new MapperBuilderAssistant(new MybatisConfiguration(), ""),
             AiMessage.class);
+        TableInfoHelper.initTableInfo(new MapperBuilderAssistant(new MybatisConfiguration(), ""),
+            org.zhiku.ai.model.domain.AiModel.class);
     }
 
     private AiAppBo validBo() {
@@ -126,6 +128,38 @@ class AiAppServiceTest {
         AiAppBo bo = validBo();
         bo.setChatType("agent");
         assertThrows(ServiceException.class, () -> appService.insertByBo(bo));
+    }
+
+    @Test
+    void nullModelResolvesDefaultLlm() throws Exception {
+        org.zhiku.ai.model.domain.AiModel llm = new org.zhiku.ai.model.domain.AiModel();
+        llm.setModelId(200L);
+        when(modelMapper.selectOne(any(Wrapper.class))).thenReturn(llm);
+        when(modelMapper.selectById(200L)).thenReturn(llm);
+        // toEntity 钩子：手动映射
+        org.mockito.Mockito.doAnswer(inv -> {
+            AiAppBo src = inv.getArgument(0);
+            org.zhiku.ai.app.domain.AiApp e = new org.zhiku.ai.app.domain.AiApp();
+            e.setAppId(src.getAppId());
+            e.setAppName(src.getAppName());
+            e.setAppType(src.getAppType());
+            e.setChatType(src.getChatType());
+            e.setModelId(src.getModelId());
+            return e;
+        }).when(appService).toEntity(any(AiAppBo.class));
+        when(baseMapper.selectCount(any(Wrapper.class))).thenReturn(0L);
+        when(baseMapper.insert(any(org.zhiku.ai.app.domain.AiApp.class))).thenReturn(1);
+        Boolean ok = appService.insertByBo(validBo2());
+        org.junit.jupiter.api.Assertions.assertTrue(ok);
+    }
+
+    private AiAppBo validBo2() {
+        AiAppBo bo = new AiAppBo();
+        bo.setAppName("默认模型应用");
+        bo.setAppType("simple");
+        bo.setChatType("knowledge_qa");
+        bo.setConfig("{}");
+        return bo;
     }
 
     @Test

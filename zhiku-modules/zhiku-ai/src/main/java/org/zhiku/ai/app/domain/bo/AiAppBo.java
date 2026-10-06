@@ -65,9 +65,9 @@ public class AiAppBo implements Serializable {
     private String config;
 
     /**
-     * 对话模型ID
+     * 对话模型ID（新建可不选——自动落默认对话模型；设置页保存必填）
      */
-    @NotNull(message = "必须选择对话模型", groups = { AddGroup.class, EditGroup.class })
+    @NotNull(message = "必须选择对话模型", groups = { EditGroup.class })
     private Long modelId;
 
     /**

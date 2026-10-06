@@ -24,6 +24,7 @@ import org.zhiku.ai.app.runner.ChatTypeRegistry;
 import org.zhiku.ai.app.service.IAiAppService;
 import org.zhiku.ai.app.service.IAiConversationService;
 import org.zhiku.ai.knowledge.mapper.KbDatasetMapper;
+import org.zhiku.ai.model.domain.AiModel;
 import org.zhiku.ai.model.mapper.AiModelMapper;
 import org.zhiku.ai.tool.mapper.AiAppToolRelMapper;
 import org.zhiku.ai.tool.domain.AiAppToolRel;
@@ -107,6 +108,9 @@ public class AiAppServiceImpl implements IAiAppService {
 
     @Override
     public Boolean insertByBo(AiAppBo bo) {
+        if (bo.getModelId() == null) {
+            bo.setModelId(requireDefaultLlmModel());
+        }
         validate(bo, null);
         AiApp add = toEntity(bo);
         if (StringUtils.isBlank(add.getChatType())) {
@@ -226,6 +230,24 @@ public class AiAppServiceImpl implements IAiAppService {
             .eq(AiApp::getShareEnabled, "1")
             .eq(AiApp::getStatus, "0"));
         return vo;
+    }
+
+    /**
+     * 新建未选模型时自动落默认对话模型（isDefault 优先，否则最新一个 LLM；一个都没有则引导先配模型）
+     */
+    private Long requireDefaultLlmModel() {
+        AiModel llm = modelMapper.selectOne(new LambdaQueryWrapper<AiModel>()
+            .eq(AiModel::getModelType, "1").eq(AiModel::getIsDefault, "1")
+            .orderByDesc(AiModel::getModelId).last("limit 1"));
+        if (llm == null) {
+            llm = modelMapper.selectOne(new LambdaQueryWrapper<AiModel>()
+                .eq(AiModel::getModelType, "1")
+                .orderByDesc(AiModel::getModelId).last("limit 1"));
+        }
+        if (llm == null) {
+            throw new ServiceException("暂无可用对话模型，请先在模型管理配置");
+        }
+        return llm.getModelId();
     }
 
     private AiApp requireApp(Long appId) {
