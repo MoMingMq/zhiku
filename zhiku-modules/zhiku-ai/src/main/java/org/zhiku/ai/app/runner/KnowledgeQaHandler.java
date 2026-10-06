@@ -120,9 +120,8 @@ public class KnowledgeQaHandler implements ChatTypeHandler {
     @Override
     public List<AppConfigField> configFields() {
         return List.of(
-            AppConfigField.multi("kbIds", "知识库与检索设置", "kb-config", true, "关联知识库并配置检索参数（重排由各知识库自身配置驱动）"),
-            AppConfigField.number("topK", "检索条数", 5, 1, 20, "多库召回并集后的 Top N"),
-            AppConfigField.number("minScore", "相似度阈值", 5, 0, 100, "低于该分数的命中被过滤（百分比，0=不过滤）"));
+            AppConfigField.multi("retrieval", "知识库与检索设置", "kb-config", true,
+                "关联知识库并配置检索条数/相似度阈值（重排由各知识库自身配置驱动）"));
     }
 
     @Override
