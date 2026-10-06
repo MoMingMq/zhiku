@@ -20,6 +20,7 @@ import org.zhiku.common.core.utils.StringUtils;
 import org.zhiku.common.json.utils.JsonUtils;
 import org.zhiku.common.mybatis.core.page.PageQuery;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
@@ -38,6 +39,11 @@ public class KbDatasetServiceImpl implements IKbDatasetService {
     private final KbDocumentMapper documentMapper;
     private final IAiModelRefService modelRefService;
     private final org.zhiku.ai.model.mapper.AiModelMapper aiModelMapper;
+    private final org.zhiku.ai.knowledge.service.IKbDocumentService documentService;
+    private final org.zhiku.ai.knowledge.mapper.KbProblemMapper problemMapper;
+    private final org.zhiku.ai.knowledge.mapper.KbProblemChunkRelMapper problemRelMapper;
+    private final org.zhiku.ai.app.mapper.AiAppKbRelMapper appKbRelMapper;
+    private final org.springframework.beans.factory.ObjectProvider<org.zhiku.ai.knowledge.vector.KbVectorStore> vectorStoreProvider;
 
     @Override
     public PageResult<KbDatasetVo> queryPageList(KbDatasetBo bo, PageQuery pageQuery) {
@@ -80,16 +86,46 @@ public class KbDatasetServiceImpl implements IKbDatasetService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean deleteWithValidByIds(Collection<Long> ids, Boolean isValid) {
-        // 删除保护：存在任何未删除文档（含处理中）即拒绝——先删空文档再删库
-        LambdaQueryWrapper<KbDocument> lqw = new LambdaQueryWrapper<>();
-        lqw.in(KbDocument::getDatasetId, ids);
-        Long docCount = documentMapper.selectCount(lqw);
-        if (docCount != null && docCount > 0) {
-            throw new ServiceException("知识库下存在 " + docCount + " 个文档，请先删除全部文档后再删除知识库");
+        for (Long datasetId : ids) {
+            cascadeDelete(datasetId);
         }
-        // TODO M4: 被应用（ai_app_kb_rel）引用中的知识库不可删，提示引用清单
         return baseMapper.deleteByIds(ids) > 0;
+    }
+
+    /**
+     * 级联删除：文档（向量/分块/问题关联/磁盘文件，复用单文档删除链路）→ 问题与关联 → 整库向量表达式兜底 → 解除应用挂载
+     */
+    private void cascadeDelete(Long datasetId) {
+        KbDataset dataset = baseMapper.selectById(datasetId);
+        if (dataset == null) {
+            return;
+        }
+        List<KbDocument> documents = documentMapper.selectList(
+            new LambdaQueryWrapper<KbDocument>().eq(KbDocument::getDatasetId, datasetId));
+        // 处理中保护保留：与异步入库管线竞态会残留孤儿分块与向量
+        for (KbDocument doc : documents) {
+            if (org.zhiku.ai.knowledge.ingest.DocumentStatus.IN_PROGRESS.contains(doc.getStatus())) {
+                throw new ServiceException("知识库下存在处理中的文档（" + doc.getFileName() + "），请等处理结束后再删除知识库");
+            }
+        }
+        for (KbDocument doc : documents) {
+            documentService.deleteById(doc.getDocumentId());
+        }
+        // 问题域：问题与关联（问题向量由下方整库表达式兜底清理）
+        problemMapper.delete(new LambdaQueryWrapper<org.zhiku.ai.knowledge.domain.KbProblem>()
+            .eq(org.zhiku.ai.knowledge.domain.KbProblem::getDatasetId, datasetId));
+        problemRelMapper.delete(new LambdaQueryWrapper<org.zhiku.ai.knowledge.domain.KbProblemChunkRel>()
+            .eq(org.zhiku.ai.knowledge.domain.KbProblemChunkRel::getDatasetId, datasetId));
+        // 整库向量兜底（kb_id 表达式覆盖问题向量与任何残余；幂等）
+        org.zhiku.ai.knowledge.vector.KbVectorStore vectorStore = vectorStoreProvider.getIfAvailable();
+        if (vectorStore != null && dataset.getEmbedDim() != null) {
+            vectorStore.deleteByExpr(dataset.getEmbedDim(), "kb_id == " + datasetId);
+        }
+        // 解除应用挂载关系
+        appKbRelMapper.delete(new LambdaQueryWrapper<org.zhiku.ai.app.domain.AiAppKbRel>()
+            .eq(org.zhiku.ai.app.domain.AiAppKbRel::getDatasetId, datasetId));
     }
 
     /**
