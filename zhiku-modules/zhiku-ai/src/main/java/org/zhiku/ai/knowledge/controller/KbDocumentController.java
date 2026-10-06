@@ -97,12 +97,24 @@ public class KbDocumentController extends BaseController {
     }
 
     /**
-     * 查询文档的分块列表（右表）
+     * 查询文档的分段列表
      */
     @SaCheckPermission("ai:kb:query")
     @GetMapping("/{documentId}/chunks")
     public R<List<KbChunkVo>> chunks(@NotNull @PathVariable Long documentId) {
         return R.ok(chunkService.queryByDocumentId(documentId));
+    }
+
+    /**
+     * 分页查询文档分段（绑定弹窗滚动分页：searchType=title|content）
+     */
+    @SaCheckPermission("ai:kb:query")
+    @GetMapping("/{documentId}/chunk/page")
+    public R<PageResult<KbChunkVo>> chunkPage(@NotNull @PathVariable Long documentId,
+                                              @RequestParam(required = false) String searchType,
+                                              @RequestParam(required = false) String keyword,
+                                              PageQuery pageQuery) {
+        return R.ok(chunkService.queryPage(documentId, searchType, keyword, pageQuery));
     }
 
     /**

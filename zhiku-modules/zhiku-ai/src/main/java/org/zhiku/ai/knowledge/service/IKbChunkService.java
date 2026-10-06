@@ -1,6 +1,8 @@
 package org.zhiku.ai.knowledge.service;
 
 import org.zhiku.ai.knowledge.domain.vo.KbChunkVo;
+import org.zhiku.common.core.domain.PageResult;
+import org.zhiku.common.mybatis.core.page.PageQuery;
 
 import java.util.List;
 
@@ -15,6 +17,14 @@ public interface IKbChunkService {
      * 查询文档的分段列表
      */
     List<KbChunkVo> queryByDocumentId(Long documentId);
+
+    /**
+     * 分页查询文档分段（绑定弹窗滚动分页用）
+     *
+     * @param searchType title|content 检索字段
+     * @param keyword    检索词
+     */
+    PageResult<KbChunkVo> queryPage(Long documentId, String searchType, String keyword, PageQuery pageQuery);
 
     /**
      * 切换分段禁用状态（禁用后不参与检索）

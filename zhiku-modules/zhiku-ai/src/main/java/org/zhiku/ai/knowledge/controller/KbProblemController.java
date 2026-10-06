@@ -4,10 +4,10 @@ import cn.dev33.satoken.annotation.SaCheckPermission;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.zhiku.ai.knowledge.domain.vo.KbProblemChunkVo;
 import org.zhiku.ai.knowledge.domain.vo.KbProblemVo;
 import org.zhiku.ai.knowledge.service.IKbProblemService;
 import org.zhiku.common.core.domain.R;
-import org.zhiku.common.core.utils.StringUtils;
 import org.zhiku.common.log.annotation.Log;
 import org.zhiku.common.log.enums.BusinessType;
 import org.zhiku.common.redis.annotation.RepeatSubmit;
@@ -48,7 +48,7 @@ public class KbProblemController extends BaseController {
     }
 
     /**
-     * 查询问题详情（含关联分段）
+     * 查询问题详情（含关联分段ID）
      */
     @SaCheckPermission("ai:kb:query")
     @GetMapping("/{problemId}")
@@ -57,25 +57,45 @@ public class KbProblemController extends BaseController {
     }
 
     /**
-     * 新增问题（文本向量化入库）
+     * 查询问题关联的分段（含文档名）
+     */
+    @SaCheckPermission("ai:kb:query")
+    @GetMapping("/{problemId}/chunks")
+    public R<List<KbProblemChunkVo>> boundChunks(@NotNull @PathVariable Long problemId) {
+        return R.ok(problemService.queryBoundChunks(problemId));
+    }
+
+    /**
+     * 批量新增问题（content 一行一个问题，逐条向量化）
      */
     @SaCheckPermission("ai:kb:add")
     @Log(title = "知识库管理", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping
-    public R<Long> add(@RequestBody ProblemBody body) {
-        return R.ok(problemService.insertByBo(body.datasetId(), body.content(), body.chunkIds()));
+    public R<Integer> add(@RequestBody ProblemBody body) {
+        return R.ok(problemService.insertBatch(body.datasetId(), body.content()).size());
     }
 
     /**
-     * 编辑问题（文本变更重新向量化，重绑分段）
+     * 绑定分段（追加关联）
      */
     @SaCheckPermission("ai:kb:edit")
     @Log(title = "知识库管理", businessType = BusinessType.UPDATE)
     @RepeatSubmit()
-    @PutMapping
-    public R<Void> edit(@RequestBody ProblemBody body) {
-        return toAjax(problemService.updateByBo(body.problemId(), body.content(), body.chunkIds()));
+    @PutMapping("/{problemId}/bind")
+    public R<Void> bind(@NotNull @PathVariable Long problemId, @RequestBody BindBody body) {
+        return toAjax(problemService.bindChunks(problemId, body.chunkIds()));
+    }
+
+    /**
+     * 解绑分段
+     */
+    @SaCheckPermission("ai:kb:edit")
+    @Log(title = "知识库管理", businessType = BusinessType.UPDATE)
+    @RepeatSubmit()
+    @PutMapping("/{problemId}/unbind")
+    public R<Void> unbind(@NotNull @PathVariable Long problemId, @RequestBody BindBody body) {
+        return toAjax(problemService.unbindChunks(problemId, body.chunkIds()));
     }
 
     /**
@@ -89,9 +109,15 @@ public class KbProblemController extends BaseController {
     }
 
     /**
-     * 问题请求体
+     * 问题创建请求体（content 按行拆分为多个问题）
      */
-    public record ProblemBody(Long problemId, Long datasetId, String content, List<Long> chunkIds) {
+    public record ProblemBody(Long datasetId, String content) {
+    }
+
+    /**
+     * 绑定/解绑请求体
+     */
+    public record BindBody(List<Long> chunkIds) {
     }
 
 }

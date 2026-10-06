@@ -3,25 +3,29 @@ package org.zhiku.ai.knowledge.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.zhiku.ai.knowledge.domain.KbChunk;
 import org.zhiku.ai.knowledge.domain.KbDataset;
 import org.zhiku.ai.knowledge.domain.KbDocument;
+import org.zhiku.ai.knowledge.domain.KbProblemChunkRel;
 import org.zhiku.ai.knowledge.domain.vo.KbChunkVo;
 import org.zhiku.ai.knowledge.mapper.KbChunkMapper;
 import org.zhiku.ai.knowledge.mapper.KbDatasetMapper;
 import org.zhiku.ai.knowledge.mapper.KbDocumentMapper;
+import org.zhiku.ai.knowledge.mapper.KbProblemChunkRelMapper;
 import org.zhiku.ai.knowledge.service.IKbChunkService;
 import org.zhiku.ai.knowledge.vector.KbVectorStore;
 import org.zhiku.ai.model.client.AiModelClientFactory;
+import org.zhiku.common.core.domain.PageResult;
 import org.zhiku.common.core.exception.ServiceException;
 import org.zhiku.common.core.utils.StringUtils;
+import org.zhiku.common.mybatis.core.page.PageQuery;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -42,6 +46,7 @@ public class KbChunkServiceImpl implements IKbChunkService {
     private final KbChunkMapper baseMapper;
     private final KbDatasetMapper datasetMapper;
     private final KbDocumentMapper documentMapper;
+    private final KbProblemChunkRelMapper problemRelMapper;
     private final AiModelClientFactory modelClientFactory;
     /** Milvus 未启用时向量库不可用：仅允许禁用/排序，增删改内容需向量服务 */
     private final ObjectProvider<KbVectorStore> vectorStoreProvider;
@@ -52,6 +57,22 @@ public class KbChunkServiceImpl implements IKbChunkService {
         lqw.eq(KbChunk::getDocumentId, documentId)
             .orderByAsc(KbChunk::getSeq);
         return baseMapper.selectVoList(lqw);
+    }
+
+    @Override
+    public PageResult<KbChunkVo> queryPage(Long documentId, String searchType, String keyword, PageQuery pageQuery) {
+        LambdaQueryWrapper<KbChunk> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(KbChunk::getDocumentId, documentId);
+        if (StringUtils.isNotBlank(keyword)) {
+            if ("title".equals(searchType)) {
+                lqw.and(w -> w.like(KbChunk::getTitle, keyword).or().like(KbChunk::getHeadingPath, keyword));
+            } else {
+                lqw.like(KbChunk::getContent, keyword);
+            }
+        }
+        lqw.orderByAsc(KbChunk::getSeq);
+        Page<KbChunkVo> page = baseMapper.selectVoPage(pageQuery.build(), lqw);
+        return PageResult.build(page.getRecords(), page.getTotal());
     }
 
     @Override
@@ -119,6 +140,9 @@ public class KbChunkServiceImpl implements IKbChunkService {
                 vectorStore.deleteByExpr(dim, "chunk_id == " + chunkId);
             }
         }
+        // 同步清理问题关联
+        problemRelMapper.delete(new LambdaQueryWrapper<KbProblemChunkRel>()
+            .eq(KbProblemChunkRel::getChunkId, chunkId));
         return baseMapper.deleteById(chunkId) > 0;
     }
 

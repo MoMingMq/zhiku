@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.zhiku.ai.knowledge.domain.KbChunk;
 import org.zhiku.ai.knowledge.domain.KbDataset;
+import org.zhiku.ai.knowledge.domain.KbProblemChunkRel;
 import org.zhiku.ai.knowledge.domain.KbDocument;
 import org.zhiku.ai.knowledge.domain.vo.KbDocumentVo;
 import org.zhiku.ai.knowledge.ingest.DocumentIngestPipeline;
@@ -15,6 +16,7 @@ import org.zhiku.ai.knowledge.ingest.DocumentStatus;
 import org.zhiku.ai.knowledge.ingest.event.DocumentIngestEvent;
 import org.zhiku.ai.knowledge.mapper.KbChunkMapper;
 import org.zhiku.ai.knowledge.mapper.KbDatasetMapper;
+import org.zhiku.ai.knowledge.mapper.KbProblemChunkRelMapper;
 import org.zhiku.ai.knowledge.mapper.KbDocumentMapper;
 import org.zhiku.ai.knowledge.service.IKbDocumentService;
 import org.zhiku.ai.knowledge.storage.StorageService;
@@ -51,6 +53,7 @@ public class KbDocumentServiceImpl implements IKbDocumentService {
     private final KbDocumentMapper baseMapper;
     private final KbDatasetMapper datasetMapper;
     private final KbChunkMapper chunkMapper;
+    private final KbProblemChunkRelMapper problemRelMapper;
     private final StorageService storageService;
     /** Milvus 未启用时 pipeline 不存在（上传/重试/重切降级报错，查询不受影响） */
     private final ObjectProvider<DocumentIngestPipeline> pipelineProvider;
@@ -167,6 +170,9 @@ public class KbDocumentServiceImpl implements IKbDocumentService {
         } else {
             chunkMapper.delete(new LambdaQueryWrapper<KbChunk>().eq(KbChunk::getDocumentId, documentId));
         }
+        // 同步清理问题关联
+        problemRelMapper.delete(new LambdaQueryWrapper<KbProblemChunkRel>()
+            .eq(KbProblemChunkRel::getDocumentId, documentId));
         boolean ok = baseMapper.deleteById(documentId) > 0;
         if (ok) {
             storageService.delete(doc.getFilePath());

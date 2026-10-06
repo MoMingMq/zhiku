@@ -1,5 +1,6 @@
 package org.zhiku.ai.knowledge.service;
 
+import org.zhiku.ai.knowledge.domain.vo.KbProblemChunkVo;
 import org.zhiku.ai.knowledge.domain.vo.KbProblemVo;
 
 import java.util.Collection;
@@ -23,16 +24,26 @@ public interface IKbProblemService {
     KbProblemVo queryById(Long problemId);
 
     /**
-     * 新增问题并绑定分段（问题文本向量化入库）
+     * 批量新增问题（content 按行拆分，一行一个问题，逐条向量化入库）
      *
-     * @return 问题ID
+     * @return 创建的问题ID列表
      */
-    Long insertByBo(Long datasetId, String content, List<Long> chunkIds);
+    List<Long> insertBatch(Long datasetId, String content);
 
     /**
-     * 编辑问题（文本变更则重新向量化）并重绑分段
+     * 绑定分段（追加关联，不重复）
      */
-    Boolean updateByBo(Long problemId, String content, List<Long> chunkIds);
+    Boolean bindChunks(Long problemId, List<Long> chunkIds);
+
+    /**
+     * 解绑分段
+     */
+    Boolean unbindChunks(Long problemId, List<Long> chunkIds);
+
+    /**
+     * 查询问题关联的分段（含文档名，右侧面板/抽屉展示与解绑用）
+     */
+    List<KbProblemChunkVo> queryBoundChunks(Long problemId);
 
     /**
      * 批量删除问题（同步删除向量与关联）
