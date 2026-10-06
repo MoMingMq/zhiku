@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * 结构感知切分：IR 初始块 → section 候选块
- * <p>规则：标题并入 section 首块正文；连续段落聚合至上限；表格/代码块原子保留；
+ * <p>规则：标题并入 section 首块正文与标题路径（父路径 + 标题自身，保层级）；连续段落聚合至上限；表格/代码块原子保留；
  * 超长表格按行组切分并标记续块；代码块即使超长也不切（递归兜底同样跳过）。
  *
  * @author zhiku
@@ -26,8 +26,11 @@ public class StructureSplitter implements ChunkStage {
             switch (draft.getBlockType()) {
                 case "heading" -> {
                     flush(output, sectionBuffer, sectionPath);
-                    sectionBuffer = new StringBuilder(draft.getContent() == null ? "" : draft.getContent());
-                    sectionPath = draft.getHeadingPath() == null ? "" : draft.getHeadingPath();
+                    // 解析器给 heading 块的 headingPath 是父路径，此处并入标题自身得到完整层级路径
+                    String parent = draft.getHeadingPath() == null ? "" : draft.getHeadingPath();
+                    String title = draft.getContent() == null ? "" : draft.getContent();
+                    sectionBuffer = new StringBuilder(title);
+                    sectionPath = parent.isEmpty() ? title : parent + ">" + title;
                 }
                 case "paragraph" -> {
                     if (sectionBuffer == null) {

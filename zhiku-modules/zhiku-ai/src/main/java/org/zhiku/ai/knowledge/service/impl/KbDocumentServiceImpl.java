@@ -163,6 +163,10 @@ public class KbDocumentServiceImpl implements IKbDocumentService {
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteById(Long documentId) {
         KbDocument doc = requireDocument(documentId);
+        // 处理中禁止删除：与异步入库管线竞态会残留孤儿分块与向量
+        if (DocumentStatus.IN_PROGRESS.contains(doc.getStatus())) {
+            throw new ServiceException("文档处理中（解析/分块/向量化），处理结束后才可删除");
+        }
         // 向量清理（Milvus 未启用时仅清 MySQL 与文件）
         DocumentIngestPipeline pipeline = pipelineProvider.getIfAvailable();
         if (pipeline != null) {

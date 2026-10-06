@@ -16,6 +16,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -102,7 +104,7 @@ public class TikaDocumentParser implements DocumentParser {
                     continue;
                 }
                 headingStack[level] = title;
-                java.util.Arrays.fill(headingStack, level + 1, headingStack.length, null);
+                Arrays.fill(headingStack, level + 1, headingStack.length, null);
                 blocks.add(block(IrType.HEADING, title, path(headingStack, level - 1), level));
             } else if ("p".equals(tag)) {
                 String content = element.getTextContent().strip();
@@ -127,11 +129,14 @@ public class TikaDocumentParser implements DocumentParser {
     }
 
     /**
-     * 表格重建为 Markdown 管道表（跨行合并单元格按同行收集）
+     * 表格重建为 Markdown 管道表（首行为表头，其后插入 GFM 必需的分隔行；跨行合并单元格按同行收集）
+     * <p>GFM 硬约束：单元格必须单行——嵌套表格先拍平为纯文本、单元格内空白（换行/制表符）压成单空格。
      */
     private String rebuildTable(Element table) {
+        flattenNestedTables(table);
         StringBuilder sb = new StringBuilder();
         NodeList rows = table.getElementsByTagName("tr");
+        boolean headerWritten = false;
         for (int i = 0; i < rows.getLength(); i++) {
             Element row = (Element) rows.item(i);
             NodeList cells = row.getElementsByTagName("td");
@@ -140,7 +145,7 @@ public class TikaDocumentParser implements DocumentParser {
             }
             List<String> parts = new ArrayList<>();
             for (int j = 0; j < cells.getLength(); j++) {
-                String text = cells.item(j).getTextContent().strip();
+                String text = cells.item(j).getTextContent().replaceAll("\\s+", " ").strip();
                 parts.add(text.isEmpty() ? " " : text);
             }
             if (!parts.isEmpty()) {
@@ -148,9 +153,30 @@ public class TikaDocumentParser implements DocumentParser {
                     sb.append('\n');
                 }
                 sb.append("| ").append(String.join(" | ", parts)).append(" |");
+                if (!headerWritten) {
+                    sb.append('\n')
+                        .append("| ").append(String.join(" | ", Collections.nCopies(parts.size(), "---"))).append(" |");
+                    headerWritten = true;
+                }
             }
         }
         return sb.toString();
+    }
+
+    /**
+     * 嵌套表格拍平：内层 table 整体替换为其纯文本（空白压平）。
+     * getElementsByTagName 按后代递归匹配，不先移除内层 table 会把内层 tr/td 混入外层行。
+     */
+    private void flattenNestedTables(Element table) {
+        NodeList nested = table.getElementsByTagName("table");
+        for (int i = nested.getLength() - 1; i >= 0; i--) {
+            Element inner = (Element) nested.item(i);
+            String flat = inner.getTextContent().replaceAll("\\s+", " ").strip();
+            org.w3c.dom.Text textNode = table.getOwnerDocument().createTextNode(" " + flat + " ");
+            if (inner.getParentNode() != null) {
+                inner.getParentNode().replaceChild(textNode, inner);
+            }
+        }
     }
 
     private String path(String[] headingStack, int maxLevel) {

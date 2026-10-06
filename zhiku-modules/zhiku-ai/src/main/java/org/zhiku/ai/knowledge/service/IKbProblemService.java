@@ -46,6 +46,11 @@ public interface IKbProblemService {
     List<KbProblemChunkVo> queryBoundChunks(Long problemId);
 
     /**
+     * 查询分段已绑定的问题（分段编辑弹窗右侧面板展示与解绑用）
+     */
+    List<KbProblemVo> queryChunkProblems(Long chunkId);
+
+    /**
      * 批量删除问题（同步删除向量与关联）
      */
     Boolean deleteByIds(Collection<Long> ids);

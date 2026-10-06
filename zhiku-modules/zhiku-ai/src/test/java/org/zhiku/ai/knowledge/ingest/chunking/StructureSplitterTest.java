@@ -26,8 +26,9 @@ class StructureSplitterTest {
 
     @Test
     void headingMergedIntoSection() {
+        // 解析器语义：heading 块的 headingPath 为父路径（一级标题父路径为空）
         List<ChunkDraft> result = splitter.process(List.of(
-            draft("heading", "第一章", "第一章"),
+            draft("heading", "第一章", ""),
             draft("paragraph", "概述文字。", "第一章")), new ChunkParams());
         assertEquals(1, result.size());
         assertEquals("section", result.get(0).getBlockType());
@@ -37,10 +38,24 @@ class StructureSplitterTest {
     }
 
     @Test
+    void secondLevelHeadingBuildsHierarchicalPath() {
+        // h1 章标题（父路径空）→ h2 节标题（父路径=章名）→ 节下段落，section 路径应含完整层级
+        List<ChunkDraft> result = splitter.process(List.of(
+            draft("heading", "第一章", ""),
+            draft("paragraph", "章引言。", "第一章"),
+            draft("heading", "1.1 范围", "第一章"),
+            draft("paragraph", "节正文。", "第一章>1.1 范围")), new ChunkParams());
+        assertEquals(2, result.size());
+        assertEquals("第一章", result.get(0).getHeadingPath());
+        assertEquals("第一章>1.1 范围", result.get(1).getHeadingPath());
+        assertTrue(result.get(1).getContent().startsWith("1.1 范围"));
+    }
+
+    @Test
     void smallTableKeptAtomic() {
         String table = "| a | b |\n| 1 | 2 |\n| 3 | 4 |";
         List<ChunkDraft> result = splitter.process(List.of(
-            draft("heading", "标题", "标题"),
+            draft("heading", "标题", ""),
             draft("paragraph", "段落", "标题"),
             draft("table", table, "标题")), new ChunkParams());
         assertEquals(2, result.size());

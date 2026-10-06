@@ -5,8 +5,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.zhiku.ai.knowledge.domain.vo.KbChunkVo;
 import org.zhiku.ai.knowledge.domain.vo.KbDocumentVo;
+import org.zhiku.ai.knowledge.domain.vo.KbProblemVo;
 import org.zhiku.ai.knowledge.service.IKbChunkService;
 import org.zhiku.ai.knowledge.service.IKbDocumentService;
+import org.zhiku.ai.knowledge.service.IKbProblemService;
 import org.zhiku.common.core.domain.PageResult;
 import org.zhiku.common.core.domain.R;
 import org.zhiku.common.log.annotation.Log;
@@ -41,6 +43,7 @@ public class KbDocumentController extends BaseController {
 
     private final IKbDocumentService documentService;
     private final IKbChunkService chunkService;
+    private final IKbProblemService problemService;
 
     /**
      * 查询文档列表（左树，按知识库过滤）
@@ -125,6 +128,15 @@ public class KbDocumentController extends BaseController {
     @PutMapping("/chunk/{chunkId}/disabled")
     public R<Void> changeChunkDisabled(@NotNull @PathVariable Long chunkId, @RequestParam boolean disabled) {
         return toAjax(chunkService.changeDisabled(chunkId, disabled));
+    }
+
+    /**
+     * 查询分段已绑定的问题（分段编辑弹窗右侧面板；绑定/解绑复用问题侧接口）
+     */
+    @SaCheckPermission("ai:kb:query")
+    @GetMapping("/chunk/{chunkId}/problems")
+    public R<List<KbProblemVo>> chunkProblems(@NotNull @PathVariable Long chunkId) {
+        return R.ok(problemService.queryChunkProblems(chunkId));
     }
 
     /**

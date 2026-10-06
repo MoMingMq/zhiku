@@ -57,6 +57,9 @@ class TikaDocumentParserTest {
         assertEquals(IrType.TABLE, blocks.get(2).getType());
         assertTrue(blocks.get(2).getContent().contains("上限"));
         assertTrue(blocks.get(2).getContent().contains("100"));
+        // GFM 表格语法：首行表头后必须跟分隔行，否则前端渲染为纯文本
+        String[] lines = blocks.get(2).getContent().split("\n");
+        assertEquals("| --- | --- |", lines[1], "第二行应为两列分隔行");
     }
 
     @Test
@@ -69,6 +72,9 @@ class TikaDocumentParserTest {
             "应包含正文段落块");
         assertTrue(blocks.stream().anyMatch(b -> b.getType() == IrType.TABLE && b.getContent().contains("单元格A")),
             "应包含表格块且内容保留");
+        assertTrue(blocks.stream().anyMatch(b -> b.getType() == IrType.TABLE
+                && b.getContent().split("\n")[1].equals("| --- | --- |")),
+            "docx 表格第二行应为分隔行（GFM 语法）");
     }
 
     @Test
@@ -78,6 +84,28 @@ class TikaDocumentParserTest {
         List<IrBlock> blocks = ir.getBlocks();
         assertTrue(blocks.stream().anyMatch(b -> b.getType() == IrType.PARAGRAPH), "PDF 应产出段落块");
         assertTrue(ir.getCharCount() > 0);
+    }
+
+    @Test
+    void nestedTableFlattenedAndCellSingleLine() {
+        // 嵌套表格 + 单元格内换行：GFM 要求单元格单行，内层表格拍平为纯文本
+        String html = """
+            <html><body>
+            <table>
+            <tr><th>外层</th><th>说明</th></tr>
+            <tr><td>普通单元格</td><td><table><tr><td>内层A</td><td>内层B</td></tr></table></td></tr>
+            <tr><td>带换行
+            文本</td><td>值</td></tr>
+            </table>
+            </body></html>
+            """;
+        DocumentIR ir = parser.parse(new ByteArrayInputStream(html.getBytes()), "a.html");
+        IrBlock table = ir.getBlocks().stream().filter(b -> b.getType() == IrType.TABLE).findFirst().orElseThrow();
+        String[] lines = table.getContent().split("\n");
+        assertEquals(4, lines.length, "表头+分隔+两数据行，实际：" + table.getContent());
+        assertEquals("| --- | --- |", lines[1]);
+        assertEquals("| 普通单元格 | 内层A 内层B |", lines[2], "嵌套表格应拍平为单行文本并入单元格");
+        assertEquals("| 带换行 文本 | 值 |", lines[3], "单元格内换行应压成单空格");
     }
 
     @Test

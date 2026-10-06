@@ -191,6 +191,23 @@ public class KbProblemServiceImpl implements IKbProblemService {
     }
 
     @Override
+    public List<KbProblemVo> queryChunkProblems(Long chunkId) {
+        List<KbProblemChunkRel> rels = relMapper.selectList(new LambdaQueryWrapper<KbProblemChunkRel>()
+            .eq(KbProblemChunkRel::getChunkId, chunkId));
+        if (rels.isEmpty()) {
+            return List.of();
+        }
+        Map<Long, KbProblem> problemMap = baseMapper.selectByIds(
+                rels.stream().map(KbProblemChunkRel::getProblemId).distinct().toList())
+            .stream().collect(Collectors.toMap(KbProblem::getProblemId, Function.identity()));
+        return rels.stream()
+            .map(rel -> problemMap.get(rel.getProblemId()))
+            .filter(java.util.Objects::nonNull)
+            .map(p -> toVo(p, List.of(chunkId), 1L))
+            .toList();
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public Boolean deleteByIds(Collection<Long> ids) {
         KbVectorStore vectorStore = vectorStoreProvider.getIfAvailable();
