@@ -109,8 +109,10 @@ public class AiAppController extends BaseController {
     @SaCheckPermission("ai:app:edit")
     @Log(title = "应用管理", businessType = BusinessType.UPDATE)
     @PutMapping("/{appId}/share/{enabled}")
-    public R<String> toggleShare(@NotNull @PathVariable Long appId, @NotNull @PathVariable Boolean enabled) {
-        return R.ok(appService.toggleShare(appId, enabled));
+    public R<java.util.Map<String, String>> toggleShare(@NotNull @PathVariable Long appId, @NotNull @PathVariable Boolean enabled) {
+        // 注意：R.ok(String) 会命中 msg 重载，字符串数据必须用 Map 包装返回
+        String code = appService.toggleShare(appId, enabled);
+        return R.ok(java.util.Map.of("shareCode", code == null ? "" : code));
     }
 
     /**
