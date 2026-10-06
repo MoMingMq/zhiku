@@ -112,6 +112,8 @@ security:
     - /*/api-docs
     - /*/api-docs/**
     - /warm-flow-ui/config
+    # AI 应用公开对话端点（share_code 寻址 + 服务端 IP 白名单与限流自行校验）
+    - /public/app/**
 
 # MyBatisPlus配置
 # https://baomidou.com/config/
