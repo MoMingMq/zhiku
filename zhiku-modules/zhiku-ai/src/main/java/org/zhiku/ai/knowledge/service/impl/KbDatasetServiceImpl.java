@@ -72,8 +72,9 @@ public class KbDatasetServiceImpl implements IKbDatasetService {
     public Boolean updateByBo(KbDatasetBo bo) {
         validate(bo);
         KbDataset update = toEntity(bo);
-        // 换绑向量模型时同步刷新维度
-        update.setEmbedDim(modelRefService.queryDimById(bo.getEmbedModelId()));
+        // 向量模型与维度一经创建禁改（已有分段的向量维度与其绑定，改绑会导致向量不可用）
+        update.setEmbedModelId(null);
+        update.setEmbedDim(null);
         return baseMapper.updateById(update) > 0;
     }
 
