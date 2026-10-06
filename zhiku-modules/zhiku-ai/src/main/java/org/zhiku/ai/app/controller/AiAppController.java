@@ -77,8 +77,9 @@ public class AiAppController extends BaseController {
     @Log(title = "应用管理", businessType = BusinessType.INSERT)
     @RepeatSubmit()
     @PostMapping
-    public R<Void> add(@Validated(AddGroup.class) @RequestBody AiAppBo bo) {
-        return toAjax(appService.insertByBo(bo));
+    public R<Long> add(@Validated(AddGroup.class) @RequestBody AiAppBo bo) {
+        appService.insertByBo(bo);
+        return R.ok(bo.getAppId());
     }
 
     /**
